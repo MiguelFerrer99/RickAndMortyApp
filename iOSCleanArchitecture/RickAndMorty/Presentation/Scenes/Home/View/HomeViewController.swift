@@ -62,6 +62,6 @@ private extension HomeViewController {
     }
     
     func configureNavigationBar() {
-        // Configure NavigationBar
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
 }
