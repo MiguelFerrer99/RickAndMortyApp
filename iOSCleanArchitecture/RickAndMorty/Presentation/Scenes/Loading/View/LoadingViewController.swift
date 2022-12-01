@@ -1,5 +1,5 @@
 //
-//  HomeController.swift
+//  LoadingViewController.swift
 //  iOSCleanArchitecture
 //
 //  Created by Miguel Ferrer Fornali on 19/11/22.
@@ -8,11 +8,11 @@
 import UIKit
 import Combine
 
-final class HomeViewController: UIViewController {
+final class LoadingViewController: UIViewController {
     @IBOutlet private weak var stackView: UIStackView!
     
-    private let viewModel: HomeViewModel
-    private let dependencies: HomeDependenciesResolver
+    private let viewModel: LoadingViewModel
+    private let dependencies: LoadingDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
     private lazy var exampleView: ExampleView = {
         let view = ExampleView()
@@ -20,10 +20,10 @@ final class HomeViewController: UIViewController {
         return view
     }()
 
-    init(dependencies: HomeDependenciesResolver) {
+    init(dependencies: LoadingDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
-        super.init(nibName: "HomeViewController", bundle: .main)
+        super.init(nibName: "LoadingViewController", bundle: .main)
     }
     
     @available(*, unavailable)
@@ -44,7 +44,7 @@ final class HomeViewController: UIViewController {
     }
 }
 
-private extension HomeViewController {
+private extension LoadingViewController {
     func setAppearance() {
         configureExampleView()
     }

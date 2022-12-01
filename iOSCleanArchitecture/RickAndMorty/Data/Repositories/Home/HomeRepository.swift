@@ -8,9 +8,9 @@
 protocol HomeRepository {}
 
 final class DefaultHomeRepository: HomeRepository {
-    private let dependencies: HomeDependenciesResolver
+    private let dependencies: LoadingDependenciesResolver
     
-    init(dependencies: HomeDependenciesResolver) {
+    init(dependencies: LoadingDependenciesResolver) {
         self.dependencies = dependencies
     }
 }
