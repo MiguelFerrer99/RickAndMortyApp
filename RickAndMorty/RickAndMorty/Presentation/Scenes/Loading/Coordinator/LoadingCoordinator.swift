@@ -1,5 +1,5 @@
 //
-//  HomeCoordinator.swift
+//  LoadingCoordinator.swift
 //  iOSCleanArchitecture
 //
 //  Created by Miguel Ferrer Fornali on 19/11/22.
@@ -7,24 +7,24 @@
 
 import UIKit
 
-protocol HomeCoordinator {
+protocol LoadingCoordinator {
     func setAsRoot(with window: UIWindow)
 }
 
 final class DefaultHomeCoordinator {
     private let navigationController: UINavigationController
-    private let externalDependencies: HomeExternalDependenciesResolver
+    private let externalDependencies: LoadingExternalDependenciesResolver
     private lazy var dependencies: DefaultHomeDependenciesResolver = {
         DefaultHomeDependenciesResolver(externalDependencies: externalDependencies, coordinator: self)
     }()
     
-    init(externalDependencies: HomeExternalDependenciesResolver, navigationController: UINavigationController) {
+    init(externalDependencies: LoadingExternalDependenciesResolver, navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.externalDependencies = externalDependencies
     }
 }
 
-extension DefaultHomeCoordinator: HomeCoordinator {
+extension DefaultHomeCoordinator: LoadingCoordinator {
     func setAsRoot(with window: UIWindow) {
         navigationController.setViewControllers([dependencies.resolve()], animated: true)
         window.rootViewController = navigationController
@@ -33,15 +33,15 @@ extension DefaultHomeCoordinator: HomeCoordinator {
 }
 
 private extension DefaultHomeCoordinator {
-    struct DefaultHomeDependenciesResolver: HomeDependenciesResolver {
-        let externalDependencies: HomeExternalDependenciesResolver
-        let coordinator: HomeCoordinator
+    struct DefaultHomeDependenciesResolver: LoadingDependenciesResolver {
+        let externalDependencies: LoadingExternalDependenciesResolver
+        let coordinator: LoadingCoordinator
         
-        var external: HomeExternalDependenciesResolver {
+        var external: LoadingExternalDependenciesResolver {
             externalDependencies
         }
         
-        func resolve() -> HomeCoordinator {
+        func resolve() -> LoadingCoordinator {
             coordinator
         }
     }
