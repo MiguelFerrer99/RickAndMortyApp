@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoadingViewController" customModule="RickAndMorty" customModuleProvider="target">
             <connections>
-                <outlet property="stackView" destination="KHe-WY-LDf" id="bsy-yK-pqJ"/>
+                <outlet property="stackView" destination="Mfr-HP-gbM" id="D4Y-tn-GQS"/>
                 <outlet property="view" destination="iN0-l3-epB" id="XGf-FR-SLG"/>
             </connections>
         </placeholder>
@@ -19,22 +19,32 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KHe-WY-LDf">
-                    <rect key="frame" x="20" y="0.0" width="353" height="852"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="cwX-kh-eDg">
+                    <rect key="frame" x="49" y="359.66666666666669" width="295" height="133"/>
+                </imageView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Mfr-HP-gbM">
+                    <rect key="frame" x="20" y="502.66666666666669" width="353" height="1"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" placeholder="YES" id="k8O-ja-kgc"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="KHe-WY-LDf" secondAttribute="bottom" id="BCq-K2-HzT"/>
-                <constraint firstItem="KHe-WY-LDf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Mfu-td-ueb"/>
-                <constraint firstAttribute="trailing" secondItem="KHe-WY-LDf" secondAttribute="trailing" constant="20" id="bCe-ZP-D0K"/>
-                <constraint firstItem="KHe-WY-LDf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rLG-kH-3Zz"/>
+                <constraint firstItem="cwX-kh-eDg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2VC-mR-rNg"/>
+                <constraint firstItem="Mfr-HP-gbM" firstAttribute="top" secondItem="cwX-kh-eDg" secondAttribute="bottom" constant="10" id="Nvc-7m-INt"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Mfr-HP-gbM" secondAttribute="bottom" constant="20" id="TgU-mu-eKM"/>
+                <constraint firstItem="cwX-kh-eDg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="WQC-lY-piW"/>
+                <constraint firstItem="cwX-kh-eDg" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.75" id="cQX-dz-aiX"/>
+                <constraint firstItem="Mfr-HP-gbM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="iR5-pk-sNW"/>
+                <constraint firstAttribute="trailing" secondItem="Mfr-HP-gbM" secondAttribute="trailing" constant="20" id="lhD-b3-7bS"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="13" y="42"/>
+            <point key="canvasLocation" x="12.977099236641221" y="41.549295774647888"/>
         </view>
     </objects>
     <resources>
+        <image name="LaunchScreen" width="334" height="133"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
