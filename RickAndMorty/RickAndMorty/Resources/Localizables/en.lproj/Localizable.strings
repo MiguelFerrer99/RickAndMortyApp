@@ -1,10 +1,13 @@
-/* 
-  Localizable.strings
-  iOSCleanArchitecture
+//
+//  Localizables.swift
+//  RickAndMorty
+//
+//  Created by Miguel Ferrer Fornali on 2/12/22.
+//
 
-  Created by Miguel Ferrer Fornali on 19/11/22.
-  
-*/
+/* TryAgainButtonView */
+"tryAgainButtonView_title" = "Try again";
 
-/* Home */
-"home_title" = "Home";
+/* Loading */
+"loading_errorTitle" = "An unexpected error has occurred. Please try again later";
+"loading_errorButton" = "Try again";

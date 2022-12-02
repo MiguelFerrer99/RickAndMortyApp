@@ -23,7 +23,7 @@
                     <rect key="frame" x="49" y="359.66666666666669" width="295" height="133"/>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Mfr-HP-gbM">
-                    <rect key="frame" x="20" y="512.66666666666663" width="353" height="1"/>
+                    <rect key="frame" x="20" y="502.66666666666669" width="353" height="1"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" placeholder="YES" id="k8O-ja-kgc"/>
                     </constraints>
@@ -32,7 +32,7 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="cwX-kh-eDg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2VC-mR-rNg"/>
-                <constraint firstItem="Mfr-HP-gbM" firstAttribute="top" secondItem="cwX-kh-eDg" secondAttribute="bottom" constant="20" id="Nvc-7m-INt"/>
+                <constraint firstItem="Mfr-HP-gbM" firstAttribute="top" secondItem="cwX-kh-eDg" secondAttribute="bottom" constant="10" id="Nvc-7m-INt"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Mfr-HP-gbM" secondAttribute="bottom" constant="20" id="TgU-mu-eKM"/>
                 <constraint firstItem="cwX-kh-eDg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="WQC-lY-piW"/>
                 <constraint firstItem="cwX-kh-eDg" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.75" id="cQX-dz-aiX"/>

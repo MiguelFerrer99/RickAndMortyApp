@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TryAgainButtonView" customModule="RickAndMorty" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="Jui-cG-1bQ" id="og1-Y3-0kY"/>
+                <outlet property="titleLabel" destination="kgs-Mr-UdP" id="zb9-Rl-JXT"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="179" height="75"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jui-cG-1bQ" userLabel="Container View">
+                    <rect key="frame" x="0.0" y="0.0" width="179" height="75"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kgs-Mr-UdP">
+                            <rect key="frame" x="12" y="8" width="155" height="59"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="kgs-Mr-UdP" firstAttribute="leading" secondItem="Jui-cG-1bQ" secondAttribute="leading" constant="12" id="LuX-Oy-1HW"/>
+                        <constraint firstAttribute="trailing" secondItem="kgs-Mr-UdP" secondAttribute="trailing" constant="12" id="auZ-TJ-Y3Z"/>
+                        <constraint firstAttribute="bottom" secondItem="kgs-Mr-UdP" secondAttribute="bottom" constant="8" id="oXy-Jy-T3N"/>
+                        <constraint firstItem="kgs-Mr-UdP" firstAttribute="top" secondItem="Jui-cG-1bQ" secondAttribute="top" constant="8" id="z8Z-Ci-Kr5"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Jui-cG-1bQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="F2Z-sW-c3d"/>
+                <constraint firstAttribute="trailing" secondItem="Jui-cG-1bQ" secondAttribute="trailing" id="eCE-ew-kV3"/>
+                <constraint firstItem="Jui-cG-1bQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lYO-6b-51N"/>
+                <constraint firstAttribute="bottom" secondItem="Jui-cG-1bQ" secondAttribute="bottom" id="wBY-ca-p31"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-136.95652173913044" y="328.45982142857139"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

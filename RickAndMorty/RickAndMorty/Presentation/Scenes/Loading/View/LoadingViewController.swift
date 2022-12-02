@@ -20,6 +20,11 @@ final class LoadingViewController: UIViewController {
         view.isHidden = true
         return view
     }()
+    private lazy var errorView: LoadingErrorView = {
+        let view = LoadingErrorView()
+        view.isHidden = true
+        return view
+    }()
     
     init(dependencies: LoadingDependenciesResolver) {
         self.dependencies = dependencies
@@ -34,7 +39,7 @@ final class LoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setAppearance()
+        setupView()
         bind()
         viewModel.viewDidLoad()
     }
@@ -46,16 +51,22 @@ final class LoadingViewController: UIViewController {
 }
 
 private extension LoadingViewController {
-    func setAppearance() {
+    func setupView() {
         configureLoaderView()
+        configureErrorView()
     }
     
     func configureLoaderView() {
         stackView.addArrangedSubview(loaderView)
     }
     
+    func configureErrorView() {
+        stackView.addArrangedSubview(errorView)
+    }
+    
     func bind() {
         bindViewModel()
+        bindErrorView()
     }
     
     func bindViewModel() {
@@ -63,11 +74,51 @@ private extension LoadingViewController {
             .filter { $0 == .loading }
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                self.loaderView.isHidden = false
+                self.setLoadingState()
+            }.store(in: &subscriptions)
+        
+        viewModel.state
+            .filter { $0 == .error }
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.setErrorState()
+            }.store(in: &subscriptions)
+    }
+    
+    func bindErrorView() {
+        errorView.publisher
+            .filter { $0 == .didTapTryAgain }
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.getInfoAgain()
             }.store(in: &subscriptions)
     }
     
     func configureNavigationBar() {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    func setLoadingState() {
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            guard let self = self else { return }
+            self.loaderView.alpha = 1
+            self.errorView.alpha = 0
+        } completion: { [weak self] ended in
+            guard let self = self else { return }
+            self.loaderView.isHidden = false
+            self.errorView.isHidden = true
+        }
+    }
+    
+    func setErrorState() {
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            guard let self = self else { return }
+            self.loaderView.alpha = 0
+            self.errorView.alpha = 1
+        } completion: { [weak self] ended in
+            guard let self = self else { return }
+            self.loaderView.isHidden = true
+            self.errorView.isHidden = false
+        }
     }
 }

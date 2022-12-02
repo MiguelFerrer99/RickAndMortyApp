@@ -5,11 +5,13 @@
 //  Created by Miguel Ferrer Fornali on 19/11/22.
 //
 
+import Foundation
 import Combine
 
 enum LoadingViewModelState {
     case idle
     case loading
+    case error
 }
 
 final class LoadingViewModel {
@@ -24,13 +26,25 @@ final class LoadingViewModel {
     }
     
     func viewDidLoad() {
-        stateSubject.send(.loading)
+        getInfo()
+    }
+    
+    func getInfoAgain() {
+        getInfo()
     }
 }
 
 private extension LoadingViewModel {
     var coordinator: LoadingCoordinator {
         dependencies.resolve()
+    }
+    
+    func getInfo() {
+        stateSubject.send(.loading)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            guard let self = self else { return }
+            self.stateSubject.send(.error)
+        }
     }
 }
 
