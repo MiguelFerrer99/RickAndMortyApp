@@ -9,6 +9,7 @@ import Combine
 
 enum LoadingViewModelState {
     case idle
+    case loading
 }
 
 final class LoadingViewModel {
@@ -23,7 +24,7 @@ final class LoadingViewModel {
     }
     
     func viewDidLoad() {
-        // Subscribe events and execute UseCases
+        stateSubject.send(.loading)
     }
 }
 

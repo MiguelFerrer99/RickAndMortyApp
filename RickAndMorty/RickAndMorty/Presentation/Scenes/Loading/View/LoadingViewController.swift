@@ -14,12 +14,13 @@ final class LoadingViewController: UIViewController {
     private let viewModel: LoadingViewModel
     private let dependencies: LoadingDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
-    private lazy var exampleView: ExampleView = {
-        let view = ExampleView()
-        view.configure(with: "Hello, World!")
+    
+    private lazy var loaderView: LoadingLoaderView = {
+        let view = LoadingLoaderView()
+        view.isHidden = true
         return view
     }()
-
+    
     init(dependencies: LoadingDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
@@ -46,11 +47,11 @@ final class LoadingViewController: UIViewController {
 
 private extension LoadingViewController {
     func setAppearance() {
-        configureExampleView()
+        configureLoaderView()
     }
     
-    func configureExampleView() {
-        stackView.addArrangedSubview(exampleView)
+    func configureLoaderView() {
+        stackView.addArrangedSubview(loaderView)
     }
     
     func bind() {
@@ -58,7 +59,12 @@ private extension LoadingViewController {
     }
     
     func bindViewModel() {
-        // Bind ViewModel states
+        viewModel.state
+            .filter { $0 == .loading }
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.loaderView.isHidden = false
+            }.store(in: &subscriptions)
     }
     
     func configureNavigationBar() {
