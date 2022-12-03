@@ -8,14 +8,15 @@
 import UIKit
 
 protocol LoadingCoordinator {
-    func setAsRoot(with window: UIWindow)
+    func start()
+    func openHome()
 }
 
-final class DefaultHomeCoordinator {
+final class DefaultLoadingCoordinator {
     private let navigationController: UINavigationController
     private let externalDependencies: LoadingExternalDependenciesResolver
-    private lazy var dependencies: DefaultHomeDependenciesResolver = {
-        DefaultHomeDependenciesResolver(externalDependencies: externalDependencies, coordinator: self)
+    private lazy var dependencies: DefaultLoadingDependenciesResolver = {
+        DefaultLoadingDependenciesResolver(externalDependencies: externalDependencies, coordinator: self)
     }()
     
     init(externalDependencies: LoadingExternalDependenciesResolver, navigationController: UINavigationController) {
@@ -24,16 +25,22 @@ final class DefaultHomeCoordinator {
     }
 }
 
-extension DefaultHomeCoordinator: LoadingCoordinator {
-    func setAsRoot(with window: UIWindow) {
+extension DefaultLoadingCoordinator: LoadingCoordinator {
+    func start() {
+        guard let window = AppDependencies.shared.window else { return }
         navigationController.setViewControllers([dependencies.resolve()], animated: true)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }
+    
+    func openHome() {
+        let coordinator = dependencies.external.resolveHomeCoordinator()
+        coordinator.start()
+    }
 }
 
-private extension DefaultHomeCoordinator {
-    struct DefaultHomeDependenciesResolver: LoadingDependenciesResolver {
+private extension DefaultLoadingCoordinator {
+    struct DefaultLoadingDependenciesResolver: LoadingDependenciesResolver {
         let externalDependencies: LoadingExternalDependenciesResolver
         let coordinator: LoadingCoordinator
         

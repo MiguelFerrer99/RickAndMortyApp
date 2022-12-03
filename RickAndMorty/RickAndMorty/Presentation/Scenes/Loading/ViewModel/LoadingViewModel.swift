@@ -29,7 +29,7 @@ final class LoadingViewModel {
         getInfo()
     }
     
-    func getInfoAgain() {
+    func tryAgain() {
         getInfo()
     }
 }
@@ -43,7 +43,8 @@ private extension LoadingViewModel {
         stateSubject.send(.loading)
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             guard let self = self else { return }
-            self.stateSubject.send(.error)
+            self.stateSubject.send(.idle)
+            self.coordinator.openHome()
         }
     }
 }

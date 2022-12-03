@@ -9,11 +9,12 @@ import UIKit
 
 protocol LoadingExternalDependenciesResolver {
     func resolve() -> UINavigationController
-    func resolveHomeCoordinator() -> LoadingCoordinator
+    func resolveLoadingCoordinator() -> LoadingCoordinator
+    func resolveHomeCoordinator() -> HomeCoordinator
 }
 
 extension LoadingExternalDependenciesResolver {
-    func resolveHomeCoordinator() -> LoadingCoordinator {
-        DefaultHomeCoordinator(externalDependencies: self, navigationController: resolve())
+    func resolveLoadingCoordinator() -> LoadingCoordinator {
+        DefaultLoadingCoordinator(externalDependencies: self, navigationController: resolve())
     }
 }

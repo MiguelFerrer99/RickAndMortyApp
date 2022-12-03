@@ -39,7 +39,7 @@ final class LoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        setupViews()
         bind()
         viewModel.viewDidLoad()
     }
@@ -51,7 +51,11 @@ final class LoadingViewController: UIViewController {
 }
 
 private extension LoadingViewController {
-    func setupView() {
+    var sceneNavigationController: UINavigationController {
+        dependencies.external.resolve()
+    }
+    
+    func setupViews() {
         configureLoaderView()
         configureErrorView()
     }
@@ -70,6 +74,13 @@ private extension LoadingViewController {
     }
     
     func bindViewModel() {
+        viewModel.state
+            .filter { $0 == .idle }
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.setIdleState()
+            }.store(in: &subscriptions)
+        
         viewModel.state
             .filter { $0 == .loading }
             .sink { [weak self] _ in
@@ -90,12 +101,24 @@ private extension LoadingViewController {
             .filter { $0 == .didTapTryAgain }
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                self.viewModel.getInfoAgain()
+                self.viewModel.tryAgain()
             }.store(in: &subscriptions)
     }
     
     func configureNavigationBar() {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        sceneNavigationController.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func setIdleState() {
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            guard let self = self else { return }
+            self.loaderView.alpha = 0
+            self.errorView.alpha = 0
+        } completion: { [weak self] ended in
+            guard let self = self else { return }
+            self.loaderView.isHidden = true
+            self.errorView.isHidden = true
+        }
     }
     
     func setLoadingState() {
