@@ -69,7 +69,17 @@ private extension HomeViewController {
     }
     
     func configureNavigationBar() {
+        configureNavigationBarCommons()
         sceneNavigationController.setNavigationBarHidden(false, animated: true)
-        self.navigationItem.titleView = titleView
+        navigationItem.titleView = titleView
+    }
+    
+    func configureNavigationBarCommons() {
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.shadowColor = .clear
+        navBarAppearance.shadowImage = UIImage()
+        sceneNavigationController.navigationBar.standardAppearance = navBarAppearance
+        sceneNavigationController.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
 }
