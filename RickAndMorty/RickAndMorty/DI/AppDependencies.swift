@@ -20,5 +20,4 @@ final class AppDependencies {
     }
 }
 
-extension AppDependencies: LoadingExternalDependenciesResolver,
-                            HomeExternalDependenciesResolver {}
+extension AppDependencies: HomeExternalDependenciesResolver {}

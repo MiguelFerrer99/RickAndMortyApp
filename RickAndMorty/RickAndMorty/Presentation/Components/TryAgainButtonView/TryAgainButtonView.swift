@@ -43,8 +43,7 @@ private extension TryAgainButtonView {
         containerView.layer.borderWidth = 3.0
         containerView.layer.cornerRadius = 10
         containerView.layer.borderColor = UIColor.black.cgColor
-        containerView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didLongPressButtonView)))
-        containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapButtonView)))
+        containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapContainerView)))
     }
     
     func configureTitleLabel() {
@@ -52,26 +51,7 @@ private extension TryAgainButtonView {
         titleLabel.text = .tryAgainButtonView.title.localized
     }
     
-    @objc func didLongPressButtonView(recognizer: UILongPressGestureRecognizer) {
-        switch recognizer.state {
-        case .began:
-            titleLabel.alpha = 0.5
-        case .ended:
-            titleLabel.alpha = 1
-        default:
-            break
-        }
-    }
-    
-    @objc func didTapButtonView(recognizer: UITapGestureRecognizer) {
-        switch recognizer.state {
-        case .began:
-            titleLabel.alpha = 0.5
-        case .ended:
-            titleLabel.alpha = 1
-            subject.send(.didTapButton)
-        default:
-            break
-        }
+    @objc func didTapContainerView() {
+        subject.send(.didTapButton)
     }
 }

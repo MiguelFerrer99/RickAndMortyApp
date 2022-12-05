@@ -1,8 +1,8 @@
 //
 //  HomeCoordinator.swift
-//  RickAndMorty
+//  iOSCleanArchitecture
 //
-//  Created by Miguel Ferrer Fornali on 3/12/22.
+//  Created by Miguel Ferrer Fornali on 19/11/22.
 //
 
 import UIKit
@@ -27,7 +27,7 @@ final class DefaultHomeCoordinator {
 extension DefaultHomeCoordinator: HomeCoordinator {
     func start() {
         guard let window = AppDependencies.shared.window else { return }
-        let navigationController = UINavigationController(rootViewController: dependencies.resolve())
+        navigationController.setViewControllers([dependencies.resolve()], animated: true)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }

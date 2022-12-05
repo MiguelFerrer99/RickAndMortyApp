@@ -1,8 +1,8 @@
 //
-//  HomeExternalDependenciesResolver.swift
-//  RickAndMorty
+//  LoadingExternalDependenciesResolver.swift
+//  iOSCleanArchitecture
 //
-//  Created by Miguel Ferrer Fornali on 3/12/22.
+//  Created by Miguel Ferrer Fornali on 19/11/22.
 //
 
 import UIKit

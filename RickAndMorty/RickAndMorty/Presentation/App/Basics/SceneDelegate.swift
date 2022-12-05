@@ -48,7 +48,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 private extension SceneDelegate {
     func setRootScene() {
-        let homeCoordinator = AppDependencies.shared.resolveLoadingCoordinator()
+        let homeCoordinator = AppDependencies.shared.resolveHomeCoordinator()
         homeCoordinator.start()
     }
 }

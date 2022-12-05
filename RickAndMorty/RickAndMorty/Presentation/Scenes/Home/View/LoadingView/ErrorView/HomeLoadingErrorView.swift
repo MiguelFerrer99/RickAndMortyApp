@@ -1,5 +1,5 @@
 //
-//  LoadingErrorView.swift
+//  HomeLoadingErrorView.swift
 //  RickAndMorty
 //
 //  Created by Miguel Ferrer Fornali on 2/12/22.
@@ -8,17 +8,17 @@
 import UIKit
 import Combine
 
-enum LoadingErrorViewState {
+enum HomeLoadingErrorViewState {
     case didTapTryAgain
 }
 
-final class LoadingErrorView: XibView {
+final class HomeLoadingErrorView: XibView {
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var titleLabel: UILabel!
     
     private var subscriptions = Set<AnyCancellable>()
-    private var subject = PassthroughSubject<LoadingErrorViewState, Never>()
-    var publisher: AnyPublisher<LoadingErrorViewState, Never> {
+    private var subject = PassthroughSubject<HomeLoadingErrorViewState, Never>()
+    var publisher: AnyPublisher<HomeLoadingErrorViewState, Never> {
         subject.eraseToAnyPublisher()
     }
     
@@ -41,7 +41,7 @@ final class LoadingErrorView: XibView {
     }
 }
 
-private extension LoadingErrorView {
+private extension HomeLoadingErrorView {
     func setupView() {
         configureTryAgainButtonView()
     }

@@ -12,7 +12,7 @@ protocol HomeUseCase {
 final class DefaultHomeUseCase {
     private let repository: HomeRepository
 
-    init(dependencies: LoadingDependenciesResolver) {
+    init(dependencies: HomeDependenciesResolver) {
         self.repository = dependencies.resolve()
     }
 }

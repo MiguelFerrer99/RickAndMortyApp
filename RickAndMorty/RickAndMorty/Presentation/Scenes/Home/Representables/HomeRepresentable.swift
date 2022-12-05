@@ -1,10 +1,6 @@
 //
 //  HomeRepresentable.swift
-//  RickAndMorty
+//  iOSCleanArchitecture
 //
-//  Created by Miguel Ferrer Fornali on 3/12/22.
+//  Created by Miguel Ferrer Fornali on 20/11/22.
 //
-
-protocol HomeRepresentable {}
-
-struct DefaultHomeRepresentable: HomeRepresentable {}

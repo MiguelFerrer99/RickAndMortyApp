@@ -1,14 +1,18 @@
 //
-//  HomeViewModel.swift
-//  RickAndMorty
+//  LoadingViewModel.swift
+//  iOSCleanArchitecture
 //
-//  Created by Miguel Ferrer Fornali on 3/12/22.
+//  Created by Miguel Ferrer Fornali on 19/11/22.
 //
 
+import Foundation
 import Combine
 
 enum HomeViewModelState {
     case idle
+    case loading
+    case error
+    case received
 }
 
 final class HomeViewModel {
@@ -23,17 +27,25 @@ final class HomeViewModel {
     }
     
     func viewDidLoad() {
-        // Subscribe events and execute UseCases
+        getInfo()
     }
     
-    func openAuthorBottomSheet() {
-        print("Did tap Title View")
+    func tryAgain() {
+        getInfo()
     }
 }
 
 private extension HomeViewModel {
     var coordinator: HomeCoordinator {
         dependencies.resolve()
+    }
+    
+    func getInfo() {
+        stateSubject.send(.loading)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            guard let self = self else { return }
+            self.stateSubject.send(.received)
+        }
     }
 }
 
