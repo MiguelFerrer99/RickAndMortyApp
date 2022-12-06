@@ -125,5 +125,6 @@ private extension HomeViewController {
         loadingView.receivedData()
         loadingView.isHidden = true
         dataView.isHidden = false
+        dataView.receivedData()
     }
 }

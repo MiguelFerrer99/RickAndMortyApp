@@ -19,10 +19,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="3BD-ez-zZp" customClass="LottieAnimationView" customModule="Lottie">
-                    <rect key="frame" x="149.5" y="0.0" width="35" height="35"/>
+                    <rect key="frame" x="150.5" y="0.0" width="33" height="33.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="35" id="XbC-RF-y1O"/>
                         <constraint firstAttribute="width" secondItem="3BD-ez-zZp" secondAttribute="height" multiplier="1:1" id="wR6-7O-4JG"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
@@ -37,6 +36,7 @@
                 <constraint firstItem="3BD-ez-zZp" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="R9E-lr-RCH"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3BD-ez-zZp" secondAttribute="bottom" id="TcV-Ta-SZh"/>
                 <constraint firstItem="3BD-ez-zZp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="anb-go-OXw"/>
+                <constraint firstItem="3BD-ez-zZp" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.1" id="cpV-qD-wnQ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-24.637681159420293" y="-203.23660714285714"/>
