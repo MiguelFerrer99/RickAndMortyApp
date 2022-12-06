@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,23 +17,24 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="XhC-Sd-EnY">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="874"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDL-dL-4Fm" userLabel="Container View">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <rect key="frame" x="0.0" y="59" width="393" height="815"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="zjp-Li-oIA"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="WDL-dL-4Fm" secondAttribute="trailing" id="9xV-1z-x7N"/>
-                <constraint firstAttribute="bottom" secondItem="WDL-dL-4Fm" secondAttribute="bottom" id="P8H-bv-BvN"/>
-                <constraint firstItem="WDL-dL-4Fm" firstAttribute="leading" secondItem="XhC-Sd-EnY" secondAttribute="leading" id="pnK-WN-h6H"/>
-                <constraint firstItem="WDL-dL-4Fm" firstAttribute="top" secondItem="XhC-Sd-EnY" secondAttribute="top" id="uhg-hd-szO"/>
+                <constraint firstAttribute="bottom" secondItem="WDL-dL-4Fm" secondAttribute="bottom" id="Tao-4A-CI3"/>
+                <constraint firstItem="WDL-dL-4Fm" firstAttribute="leading" secondItem="XhC-Sd-EnY" secondAttribute="leading" id="W1Z-0T-cSD"/>
+                <constraint firstAttribute="trailing" secondItem="WDL-dL-4Fm" secondAttribute="trailing" id="fke-aZ-bTZ"/>
+                <constraint firstItem="zjp-Li-oIA" firstAttribute="top" secondItem="WDL-dL-4Fm" secondAttribute="top" id="gRu-S2-IWq"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-908" y="3"/>
+            <point key="canvasLocation" x="-909.16030534351137" y="44.366197183098592"/>
         </view>
     </objects>
     <resources>

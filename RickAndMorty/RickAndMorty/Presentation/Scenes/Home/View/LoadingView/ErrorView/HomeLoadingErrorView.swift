@@ -30,20 +30,24 @@ final class HomeLoadingErrorView: XibView {
         super.init(frame: frame)
         setupView()
         bind()
-        setAppearance()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
         bind()
-        setAppearance()
     }
 }
 
 private extension HomeLoadingErrorView {
     func setupView() {
+        configureTitleLabel()
         configureTryAgainButtonView()
+    }
+    
+    func configureTitleLabel() {
+        titleLabel.font = .systemFont(ofSize: 16, weight: .bold)
+        titleLabel.text = .loading.errorTitle.localized
     }
     
     func configureTryAgainButtonView() {
@@ -61,14 +65,5 @@ private extension HomeLoadingErrorView {
                 guard let self = self else { return }
                 self.subject.send(.didTapTryAgain)
             }.store(in: &subscriptions)
-    }
-    
-    func setAppearance() {
-        configureTitleLabel()
-    }
-    
-    func configureTitleLabel() {
-        titleLabel.font = .systemFont(ofSize: 16, weight: .bold)
-        titleLabel.text = .loading.errorTitle.localized
     }
 }

@@ -73,6 +73,7 @@ private extension HomeViewController {
     func bind() {
         bindViewModel()
         bindLoadingView()
+        bindDataView()
     }
     
     func bindViewModel() {
@@ -107,22 +108,19 @@ private extension HomeViewController {
             }.store(in: &subscriptions)
     }
     
+    func bindDataView() {
+        dataView.publisher
+            .filter { $0 == .didTapTitleImage }
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.openAuthorInfo()
+            }.store(in: &subscriptions)
+    }
+    
     func configureNavigationBar() {
-        configureNavigationBarCommons()
         sceneNavigationController.setNavigationBarHidden(true, animated: false)
     }
     
-    func configureNavigationBarCommons() {
-        let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.configureWithOpaqueBackground()
-        navBarAppearance.shadowColor = .clear
-        navBarAppearance.shadowImage = UIImage()
-        sceneNavigationController.navigationBar.standardAppearance = navBarAppearance
-        sceneNavigationController.navigationBar.scrollEdgeAppearance = navBarAppearance
-    }
-}
-
-private extension HomeViewController {
     func showDataView() {
         loadingView.receivedData()
         loadingView.isHidden = true

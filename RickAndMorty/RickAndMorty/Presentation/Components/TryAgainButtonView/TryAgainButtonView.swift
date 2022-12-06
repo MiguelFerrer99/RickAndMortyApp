@@ -24,17 +24,17 @@ final class TryAgainButtonView: XibView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setAppearance()
+        setupView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setAppearance()
+        setupView()
     }
 }
 
 private extension TryAgainButtonView {
-    func setAppearance() {
+    func setupView() {
         configureContainerView()
         configureTitleLabel()
     }

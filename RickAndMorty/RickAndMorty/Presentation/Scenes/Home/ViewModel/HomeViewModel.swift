@@ -33,6 +33,10 @@ final class HomeViewModel {
     func tryAgain() {
         getInfo()
     }
+    
+    func openAuthorInfo() {
+        print("Did tap Title View Image")
+    }
 }
 
 private extension HomeViewModel {
