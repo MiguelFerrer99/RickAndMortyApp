@@ -9,6 +9,7 @@ import UIKit
 
 protocol HomeCoordinator {
     func start()
+    func openAuthorInfo()
 }
 
 final class DefaultHomeCoordinator {
@@ -30,6 +31,11 @@ extension DefaultHomeCoordinator: HomeCoordinator {
         navigationController.setViewControllers([dependencies.resolve()], animated: true)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
+    }
+    
+    func openAuthorInfo() {
+        let coordinator = dependencies.external.resolveAuthorInfoCoordinator()
+        coordinator.start()
     }
 }
 

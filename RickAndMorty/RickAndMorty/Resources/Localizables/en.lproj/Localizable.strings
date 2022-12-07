@@ -9,4 +9,8 @@
 "tryAgainButtonView_title" = "Try again";
 
 /* Loading */
-"loading_errorTitle" = "An unexpected error has occurred. Please try again later";
+"home_loadingErrorTitle" = "An unexpected error has occurred. Please try again later";
+
+/* AuthorInfo */
+"authorInfo_name" = "Miguel Ferrer Fornali";
+"authorInfo_openingMediaError" = "An unexpected error has occurred. Please try again later";

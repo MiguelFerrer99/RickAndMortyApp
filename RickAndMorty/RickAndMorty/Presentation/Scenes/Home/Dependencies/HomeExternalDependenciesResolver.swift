@@ -10,6 +10,7 @@ import UIKit
 protocol HomeExternalDependenciesResolver {
     func resolve() -> UINavigationController
     func resolveHomeCoordinator() -> HomeCoordinator
+    func resolveAuthorInfoCoordinator() -> AuthorInfoCoordinator
 }
 
 extension HomeExternalDependenciesResolver {

@@ -32,12 +32,16 @@ extension Localizable {
 }
 
 extension String {
-    enum loading: String, Localizable {
-        case errorTitle = "loading_errorTitle"
-        case errorButton = "loading_errorButton"
-    }
-    
     enum tryAgainButtonView: String, Localizable {
         case title = "tryAgainButtonView_title"
+    }
+    
+    enum home: String, Localizable {
+        case loadingErrorTitle = "home_loadingErrorTitle"
+    }
+    
+    enum authorInfo: String, Localizable {
+        case name = "authorInfo_name"
+        case openingMediaError = "authorInfo_openingMediaError"
     }
 }

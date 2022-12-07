@@ -35,7 +35,7 @@ final class HomeViewModel {
     }
     
     func openAuthorInfo() {
-        print("Did tap Title View Image")
+        coordinator.openAuthorInfo()
     }
 }
 

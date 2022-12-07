@@ -47,7 +47,7 @@ private extension HomeLoadingErrorView {
     
     func configureTitleLabel() {
         titleLabel.font = .systemFont(ofSize: 16, weight: .bold)
-        titleLabel.text = .loading.errorTitle.localized
+        titleLabel.text = .home.loadingErrorTitle.localized
     }
     
     func configureTryAgainButtonView() {

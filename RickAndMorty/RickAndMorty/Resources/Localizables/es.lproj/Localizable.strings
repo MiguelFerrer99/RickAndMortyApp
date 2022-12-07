@@ -9,4 +9,8 @@
 "tryAgainButtonView_title" = "Inténtalo de nuevo";
 
 /* Loading */
-"loading_errorTitle" = "Ha ocurrido un error inesperado. Por favor, intentalo de nuevo más tarde";
+"home_loadingErrorTitle" = "Ha ocurrido un error inesperado. Por favor, intentalo de nuevo más tarde";
+
+/* AuthorInfo */
+"authorInfo_name" = "Miguel Ferrer Fornali";
+"authorInfo_openingMediaError" = "Ha ocurrido un error inesperado. Por favor, intentalo de nuevo más tarde";
