@@ -14,7 +14,9 @@
                 <outlet property="titleView" destination="IcF-QE-Tdx" id="2KP-mT-NSJ"/>
                 <outlet property="topImageView" destination="t5U-FC-v5l" id="CzC-WF-4Fy"/>
                 <outlet property="topImageViewDefaultHeightConstraint" destination="6p4-8K-cwS" id="Alt-AG-fMr"/>
+                <outlet property="topImageViewDefaultWidthConstraint" destination="WCL-nR-57C" id="l9d-x1-VuX"/>
                 <outlet property="topImageViewReceivedDataHeightConstraint" destination="B01-sW-QeB" id="QJ4-Yg-jI7"/>
+                <outlet property="topImageViewReceivedWidthConstraint" destination="bvL-SZ-Rsg" id="Znr-oN-dGI"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -37,8 +39,14 @@
                                 <constraint firstAttribute="bottom" secondItem="t5U-FC-v5l" secondAttribute="bottom" id="LFc-V9-g3b"/>
                                 <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.75" id="WCL-nR-57C"/>
                                 <constraint firstItem="t5U-FC-v5l" firstAttribute="centerX" secondItem="IcF-QE-Tdx" secondAttribute="centerX" id="Yjg-oi-Skh"/>
+                                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.28" id="bvL-SZ-Rsg"/>
                                 <constraint firstItem="t5U-FC-v5l" firstAttribute="top" secondItem="IcF-QE-Tdx" secondAttribute="top" id="trV-dA-N2C"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="bvL-SZ-Rsg"/>
+                                </mask>
+                            </variation>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucl-sG-mgL" userLabel="Collection Container View">
                             <rect key="frame" x="0.0" y="896" width="414" height="0.0"/>

@@ -21,7 +21,10 @@
                                 <rect key="frame" x="0.0" y="59" width="430" height="873"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Tmz-d7-Hcs">
-                                        <rect key="frame" x="53.666666666666657" y="237" width="322.66666666666674" height="399"/>
+                                        <rect key="frame" x="53.666666666666657" y="372" width="322.66666666666674" height="129"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Tmz-d7-Hcs" secondAttribute="height" multiplier="5:2" id="MIZ-LI-Jww"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>

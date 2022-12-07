@@ -19,10 +19,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Crw-cq-Otk">
-                    <rect key="frame" x="49" y="359.5" width="295" height="133"/>
+                    <rect key="frame" x="49" y="367" width="295" height="118"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Crw-cq-Otk" secondAttribute="height" multiplier="5:2" id="RPa-ch-59c"/>
+                    </constraints>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mlX-aT-57Q">
-                    <rect key="frame" x="20" y="502.5" width="353" height="1"/>
+                    <rect key="frame" x="20" y="495" width="353" height="1"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" placeholder="YES" id="9a6-BW-ICy"/>
                     </constraints>
@@ -43,7 +46,7 @@
         </view>
     </objects>
     <resources>
-        <image name="LaunchScreen" width="334" height="133"/>
+        <image name="LaunchScreen" width="1002" height="399"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
