@@ -35,7 +35,7 @@ extension DefaultHomeCoordinator: HomeCoordinator {
     
     func openAuthorInfo() {
         let coordinator = dependencies.external.resolveAuthorInfoCoordinator()
-        coordinator.start()
+        coordinator.start(with: DefaultAuthorInfoRepresentable(iPad: UIDevice.current.userInterfaceIdiom == .pad))
     }
 }
 

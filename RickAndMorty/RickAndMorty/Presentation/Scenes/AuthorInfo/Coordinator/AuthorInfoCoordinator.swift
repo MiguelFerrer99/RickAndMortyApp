@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AuthorInfoCoordinator {
-    func start()
+    func start(with representable: AuthorInfoRepresentable)
     func dismiss()
     func openGitHub()
     func openLinkedIn()
@@ -28,9 +28,10 @@ final class DefaultAuthorInfoCoordinator {
 }
 
 extension DefaultAuthorInfoCoordinator: AuthorInfoCoordinator {
-    func start() {
+    func start(with representable: AuthorInfoRepresentable) {
+        dependencies.setRepresentable(representable)
         let viewController: AuthorInfoViewController = dependencies.resolve()
-        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalPresentationStyle = representable.iPad ? .pageSheet : .overFullScreen
         navigationController.present(viewController, animated: true)
     }
     
@@ -60,9 +61,16 @@ extension DefaultAuthorInfoCoordinator: AuthorInfoCoordinator {
 }
 
 private extension DefaultAuthorInfoCoordinator {
-    struct DefaultAuthorInfoDependenciesResolver: AuthorInfoDependenciesResolver {
-        let externalDependencies: AuthorInfoExternalDependenciesResolver
-        let coordinator: AuthorInfoCoordinator
+    final class DefaultAuthorInfoDependenciesResolver: AuthorInfoDependenciesResolver {
+        private let externalDependencies: AuthorInfoExternalDependenciesResolver
+        private let coordinator: AuthorInfoCoordinator
+        private var representable: AuthorInfoRepresentable?
+        
+        init(externalDependencies: AuthorInfoExternalDependenciesResolver, coordinator: AuthorInfoCoordinator, representable: AuthorInfoRepresentable? = nil) {
+            self.externalDependencies = externalDependencies
+            self.coordinator = coordinator
+            self.representable = representable
+        }
         
         var external: AuthorInfoExternalDependenciesResolver {
             externalDependencies
@@ -70,6 +78,14 @@ private extension DefaultAuthorInfoCoordinator {
         
         func resolve() -> AuthorInfoCoordinator {
             coordinator
+        }
+        
+        func resolve() -> AuthorInfoRepresentable? {
+            representable
+        }
+        
+        func setRepresentable(_ representable: AuthorInfoRepresentable) {
+            self.representable = representable
         }
     }
 }

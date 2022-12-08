@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class AuthorInfoViewController: UIViewController {
     @IBOutlet private weak var backgroundView: UIView!
@@ -18,6 +19,7 @@ final class AuthorInfoViewController: UIViewController {
     
     private let viewModel: AuthorInfoViewModel
     private let dependencies: AuthorInfoDependenciesResolver
+    private var subscriptions: Set<AnyCancellable> = []
 
     init(dependencies: AuthorInfoDependenciesResolver) {
         self.dependencies = dependencies
@@ -33,6 +35,8 @@ final class AuthorInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        bind()
+        viewModel.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,6 +93,29 @@ private extension AuthorInfoViewController {
         let linkedinGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapLinkedin))
         linkedinImageView.addGestureRecognizer(linkedinGestureRecognizer)
     }
+    
+    func bind() {
+        bindViewModel()
+    }
+    
+    func bindViewModel() {
+        viewModel.state
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .receivedData(let representable):
+                    self.configureViewControllerView(with: representable.iPad)
+                default: break
+                }
+            }.store(in: &subscriptions)
+    }
+    
+    func configureViewControllerView(with iPad: Bool) {
+        if iPad {
+            // Configure views to show only BottomSheetView
+        }
+    }
+    
     
     func configureNavigationBar() {
         sceneNavigationController.setNavigationBarHidden(true, animated: false)

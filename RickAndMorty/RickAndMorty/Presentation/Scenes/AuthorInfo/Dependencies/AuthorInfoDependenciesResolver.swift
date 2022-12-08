@@ -12,6 +12,7 @@ protocol AuthorInfoDependenciesResolver {
     func resolve() -> AuthorInfoCoordinator
     func resolve() -> AuthorInfoViewController
     func resolve() -> AuthorInfoViewModel
+    func resolve() -> AuthorInfoRepresentable?
 }
 
 extension AuthorInfoDependenciesResolver {

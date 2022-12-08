@@ -9,6 +9,7 @@ import Combine
 
 enum AuthorInfoViewModelState {
     case idle
+    case receivedData(AuthorInfoRepresentable)
 }
 
 final class AuthorInfoViewModel {
@@ -16,10 +17,15 @@ final class AuthorInfoViewModel {
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<AuthorInfoViewModelState, Never>(.idle)
     var state: AnyPublisher<AuthorInfoViewModelState, Never>
-
+    
     init(dependencies: AuthorInfoDependenciesResolver) {
         self.dependencies = dependencies
         state = stateSubject.eraseToAnyPublisher()
+    }
+    
+    func viewDidLoad() {
+        guard let representable = representable else { return }
+        stateSubject.send(.receivedData(representable))
     }
     
     func dismiss() {
@@ -37,6 +43,10 @@ final class AuthorInfoViewModel {
 
 private extension AuthorInfoViewModel {
     var coordinator: AuthorInfoCoordinator {
+        dependencies.resolve()
+    }
+    
+    var representable: AuthorInfoRepresentable? {
         dependencies.resolve()
     }
 }

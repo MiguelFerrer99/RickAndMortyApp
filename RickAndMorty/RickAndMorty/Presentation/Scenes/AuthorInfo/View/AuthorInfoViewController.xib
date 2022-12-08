@@ -27,10 +27,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5aY-6X-d0H" userLabel="Background View">
-                    <rect key="frame" x="0.0" y="-1103" width="393" height="2000"/>
+                    <rect key="frame" x="0.0" y="-2103" width="393" height="3000"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="2000" id="wOL-c5-jh2"/>
+                        <constraint firstAttribute="height" constant="3000" id="wOL-c5-jh2"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="voz-pM-QiL" userLabel="BottomSheet View">
