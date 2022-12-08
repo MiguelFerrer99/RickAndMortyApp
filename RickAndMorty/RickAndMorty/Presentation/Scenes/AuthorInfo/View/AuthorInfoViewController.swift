@@ -8,6 +8,7 @@
 import UIKit
 
 final class AuthorInfoViewController: UIViewController {
+    @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var bottomSheetView: UIView!
     @IBOutlet private weak var infoStackView: UIStackView!
     @IBOutlet private weak var bottomSheetBarView: UIView!
@@ -37,12 +38,7 @@ final class AuthorInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        guard let screen = view.window?.windowScene?.screen else { return }
-        self.view.frame = CGRect(x: 0, y: screen.bounds.height / 1.8, width: screen.bounds.width, height: screen.bounds.height / 2.2)
+        configureBackgroundViewForAppear()
     }
 }
 
@@ -52,20 +48,28 @@ private extension AuthorInfoViewController {
     }
     
     func setupView() {
+        configureBackgroundView()
         configureBottomSheetView()
         configureAvatarTitleLabel()
         configureMediaImages()
+    }
+    
+    func configureBackgroundView() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView))
+        backgroundView.addGestureRecognizer(gestureRecognizer)
     }
     
     func configureBottomSheetView() {
         bottomSheetView.clipsToBounds = true
         bottomSheetView.layer.cornerRadius = 50
         bottomSheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didMoveBottomSheetView))
+        bottomSheetView.addGestureRecognizer(gestureRecognizer)
         bottomSheetBarView.layer.cornerRadius = bottomSheetBarView.frame.height / 2.0
     }
     
     func configureAvatarTitleLabel() {
-        avatarTitleLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        avatarTitleLabel.font = .systemFont(ofSize: 16, weight: .bold)
         avatarTitleLabel.text = .authorInfo.name.localized
     }
     
@@ -90,8 +94,44 @@ private extension AuthorInfoViewController {
         sceneNavigationController.setNavigationBarHidden(true, animated: false)
     }
     
+    func configureBackgroundViewForAppear() {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
+            self.backgroundView.alpha = 0.4
+        }
+    }
+    
+    func dismiss() {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
+            self.backgroundView.alpha = 0
+            self.viewModel.dismiss()
+        }
+    }
+    
+    @objc func didMoveBottomSheetView(recognizer: UIPanGestureRecognizer) {
+        let translation = recognizer.translation(in: view)
+        let velocity = recognizer.velocity(in: view)
+        switch recognizer.state {
+        case .changed:
+            if translation.y > 0 {
+                bottomSheetView.transform = .init(translationX: 0, y: translation.y)
+            }
+        case .ended:
+            if translation.y > 100 || velocity.y > 1500 {
+                dismiss()
+            } else {
+                UIView.animate(withDuration: 0.25) { [weak self] in
+                    guard let self = self else { return }
+                    self.bottomSheetView.transform = .init(translationX: 0, y: 0)
+                }
+            }
+        default: break
+        }
+    }
+    
     @objc func didTapBackgroundView() {
-        viewModel.dismiss()
+        dismiss()
     }
     
     @objc func didTapGithub() {

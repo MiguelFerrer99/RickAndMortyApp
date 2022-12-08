@@ -29,7 +29,9 @@ final class DefaultAuthorInfoCoordinator {
 
 extension DefaultAuthorInfoCoordinator: AuthorInfoCoordinator {
     func start() {
-        navigationController.present(dependencies.resolve(), animated: true)
+        let viewController: AuthorInfoViewController = dependencies.resolve()
+        viewController.modalPresentationStyle = .overFullScreen
+        navigationController.present(viewController, animated: true)
     }
     
     func dismiss() {
