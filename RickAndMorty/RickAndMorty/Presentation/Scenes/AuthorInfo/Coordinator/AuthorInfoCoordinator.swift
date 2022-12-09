@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AuthorInfoCoordinator {
-    func start(with representable: AuthorInfoRepresentable)
+    func start()
     func dismiss()
     func openGitHub()
     func openLinkedIn()
@@ -28,10 +28,9 @@ final class DefaultAuthorInfoCoordinator {
 }
 
 extension DefaultAuthorInfoCoordinator: AuthorInfoCoordinator {
-    func start(with representable: AuthorInfoRepresentable) {
-        dependencies.setRepresentable(representable)
+    func start() {
         let viewController: AuthorInfoViewController = dependencies.resolve()
-        viewController.modalPresentationStyle = representable.iPad ? .pageSheet : .overFullScreen
+        viewController.modalPresentationStyle = UIDevice.current.userInterfaceIdiom == .pad ? .formSheet : .overFullScreen
         navigationController.present(viewController, animated: true)
     }
     
@@ -64,12 +63,10 @@ private extension DefaultAuthorInfoCoordinator {
     final class DefaultAuthorInfoDependenciesResolver: AuthorInfoDependenciesResolver {
         private let externalDependencies: AuthorInfoExternalDependenciesResolver
         private let coordinator: AuthorInfoCoordinator
-        private var representable: AuthorInfoRepresentable?
         
-        init(externalDependencies: AuthorInfoExternalDependenciesResolver, coordinator: AuthorInfoCoordinator, representable: AuthorInfoRepresentable? = nil) {
+        init(externalDependencies: AuthorInfoExternalDependenciesResolver, coordinator: AuthorInfoCoordinator) {
             self.externalDependencies = externalDependencies
             self.coordinator = coordinator
-            self.representable = representable
         }
         
         var external: AuthorInfoExternalDependenciesResolver {
@@ -78,14 +75,6 @@ private extension DefaultAuthorInfoCoordinator {
         
         func resolve() -> AuthorInfoCoordinator {
             coordinator
-        }
-        
-        func resolve() -> AuthorInfoRepresentable? {
-            representable
-        }
-        
-        func setRepresentable(_ representable: AuthorInfoRepresentable) {
-            self.representable = representable
         }
     }
 }

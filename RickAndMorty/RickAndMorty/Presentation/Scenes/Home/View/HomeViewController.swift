@@ -123,8 +123,11 @@ private extension HomeViewController {
     
     func showDataView() {
         loadingView.receivedData()
-        loadingView.isHidden = true
-        dataView.isHidden = false
-        dataView.receivedData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self = self else { return }
+            self.loadingView.isHidden = true
+            self.dataView.isHidden = false
+            self.dataView.receivedData()
+        }
     }
 }
