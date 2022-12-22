@@ -10,17 +10,18 @@ import Combine
 
 final class AuthorInfoViewController: UIViewController {
     @IBOutlet private weak var backgroundView: UIView!
-    @IBOutlet private weak var bottomSheetViewiPhoneTopConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var bottomSheetViewiPadTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var bottomSheetView: UIView!
     @IBOutlet private weak var infoStackView: UIStackView!
     @IBOutlet private weak var bottomSheetBarView: UIView!
     @IBOutlet private weak var avatarTitleLabel: UILabel!
     @IBOutlet private weak var githubImageView: UIImageView!
     @IBOutlet private weak var linkedinImageView: UIImageView!
+    @IBOutlet private weak var topSpacerView: UIView!
+    @IBOutlet private weak var bottomSpacerView: UIView!
     
     private let viewModel: AuthorInfoViewModel
     private let dependencies: AuthorInfoDependenciesResolver
+    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
 
     init(dependencies: AuthorInfoDependenciesResolver) {
         self.dependencies = dependencies
@@ -60,25 +61,27 @@ private extension AuthorInfoViewController {
     func configureBackgroundView() {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView))
         backgroundView.addGestureRecognizer(gestureRecognizer)
-        backgroundView.isHidden = UIDevice.current.userInterfaceIdiom == .pad
+        backgroundView.isHidden = iPadDevice
     }
     
     func configureBottomSheetView() {
-        let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+        topSpacerView.isHidden = !iPadDevice
+        bottomSpacerView.isHidden = !iPadDevice
         bottomSheetView.layer.cornerRadius = iPadDevice ? 0 : 50
         bottomSheetView.layer.maskedCorners = iPadDevice ? [] : [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didMoveBottomSheetView))
-        bottomSheetView.addGestureRecognizer(gestureRecognizer)
-        bottomSheetView.isUserInteractionEnabled = !iPadDevice
         bottomSheetBarView.layer.cornerRadius = bottomSheetBarView.frame.height / 2.0
-        bottomSheetBarView.isHidden = iPadDevice
-        bottomSheetViewiPhoneTopConstraint.isActive = !iPadDevice
-        bottomSheetViewiPadTopConstraint.isActive = iPadDevice
-        view.layoutIfNeeded()
+        if !iPadDevice {
+            let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didMoveBottomSheetView))
+            bottomSheetView.addGestureRecognizer(gestureRecognizer)
+            bottomSheetView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor).isActive = true
+        } else {
+            bottomSheetView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
+        bottomSheetView.layoutIfNeeded()
     }
     
     func configureAvatarTitleLabel() {
-        avatarTitleLabel.font = .systemFont(ofSize: 16, weight: .bold)
+        avatarTitleLabel.font = .systemFont(ofSize: iPadDevice ? 32 : 18, weight: .bold)
         avatarTitleLabel.text = .authorInfo.name.localized
     }
     
@@ -110,7 +113,7 @@ private extension AuthorInfoViewController {
         }
     }
     
-    func dismiss() {
+    func configureBackgroundViewForDisappear() {
         UIView.animate(withDuration: 0.25) { [weak self] in
             guard let self = self else { return }
             self.backgroundView.alpha = 0
@@ -127,8 +130,8 @@ private extension AuthorInfoViewController {
                 bottomSheetView.transform = .init(translationX: 0, y: translation.y)
             }
         case .ended:
-            if translation.y > 100 || velocity.y > 1500 {
-                dismiss()
+            if translation.y > 200 || velocity.y > 1500 {
+                configureBackgroundViewForDisappear()
             } else {
                 UIView.animate(withDuration: 0.25) { [weak self] in
                     guard let self = self else { return }
@@ -140,7 +143,7 @@ private extension AuthorInfoViewController {
     }
     
     @objc func didTapBackgroundView() {
-        dismiss()
+        configureBackgroundViewForDisappear()
     }
     
     @objc func didTapGithub() {

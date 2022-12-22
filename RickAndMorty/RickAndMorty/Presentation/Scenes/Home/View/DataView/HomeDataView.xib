@@ -31,13 +31,13 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="t5U-FC-v5l" userLabel="Top Image View">
-                                    <rect key="frame" x="52" y="0.0" width="310.5" height="896"/>
+                                    <rect key="frame" x="83" y="0.0" width="248" height="896"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="t5U-FC-v5l" secondAttribute="bottom" id="LFc-V9-g3b"/>
-                                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.75" id="WCL-nR-57C"/>
+                                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.6" id="WCL-nR-57C"/>
                                 <constraint firstItem="t5U-FC-v5l" firstAttribute="centerX" secondItem="IcF-QE-Tdx" secondAttribute="centerX" id="Yjg-oi-Skh"/>
                                 <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.28" id="bvL-SZ-Rsg"/>
                                 <constraint firstItem="t5U-FC-v5l" firstAttribute="top" secondItem="IcF-QE-Tdx" secondAttribute="top" id="trV-dA-N2C"/>

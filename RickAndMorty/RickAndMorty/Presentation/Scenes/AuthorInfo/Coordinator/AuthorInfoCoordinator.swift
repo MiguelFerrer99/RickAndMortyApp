@@ -40,22 +40,14 @@ extension DefaultAuthorInfoCoordinator: AuthorInfoCoordinator {
     
     func openGitHub() {
         let string = "https://github.com/MiguelFerrer99"
-        if let url = URL(string: string), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        } else {
-            let alert = UIAlertController(title: nil, message: .authorInfo.openingMediaError.localized, preferredStyle: .alert)
-            navigationController.present(alert, animated: true)
-        }
+        let url = URL(string: string)!
+        UIApplication.shared.open(url)
     }
     
     func openLinkedIn() {
         let string = "https://www.linkedin.com/in/miguel-ferrer-fornali-6145b017a/"
-        if let url = URL(string: string), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        } else {
-            let alert = UIAlertController(title: nil, message: .authorInfo.openingMediaError.localized, preferredStyle: .alert)
-            navigationController.present(alert, animated: true)
-        }
+        let url = URL(string: string)!
+        UIApplication.shared.open(url)
     }
 }
 
