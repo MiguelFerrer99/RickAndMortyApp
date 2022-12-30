@@ -128,6 +128,10 @@ private extension AuthorInfoViewController {
         case .changed:
             if translation.y > 0 {
                 bottomSheetView.transform = .init(translationX: 0, y: translation.y)
+                if !iPadDevice {
+                    let conversionFactor = (bottomSheetView.frame.height - translation.y) / bottomSheetView.frame.height
+                    backgroundView.alpha = 0.4 * conversionFactor
+                }
             }
         case .ended:
             if translation.y > 200 || velocity.y > 1500 {
@@ -135,6 +139,7 @@ private extension AuthorInfoViewController {
             } else {
                 UIView.animate(withDuration: 0.25) { [weak self] in
                     guard let self = self else { return }
+                    self.backgroundView.alpha = 0.4
                     self.bottomSheetView.transform = .init(translationX: 0, y: 0)
                 }
             }
