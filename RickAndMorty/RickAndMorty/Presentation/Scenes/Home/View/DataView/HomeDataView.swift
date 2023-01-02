@@ -23,9 +23,7 @@ final class HomeDataView: XibView {
     
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeDataViewState, Never>()
-    var publisher: AnyPublisher<HomeDataViewState, Never> {
-        subject.eraseToAnyPublisher()
-    }
+    var publisher: AnyPublisher<HomeDataViewState, Never> { subject.eraseToAnyPublisher() }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,10 +54,10 @@ private extension HomeDataView {
     func moveImageToTop() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 20, initialSpringVelocity: 5) { [weak self] in
             guard let self = self else { return }
-            self.topImageViewDefaultHeightConstraint.isActive = false
-            self.topImageViewDefaultWidthConstraint.isActive = false
-            self.topImageViewReceivedDataHeightConstraint.isActive = true
-            self.topImageViewReceivedWidthConstraint.isActive = true
+            self.topImageViewDefaultHeightConstraint.priority = UILayoutPriority(999)
+            self.topImageViewDefaultWidthConstraint.priority = UILayoutPriority(999)
+            self.topImageViewReceivedDataHeightConstraint.priority = UILayoutPriority(1000)
+            self.topImageViewReceivedWidthConstraint.priority = UILayoutPriority(1000)
             self.layoutIfNeeded()
         } completion: { [weak self] finished in
             guard let self = self else { return }

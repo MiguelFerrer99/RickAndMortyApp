@@ -39,22 +39,17 @@
                                 <constraint firstAttribute="bottom" secondItem="t5U-FC-v5l" secondAttribute="bottom" id="LFc-V9-g3b"/>
                                 <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.6" id="WCL-nR-57C"/>
                                 <constraint firstItem="t5U-FC-v5l" firstAttribute="centerX" secondItem="IcF-QE-Tdx" secondAttribute="centerX" id="Yjg-oi-Skh"/>
-                                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.28" id="bvL-SZ-Rsg"/>
+                                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.28" priority="999" id="bvL-SZ-Rsg"/>
                                 <constraint firstItem="t5U-FC-v5l" firstAttribute="top" secondItem="IcF-QE-Tdx" secondAttribute="top" id="trV-dA-N2C"/>
                             </constraints>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="bvL-SZ-Rsg"/>
-                                </mask>
-                            </variation>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucl-sG-mgL" userLabel="Collection Container View">
                             <rect key="frame" x="0.0" y="896" width="414" height="0.0"/>
                             <subviews>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xj3-UL-ajh" customClass="HomeDataCollectionView" customModule="RickAndMorty" customModuleProvider="target">
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xj3-UL-ajh" customClass="HomeDataCollectionView" customModule="RickAndMorty" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="oUM-us-xN2">
+                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="oUM-us-xN2">
                                         <size key="itemSize" width="128" height="128"/>
                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -77,17 +72,12 @@
             <constraints>
                 <constraint firstItem="b60-TZ-SGX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="5AX-wA-tgC"/>
                 <constraint firstItem="t5U-FC-v5l" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="6p4-8K-cwS"/>
-                <constraint firstItem="t5U-FC-v5l" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.075" id="B01-sW-QeB"/>
+                <constraint firstItem="t5U-FC-v5l" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.075" priority="999" id="B01-sW-QeB"/>
                 <constraint firstItem="b60-TZ-SGX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Ofd-oc-BHQ"/>
                 <constraint firstAttribute="bottom" secondItem="b60-TZ-SGX" secondAttribute="bottom" id="PCR-pY-Jig"/>
                 <constraint firstAttribute="trailing" secondItem="b60-TZ-SGX" secondAttribute="trailing" id="YcQ-mr-F5b"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="B01-sW-QeB"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="33.333333333333336" y="54.241071428571423"/>
         </view>
     </objects>

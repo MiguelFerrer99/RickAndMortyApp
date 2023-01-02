@@ -17,9 +17,7 @@ final class HomeLoadingView: XibView {
     
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeLoadingViewState, Never>()
-    var publisher: AnyPublisher<HomeLoadingViewState, Never> {
-        subject.eraseToAnyPublisher()
-    }
+    var publisher: AnyPublisher<HomeLoadingViewState, Never> { subject.eraseToAnyPublisher() }
     
     private lazy var loaderView: HomeLoadingLoaderView = {
         let view = HomeLoadingLoaderView()

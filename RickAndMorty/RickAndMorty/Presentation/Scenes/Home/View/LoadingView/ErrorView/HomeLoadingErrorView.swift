@@ -18,9 +18,7 @@ final class HomeLoadingErrorView: XibView {
     
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeLoadingErrorViewState, Never>()
-    var publisher: AnyPublisher<HomeLoadingErrorViewState, Never> {
-        subject.eraseToAnyPublisher()
-    }
+    var publisher: AnyPublisher<HomeLoadingErrorViewState, Never> { subject.eraseToAnyPublisher() }
     
     private lazy var tryAgainButtonView: TryAgainButtonView = {
         TryAgainButtonView()
