@@ -10,12 +10,15 @@ import Combine
 
 enum HomeDataCollectionViewState {
     case viewAll(HomeDataCategory)
+    case showTitleViewShadow
+    case hideTitleViewShadow
 }
 
 final class HomeDataCollectionView: UICollectionView {
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeDataCollectionViewState, Never>()
     var publisher: AnyPublisher<HomeDataCollectionViewState, Never> { subject.eraseToAnyPublisher() }
+    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     private var categories: [HomeDataCategory]?
     
     init(frame: CGRect) {
@@ -67,8 +70,8 @@ private extension HomeDataCollectionView {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 0, leading: 20, bottom: 20, trailing: 20)
-        section.interGroupSpacing = 20
+        section.contentInsets = .init(top: iPadDevice ? 20 : 0, leading: iPadDevice ? 40 : 20, bottom: iPadDevice ? 40 : 20, trailing: iPadDevice ? 40 : 20)
+        section.interGroupSpacing = iPadDevice ? 40 : 20
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(60))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         section.boundarySupplementaryItems = [header]
@@ -115,5 +118,13 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! HomeDataCollectionViewCell
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 0 {
+            subject.send(.showTitleViewShadow)
+        } else {
+            subject.send(.hideTitleViewShadow)
+        }
     }
 }

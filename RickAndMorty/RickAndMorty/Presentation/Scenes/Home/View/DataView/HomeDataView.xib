@@ -27,7 +27,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="b60-TZ-SGX">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IcF-QE-Tdx" userLabel="Title View">
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IcF-QE-Tdx" userLabel="Title View">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="t5U-FC-v5l" userLabel="Top Image View">
@@ -43,7 +43,7 @@
                                 <constraint firstItem="t5U-FC-v5l" firstAttribute="top" secondItem="IcF-QE-Tdx" secondAttribute="top" id="trV-dA-N2C"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucl-sG-mgL" userLabel="Collection Container View">
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucl-sG-mgL" userLabel="Collection Container View">
                             <rect key="frame" x="0.0" y="896" width="414" height="0.0"/>
                             <subviews>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xj3-UL-ajh" customClass="HomeDataCollectionView" customModule="RickAndMorty" customModuleProvider="target">

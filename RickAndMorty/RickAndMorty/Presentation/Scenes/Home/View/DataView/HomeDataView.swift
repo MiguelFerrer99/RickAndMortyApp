@@ -24,6 +24,7 @@ final class HomeDataView: XibView {
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeDataViewState, Never>()
     var publisher: AnyPublisher<HomeDataViewState, Never> { subject.eraseToAnyPublisher() }
+    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,11 +46,15 @@ final class HomeDataView: XibView {
 
 private extension HomeDataView {
     func setupView() {
-        configureCollectionView()
+        configureTitleView()
     }
     
-    func configureCollectionView() {
-        
+    func configureTitleView() {
+        titleView.layer.masksToBounds = false
+        titleView.layer.shadowRadius = iPadDevice ? 10 : 5
+        titleView.layer.shadowOpacity = 0
+        titleView.layer.shadowColor = UIColor.black.cgColor
+        titleView.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 2)
     }
     
     func bind() {
@@ -63,8 +68,26 @@ private extension HomeDataView {
                 switch state {
                 case .viewAll(let category):
                     self.subject.send(.viewAll(category))
+                case .showTitleViewShadow:
+                    self.showTitleViewShadow()
+                case .hideTitleViewShadow:
+                    self.hideTitleViewShadow()
                 }
             }.store(in: &subscriptions)
+    }
+    
+    func showTitleViewShadow() {
+        UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
+            guard let self = self else { return }
+            self.titleView.layer.shadowOpacity = 1
+        }
+    }
+    
+    func hideTitleViewShadow() {
+        UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
+            guard let self = self else { return }
+            self.titleView.layer.shadowOpacity = 0
+        }
     }
     
     func moveImageToTop() {
