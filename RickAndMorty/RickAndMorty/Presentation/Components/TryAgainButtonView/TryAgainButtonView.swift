@@ -15,7 +15,6 @@ enum TryAgainButtonViewState {
 final class TryAgainButtonView: XibView {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
-    
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<TryAgainButtonViewState, Never>()
     var publisher: AnyPublisher<TryAgainButtonViewState, Never> {

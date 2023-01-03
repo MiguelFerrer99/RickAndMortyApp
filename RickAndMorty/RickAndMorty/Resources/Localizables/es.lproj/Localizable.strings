@@ -8,8 +8,11 @@
 /* TryAgainButtonView */
 "tryAgainButtonView_title" = "Inténtalo de nuevo";
 
-/* Loading */
+/* Home */
 "home_loadingErrorTitle" = "Ha ocurrido un error inesperado. Por favor, intentalo de nuevo más tarde";
+"home_charactersSectionTitle" = "Personajes";
+"home_locationsSectionTitle" = "Sitios";
+"home_episodesSectionTitle" = "Episodios";
 
 /* AuthorInfo */
 "authorInfo_name" = "Miguel Ferrer Fornali";

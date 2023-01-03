@@ -10,6 +10,7 @@ import UIKit
 protocol HomeCoordinator {
     func start()
     func openAuthorInfo()
+    func openCategoryDetail(_ category: HomeDataCategory)
 }
 
 final class DefaultHomeCoordinator {
@@ -36,6 +37,17 @@ extension DefaultHomeCoordinator: HomeCoordinator {
     func openAuthorInfo() {
         let coordinator = dependencies.external.resolveAuthorInfoCoordinator()
         coordinator.start()
+    }
+    
+    func openCategoryDetail(_ category: HomeDataCategory) {
+        switch category {
+        case .characters:
+            print("Open Characters Screen")
+        case .locations:
+            print("Open Locations Screen")
+        case .episodes:
+            print("Open Episodes Screen")
+        }
     }
 }
 

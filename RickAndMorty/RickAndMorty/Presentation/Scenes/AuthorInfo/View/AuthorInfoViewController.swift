@@ -18,11 +18,10 @@ final class AuthorInfoViewController: UIViewController {
     @IBOutlet private weak var linkedinImageView: UIImageView!
     @IBOutlet private weak var topSpacerView: UIView!
     @IBOutlet private weak var bottomSpacerView: UIView!
-    
     private let viewModel: AuthorInfoViewModel
     private let dependencies: AuthorInfoDependenciesResolver
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-
+    
     init(dependencies: AuthorInfoDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()

@@ -10,6 +10,7 @@ import Combine
 
 enum HomeDataViewState {
     case didTapTitleImage
+    case viewAll(HomeDataCategory)
 }
 
 final class HomeDataView: XibView {
@@ -20,7 +21,6 @@ final class HomeDataView: XibView {
     @IBOutlet private weak var topImageViewReceivedDataHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var topImageViewReceivedWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var collectionView: HomeDataCollectionView!
-    
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeDataViewState, Never>()
     var publisher: AnyPublisher<HomeDataViewState, Never> { subject.eraseToAnyPublisher() }
@@ -37,18 +37,34 @@ final class HomeDataView: XibView {
         bind()
     }
     
-    func receivedData() {
+    func receivedData(_ categories: [HomeDataCategory]) {
+        collectionView.configure(with: categories)
         moveImageToTop()
     }
 }
 
 private extension HomeDataView {
     func setupView() {
-        // Configure view
+        configureCollectionView()
+    }
+    
+    func configureCollectionView() {
+        
     }
     
     func bind() {
-        // Bind states
+        bindCollectionView()
+    }
+    
+    func bindCollectionView() {
+        collectionView.publisher
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .viewAll(let category):
+                    self.subject.send(.viewAll(category))
+                }
+            }.store(in: &subscriptions)
     }
     
     func moveImageToTop() {

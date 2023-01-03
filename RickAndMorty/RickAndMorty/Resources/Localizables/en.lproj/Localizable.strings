@@ -8,8 +8,11 @@
 /* TryAgainButtonView */
 "tryAgainButtonView_title" = "Try again";
 
-/* Loading */
+/* Home */
 "home_loadingErrorTitle" = "An unexpected error has occurred. Please try again later";
+"home_charactersSectionTitle" = "Characters";
+"home_locationsSectionTitle" = "Locations";
+"home_episodesSectionTitle" = "Episodes";
 
 /* AuthorInfo */
 "authorInfo_name" = "Miguel Ferrer Fornali";

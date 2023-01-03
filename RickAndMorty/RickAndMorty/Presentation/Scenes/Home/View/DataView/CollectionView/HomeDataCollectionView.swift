@@ -9,13 +9,14 @@ import UIKit
 import Combine
 
 enum HomeDataCollectionViewState {
-    // Define states
+    case viewAll(HomeDataCategory)
 }
 
 final class HomeDataCollectionView: UICollectionView {
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeDataCollectionViewState, Never>()
     var publisher: AnyPublisher<HomeDataCollectionViewState, Never> { subject.eraseToAnyPublisher() }
+    private var categories: [HomeDataCategory]?
     
     init(frame: CGRect) {
         super.init(frame: frame, collectionViewLayout: .init())
@@ -25,6 +26,10 @@ final class HomeDataCollectionView: UICollectionView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
+    }
+    
+    func configure(with categories: [HomeDataCategory]) {
+        self.categories = categories
     }
 }
 
@@ -58,7 +63,7 @@ private extension HomeDataCollectionView {
     func configureLayout() {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(160))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalWidth(1/3))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
@@ -68,29 +73,34 @@ private extension HomeDataCollectionView {
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         section.boundarySupplementaryItems = [header]
         let compositionalLayout = UICollectionViewCompositionalLayout(section: section)
+        contentInset = .init(top: 0, left: 0, bottom: 20, right: 0)
         collectionViewLayout = compositionalLayout
     }
     
     func bind(_ headerView: HomeDataCollectionViewSectionHeaderView) {
         headerView.publisher
-            .filter { $0 == .didTapButton }
-            .sink { [weak self] _ in
-                guard let _ = self else { return }
-                print("Header button tapped")
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .didTapButton(let category):
+                    self.subject.send(.viewAll(category))
+                }
             }.store(in: &subscriptions)
     }
 }
 
 extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        3
+        guard let categories = categories else { return 0 }
+        return categories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! HomeDataCollectionViewSectionHeaderView
-            headerView.configure(with: "Characters")
+            guard let category = categories?[safe: indexPath.section] else { return UICollectionReusableView() }
+            headerView.configure(with: category)
             bind(headerView)
             return headerView
         default:

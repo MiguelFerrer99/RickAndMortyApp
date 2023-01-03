@@ -9,45 +9,40 @@ import UIKit
 import Combine
 
 enum HomeDataCollectionViewSectionHeaderViewState {
-    case didTapButton
+    case didTapButton(HomeDataCategory)
 }
 
 final class HomeDataCollectionViewSectionHeaderView: UICollectionReusableView {
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var arrowImageContainerView: UIView!
     @IBOutlet private weak var arrowImageView: UIImageView!
-    
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeDataCollectionViewSectionHeaderViewState, Never>()
     var publisher: AnyPublisher<HomeDataCollectionViewSectionHeaderViewState, Never> { subject.eraseToAnyPublisher() }
+    private var category: HomeDataCategory? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupView()
     }
     
-    func configure(with title: String) {
-        titleLabel.text = title
+    func configure(with category: HomeDataCategory) {
+        self.category = category
+        titleLabel.text = category.getTitle()
     }
 }
 
 private extension HomeDataCollectionViewSectionHeaderView {
     func setupView() {
         configureTitleLabel()
-        configureArrowImageContainerView()
     }
     
     func configureTitleLabel() {
-        titleLabel.font = .boldSystemFont(ofSize: 24)
+        let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+        titleLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 22)
     }
     
-    func configureArrowImageContainerView() {
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapArrowImageContainerView))
-        arrowImageContainerView.addGestureRecognizer(gestureRecognizer)
-        arrowImageContainerView.isUserInteractionEnabled = true
-    }
-    
-    @objc func didTapArrowImageContainerView() {
-        subject.send(.didTapButton)
+    @IBAction func didTapButton(_ sender: UIButton) {
+        guard let category = category else { return }
+        subject.send(.didTapButton(category))
     }
 }

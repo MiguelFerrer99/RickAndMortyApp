@@ -12,7 +12,7 @@ enum HomeViewModelState {
     case idle
     case loading
     case error
-    case received
+    case received([HomeDataCategory])
 }
 
 final class HomeViewModel {
@@ -20,6 +20,8 @@ final class HomeViewModel {
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<HomeViewModelState, Never>(.idle)
     var state: AnyPublisher<HomeViewModelState, Never>
+    
+    private let categories: [HomeDataCategory] = [.characters, .locations, .episodes]
 
     init(dependencies: HomeDependenciesResolver) {
         self.dependencies = dependencies
@@ -37,6 +39,10 @@ final class HomeViewModel {
     func openAuthorInfo() {
         coordinator.openAuthorInfo()
     }
+    
+    func openCategoryDetail(_ category: HomeDataCategory) {
+        coordinator.openCategoryDetail(category)
+    }
 }
 
 private extension HomeViewModel {
@@ -48,7 +54,7 @@ private extension HomeViewModel {
         stateSubject.send(.loading)
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             guard let self = self else { return }
-            self.stateSubject.send(.received)
+            self.stateSubject.send(.received(self.categories))
         }
     }
 }

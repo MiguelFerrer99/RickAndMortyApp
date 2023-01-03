@@ -38,6 +38,9 @@ extension String {
     
     enum home: String, Localizable {
         case loadingErrorTitle = "home_loadingErrorTitle"
+        case charactersSectionTitle = "home_charactersSectionTitle"
+        case locationsSectionTitle = "home_locationsSectionTitle"
+        case episodesSectionTitle = "home_episodesSectionTitle"
     }
     
     enum authorInfo: String, Localizable {

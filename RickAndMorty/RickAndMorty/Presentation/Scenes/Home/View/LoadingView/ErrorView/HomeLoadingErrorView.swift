@@ -15,14 +15,10 @@ enum HomeLoadingErrorViewState {
 final class HomeLoadingErrorView: XibView {
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var titleLabel: UILabel!
-    
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeLoadingErrorViewState, Never>()
     var publisher: AnyPublisher<HomeLoadingErrorViewState, Never> { subject.eraseToAnyPublisher() }
-    
-    private lazy var tryAgainButtonView: TryAgainButtonView = {
-        TryAgainButtonView()
-    }()
+    private let tryAgainButtonView = TryAgainButtonView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
