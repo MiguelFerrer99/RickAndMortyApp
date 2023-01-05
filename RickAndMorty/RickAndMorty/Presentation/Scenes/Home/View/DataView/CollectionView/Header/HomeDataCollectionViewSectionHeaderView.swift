@@ -38,7 +38,7 @@ private extension HomeDataCollectionViewSectionHeaderView {
     
     func configureTitleLabel() {
         let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-        titleLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 22)
+        titleLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 20)
     }
     
     @IBAction func didTapButton(_ sender: UIButton) {
