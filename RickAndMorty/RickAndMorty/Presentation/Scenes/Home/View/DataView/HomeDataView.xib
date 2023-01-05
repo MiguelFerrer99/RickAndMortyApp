@@ -12,11 +12,11 @@
             <connections>
                 <outlet property="collectionView" destination="xj3-UL-ajh" id="x2H-4i-1wK"/>
                 <outlet property="titleView" destination="IcF-QE-Tdx" id="2KP-mT-NSJ"/>
+                <outlet property="titleViewDefaultBottomConstraint" destination="P6a-mL-Hqn" id="BV4-Lh-BBU"/>
+                <outlet property="titleViewHeightConstraint" destination="8mM-rx-HoF" id="cq7-2B-ZlK"/>
                 <outlet property="topImageView" destination="t5U-FC-v5l" id="CzC-WF-4Fy"/>
-                <outlet property="topImageViewDefaultHeightConstraint" destination="6p4-8K-cwS" id="Alt-AG-fMr"/>
-                <outlet property="topImageViewDefaultWidthConstraint" destination="WCL-nR-57C" id="l9d-x1-VuX"/>
-                <outlet property="topImageViewReceivedDataHeightConstraint" destination="B01-sW-QeB" id="QJ4-Yg-jI7"/>
-                <outlet property="topImageViewReceivedWidthConstraint" destination="bvL-SZ-Rsg" id="Znr-oN-dGI"/>
+                <outlet property="topImageViewDefaultWidthConstraint" destination="WCL-nR-57C" id="jao-gJ-LXq"/>
+                <outlet property="topImageViewWidthConstraint" destination="JC2-bh-B1i" id="0lg-Ah-rdt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -24,58 +24,58 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="b60-TZ-SGX">
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucl-sG-mgL" userLabel="Collection Container View">
+                    <rect key="frame" x="0.0" y="896" width="414" height="0.0"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xj3-UL-ajh" customClass="HomeDataCollectionView" customModule="RickAndMorty" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="oUM-us-xN2">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" id="5h8-kQ-6eW"/>
+                        <constraint firstItem="xj3-UL-ajh" firstAttribute="top" secondItem="Ucl-sG-mgL" secondAttribute="top" id="6cZ-US-T0U"/>
+                        <constraint firstAttribute="trailing" secondItem="xj3-UL-ajh" secondAttribute="trailing" id="7DC-Ux-Q4k"/>
+                        <constraint firstItem="xj3-UL-ajh" firstAttribute="leading" secondItem="Ucl-sG-mgL" secondAttribute="leading" id="EA2-SM-lrG"/>
+                        <constraint firstAttribute="bottom" secondItem="xj3-UL-ajh" secondAttribute="bottom" id="LpW-rq-sr8"/>
+                    </constraints>
+                </view>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IcF-QE-Tdx" userLabel="Title View">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
-                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IcF-QE-Tdx" userLabel="Title View">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="t5U-FC-v5l" userLabel="Top Image View">
-                                    <rect key="frame" x="83" y="0.0" width="248" height="896"/>
-                                </imageView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="t5U-FC-v5l" secondAttribute="bottom" id="LFc-V9-g3b"/>
-                                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.6" id="WCL-nR-57C"/>
-                                <constraint firstItem="t5U-FC-v5l" firstAttribute="centerX" secondItem="IcF-QE-Tdx" secondAttribute="centerX" id="Yjg-oi-Skh"/>
-                                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.28" priority="999" id="bvL-SZ-Rsg"/>
-                                <constraint firstItem="t5U-FC-v5l" firstAttribute="top" secondItem="IcF-QE-Tdx" secondAttribute="top" id="trV-dA-N2C"/>
-                            </constraints>
-                        </view>
-                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucl-sG-mgL" userLabel="Collection Container View">
-                            <rect key="frame" x="0.0" y="896" width="414" height="0.0"/>
-                            <subviews>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xj3-UL-ajh" customClass="HomeDataCollectionView" customModule="RickAndMorty" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="oUM-us-xN2">
-                                        <size key="itemSize" width="128" height="128"/>
-                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    </collectionViewFlowLayout>
-                                </collectionView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstItem="xj3-UL-ajh" firstAttribute="top" secondItem="Ucl-sG-mgL" secondAttribute="top" id="6cZ-US-T0U"/>
-                                <constraint firstAttribute="trailing" secondItem="xj3-UL-ajh" secondAttribute="trailing" id="7DC-Ux-Q4k"/>
-                                <constraint firstItem="xj3-UL-ajh" firstAttribute="leading" secondItem="Ucl-sG-mgL" secondAttribute="leading" id="EA2-SM-lrG"/>
-                                <constraint firstAttribute="bottom" secondItem="xj3-UL-ajh" secondAttribute="bottom" id="LpW-rq-sr8"/>
-                            </constraints>
-                        </view>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="t5U-FC-v5l" userLabel="Top Image View">
+                            <rect key="frame" x="83" y="0.0" width="248" height="896"/>
+                        </imageView>
                     </subviews>
-                </stackView>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="t5U-FC-v5l" secondAttribute="bottom" id="LFc-V9-g3b"/>
+                        <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="IcF-QE-Tdx" secondAttribute="width" multiplier="0.6" id="WCL-nR-57C"/>
+                        <constraint firstItem="t5U-FC-v5l" firstAttribute="centerX" secondItem="IcF-QE-Tdx" secondAttribute="centerX" id="Yjg-oi-Skh"/>
+                        <constraint firstItem="t5U-FC-v5l" firstAttribute="top" secondItem="IcF-QE-Tdx" secondAttribute="top" id="trV-dA-N2C"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="b60-TZ-SGX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="5AX-wA-tgC"/>
-                <constraint firstItem="t5U-FC-v5l" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="6p4-8K-cwS"/>
-                <constraint firstItem="t5U-FC-v5l" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.075" priority="999" id="B01-sW-QeB"/>
-                <constraint firstItem="b60-TZ-SGX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Ofd-oc-BHQ"/>
-                <constraint firstAttribute="bottom" secondItem="b60-TZ-SGX" secondAttribute="bottom" id="PCR-pY-Jig"/>
-                <constraint firstAttribute="trailing" secondItem="b60-TZ-SGX" secondAttribute="trailing" id="YcQ-mr-F5b"/>
+                <constraint firstAttribute="trailing" secondItem="Ucl-sG-mgL" secondAttribute="trailing" id="2dV-Jt-NX7"/>
+                <constraint firstItem="IcF-QE-Tdx" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.075" priority="999" id="8mM-rx-HoF"/>
+                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.25" priority="999" id="JC2-bh-B1i"/>
+                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.35" priority="999" id="OYh-LY-Cy6"/>
+                <constraint firstAttribute="bottom" secondItem="IcF-QE-Tdx" secondAttribute="bottom" id="P6a-mL-Hqn"/>
+                <constraint firstItem="IcF-QE-Tdx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Pwa-9i-U1n"/>
+                <constraint firstItem="Ucl-sG-mgL" firstAttribute="top" secondItem="IcF-QE-Tdx" secondAttribute="bottom" priority="999" id="YAa-b0-Frf"/>
+                <constraint firstAttribute="bottom" secondItem="Ucl-sG-mgL" secondAttribute="bottom" id="Yek-yo-lUV"/>
+                <constraint firstItem="IcF-QE-Tdx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="as8-8T-Hpi"/>
+                <constraint firstAttribute="trailing" secondItem="IcF-QE-Tdx" secondAttribute="trailing" id="deC-z3-f0i"/>
+                <constraint firstItem="Ucl-sG-mgL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wbd-st-ldV"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="33.333333333333336" y="54.241071428571423"/>

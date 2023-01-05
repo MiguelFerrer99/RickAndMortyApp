@@ -16,10 +16,11 @@ enum HomeDataViewState {
 final class HomeDataView: XibView {
     @IBOutlet private weak var titleView: UIView!
     @IBOutlet private weak var topImageView: UIImageView!
-    @IBOutlet private weak var topImageViewDefaultHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var titleViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var titleViewDefaultBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var topImageViewDefaultWidthConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var topImageViewReceivedDataHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var topImageViewReceivedWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var topImageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var topImageViewWidthPadConstraint: NSLayoutConstraint!
     @IBOutlet private weak var collectionView: HomeDataCollectionView!
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeDataViewState, Never>()
@@ -28,13 +29,11 @@ final class HomeDataView: XibView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
         bind()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupView()
         bind()
     }
     
@@ -45,16 +44,17 @@ final class HomeDataView: XibView {
 }
 
 private extension HomeDataView {
-    func setupView() {
-        configureTitleView()
-    }
-    
     func configureTitleView() {
+        titleView.clipsToBounds = false
         titleView.layer.masksToBounds = false
         titleView.layer.shadowRadius = iPadDevice ? 10 : 5
         titleView.layer.shadowOpacity = 0
         titleView.layer.shadowColor = UIColor.black.cgColor
-        titleView.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 2)
+        titleView.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
+        titleView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
+                                                               y: titleView.bounds.maxY - titleView.layer.shadowRadius,
+                                                               width: titleView.bounds.width,
+                                                               height: titleView.layer.shadowRadius)).cgPath
     }
     
     func bind() {
@@ -93,14 +93,16 @@ private extension HomeDataView {
     func moveImageToTop() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 20, initialSpringVelocity: 5) { [weak self] in
             guard let self = self else { return }
-            self.topImageViewDefaultHeightConstraint.priority = UILayoutPriority(999)
+            self.titleViewDefaultBottomConstraint.priority = UILayoutPriority(999)
+            self.titleViewHeightConstraint.priority = UILayoutPriority(1000)
             self.topImageViewDefaultWidthConstraint.priority = UILayoutPriority(999)
-            self.topImageViewReceivedDataHeightConstraint.priority = UILayoutPriority(1000)
-            self.topImageViewReceivedWidthConstraint.priority = UILayoutPriority(1000)
+            self.topImageViewWidthConstraint.priority = UILayoutPriority(self.iPadDevice ? 999 : 1000)
+            self.topImageViewWidthConstraint.priority = UILayoutPriority(self.iPadDevice ? 1000 : 999)
             self.layoutIfNeeded()
         } completion: { [weak self] finished in
             guard let self = self else { return }
             if finished {
+                self.configureTitleView()
                 self.configureTitleViewImage()
                 self.showCollecionView()
             }
