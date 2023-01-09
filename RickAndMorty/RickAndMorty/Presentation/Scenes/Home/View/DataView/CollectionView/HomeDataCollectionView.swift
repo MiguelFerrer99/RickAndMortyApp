@@ -15,7 +15,6 @@ enum HomeDataCollectionViewState {
 }
 
 final class HomeDataCollectionView: UICollectionView {
-    private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeDataCollectionViewState, Never>()
     var publisher: AnyPublisher<HomeDataCollectionViewState, Never> { subject.eraseToAnyPublisher() }
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
@@ -85,17 +84,6 @@ private extension HomeDataCollectionView {
         contentInset = .init(top: 0, left: 0, bottom: 20, right: 0)
         collectionViewLayout = compositionalLayout
     }
-    
-    func bind(_ headerView: HomeDataCollectionViewSectionHeaderView) {
-        headerView.publisher
-            .sink { [weak self] state in
-                guard let self = self else { return }
-                switch state {
-                case .didTapButton(let category):
-                    self.subject.send(.viewAll(category))
-                }
-            }.store(in: &subscriptions)
-    }
 }
 
 extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -109,8 +97,7 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
         case UICollectionView.elementKindSectionHeader:
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as? HomeDataCollectionViewSectionHeaderView else { return UICollectionReusableView() }
             guard let category = categories?[safe: indexPath.section] else { return UICollectionReusableView() }
-            headerView.configure(with: category)
-            bind(headerView)
+            headerView.configure(with: category, delegate: self)
             return headerView
         default:
             return UICollectionReusableView()
@@ -137,5 +124,11 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
         } else {
             subject.send(.hideTitleViewShadow)
         }
+    }
+}
+
+extension HomeDataCollectionView: HomeDataCollectionViewSectionHeaderViewProtocol {
+    func didTapButton(with category: HomeDataCategory) {
+        subject.send(.viewAll(category))
     }
 }

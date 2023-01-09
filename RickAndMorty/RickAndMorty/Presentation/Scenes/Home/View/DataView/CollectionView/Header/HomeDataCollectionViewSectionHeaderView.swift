@@ -6,27 +6,25 @@
 //
 
 import UIKit
-import Combine
 
-enum HomeDataCollectionViewSectionHeaderViewState {
-    case didTapButton(HomeDataCategory)
+protocol HomeDataCollectionViewSectionHeaderViewProtocol: AnyObject {
+    func didTapButton(with category: HomeDataCategory)
 }
 
 final class HomeDataCollectionViewSectionHeaderView: UICollectionReusableView {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var arrowImageView: UIImageView!
-    private var subscriptions = Set<AnyCancellable>()
-    private var subject = PassthroughSubject<HomeDataCollectionViewSectionHeaderViewState, Never>()
-    var publisher: AnyPublisher<HomeDataCollectionViewSectionHeaderViewState, Never> { subject.eraseToAnyPublisher() }
     private var category: HomeDataCategory? = nil
+    private weak var delegate: HomeDataCollectionViewSectionHeaderViewProtocol?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupView()
     }
     
-    func configure(with category: HomeDataCategory) {
+    func configure(with category: HomeDataCategory, delegate: HomeDataCollectionViewSectionHeaderViewProtocol) {
         self.category = category
+        self.delegate = delegate
         titleLabel.text = category.getTitle()
     }
 }
@@ -43,6 +41,6 @@ private extension HomeDataCollectionViewSectionHeaderView {
     
     @IBAction func didTapButton(_ sender: UIButton) {
         guard let category = category else { return }
-        subject.send(.didTapButton(category))
+        delegate?.didTapButton(with: category)
     }
 }

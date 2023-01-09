@@ -56,6 +56,10 @@
                 <outlet property="containerView" destination="cAt-TH-dTp" id="5fA-jW-Fyw"/>
                 <outlet property="imageView" destination="Sz9-qL-4Cm" id="MNw-5q-EUd"/>
                 <outlet property="titleLabel" destination="dVj-05-rEZ" id="kee-Fx-cRY"/>
+                <outlet property="titleLabelBottomConstraint" destination="biX-Ri-WF3" id="NJU-6H-9Sf"/>
+                <outlet property="titleLabelLeadingConstraint" destination="KuD-JV-rGF" id="BP9-HX-Fme"/>
+                <outlet property="titleLabelTopConstraint" destination="gqg-7K-azf" id="FFr-wD-Br7"/>
+                <outlet property="titleLabelTrailingConstraint" destination="KW7-C7-X1g" id="PxV-zM-kII"/>
             </connections>
             <point key="canvasLocation" x="230.53435114503816" y="65.140845070422543"/>
         </collectionViewCell>

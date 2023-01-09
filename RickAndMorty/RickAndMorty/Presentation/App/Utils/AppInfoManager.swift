@@ -13,7 +13,8 @@ final class AppInfoManager {
              access_token,
              expires_in,
              logged,
-             userID
+             userID,
+             deviceType
     }
     
     static func set(_ key: Key, _ value: Any?) {
