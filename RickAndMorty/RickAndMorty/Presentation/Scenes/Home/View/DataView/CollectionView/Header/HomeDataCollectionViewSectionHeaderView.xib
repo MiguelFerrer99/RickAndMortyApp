@@ -24,10 +24,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="m3b-ur-Pxz" userLabel="Arrow Image View">
-                            <rect key="frame" x="386" y="25" width="30" height="24.333333333333329"/>
+                            <rect key="frame" x="388" y="26" width="28" height="22.333333333333329"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="30" id="IwX-bM-ky4"/>
+                                <constraint firstAttribute="width" constant="28" id="IwX-bM-ky4"/>
                                 <constraint firstAttribute="width" secondItem="m3b-ur-Pxz" secondAttribute="height" multiplier="1:1" id="KZI-z6-bXx"/>
                             </constraints>
                         </imageView>
