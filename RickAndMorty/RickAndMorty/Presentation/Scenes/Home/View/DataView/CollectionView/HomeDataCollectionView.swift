@@ -37,8 +37,12 @@ final class HomeDataCollectionView: UICollectionView {
 }
 
 private extension HomeDataCollectionView {
-    var cellIdentifier: String {
-        String(describing: type(of: HomeDataCollectionViewCell()))
+    var infoCellIdentifier: String {
+        String(describing: type(of: HomeDataCollectionViewInfoCell()))
+    }
+    
+    var loadingCellIdentifier: String {
+        String(describing: type(of: HomeDataCollectionViewLoadingCell()))
     }
     
     var headerIdentifier: String {
@@ -48,14 +52,16 @@ private extension HomeDataCollectionView {
     func setupView() {
         delegate = self
         dataSource = self
-        registerCell()
+        registerCells()
         registerHeader()
         configureLayout()
     }
     
-    func registerCell() {
-        let nib = UINib(nibName: cellIdentifier, bundle: .main)
-        register(nib, forCellWithReuseIdentifier: cellIdentifier)
+    func registerCells() {
+        let infoCellNib = UINib(nibName: infoCellIdentifier, bundle: .main)
+        register(infoCellNib, forCellWithReuseIdentifier: infoCellIdentifier)
+        let loadingCellNib = UINib(nibName: loadingCellIdentifier, bundle: .main)
+        register(loadingCellNib, forCellWithReuseIdentifier: loadingCellIdentifier)
     }
     
     func registerHeader() {
@@ -116,8 +122,13 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? HomeDataCollectionViewCell else { return UICollectionViewCell() }
-        return cell
+        if indexPath.item == 9 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellIdentifier, for: indexPath) as? HomeDataCollectionViewLoadingCell else { return UICollectionViewCell() }
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? HomeDataCollectionViewInfoCell else { return UICollectionViewCell() }
+            return cell
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
