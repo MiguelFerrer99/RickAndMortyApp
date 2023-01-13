@@ -34,15 +34,38 @@ enum APIServiceError: Error {
     }
 }
 
-final class APIService {
-    static let shared = APIService(authManager: APIAuthManager())
+protocol APIService {
+    func loadAuthorized<T: Decodable>(endpoint: APIEndpoint, of type: T.Type, allowRetry: Bool) async throws -> T
+    func load<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T
+}
+
+final class DefaultAPIService {
+    private lazy var authManager: APIAuthManager = { APIAuthManager(with: self) }()
     
-    let authManager: APIAuthManager
-    
-    private init(authManager: APIAuthManager) {
-        self.authManager = authManager
+    // MARK: - loadDemo - Call mocked responses
+    private func loadDemo<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T {
+        guard let url = Bundle.main.url(forResource: endpoint.mock, withExtension: "json"),
+              let data = try? Data(contentsOf: url) else {
+            APILogger.thisError(APIServiceError.mockNotFound)
+            throw APIServiceError.mockNotFound
+        }
+        do {
+            let parsedData = try JSONDecoder().decode(T.self, from: data)
+            guard let url = URL(string: "\(endpoint.mock)_Mock"),
+                  let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil) else {
+                APILogger.thisError(APIServiceError.invalidResponse)
+                throw APIServiceError.invalidResponse
+            }
+            APILogger.thisResponse(response, data: data)
+            return parsedData
+        } catch {
+            APILogger.thisError(error)
+            throw APIServiceError.errorDecodable
+        }
     }
-    
+}
+
+extension DefaultAPIService: APIService {
     // MARK: - loadAuthorized - Call secured API
     func loadAuthorized<T: Decodable>(endpoint: APIEndpoint, of type: T.Type, allowRetry: Bool = true) async throws -> T {
         var request = endpoint.request
@@ -108,29 +131,5 @@ final class APIService {
                 throw APIServiceError.errorDecodable
             }
         #endif
-    }
-}
-
-private extension APIService {
-    // MARK: - loadDemo - Call mocked responses
-    func loadDemo<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T {
-        guard let url = Bundle.main.url(forResource: endpoint.mock, withExtension: "json"),
-              let data = try? Data(contentsOf: url) else {
-            APILogger.thisError(APIServiceError.mockNotFound)
-            throw APIServiceError.mockNotFound
-        }
-        do {
-            let parsedData = try JSONDecoder().decode(T.self, from: data)
-            guard let url = URL(string: "\(endpoint.mock)_Mock"),
-                  let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil) else {
-                APILogger.thisError(APIServiceError.invalidResponse)
-                throw APIServiceError.invalidResponse
-            }
-            APILogger.thisResponse(response, data: data)
-            return parsedData
-        } catch {
-            APILogger.thisError(error)
-            throw APIServiceError.errorDecodable
-        }
     }
 }

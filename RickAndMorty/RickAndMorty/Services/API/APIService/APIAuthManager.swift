@@ -15,7 +15,12 @@ enum APIAuthManagerError: Error {
 }
 
 actor APIAuthManager {
+    private let apiService: APIService
     private var refreshTask: Task<String, Error>?
+    
+    init(with apiService: APIService) {
+        self.apiService = apiService
+    }
     
     // MARK: Return accessToken or error
     func getAccesToken() async throws -> String? {
@@ -67,7 +72,7 @@ actor APIAuthManager {
     // MARK: Call to login service
     func authenticate(with parameters: [String: Any]) async throws -> String {
         do {
-            let token = try await APIService.shared.load(endpoint: AuthEndpoint.login(parameters).endpoint, of: TokenDTO.self)
+            let token = try await apiService.load(endpoint: AuthEndpoint.login(parameters).endpoint, of: TokenDTO.self)
             save(this: token)
             return token.accessToken
         } catch let error {
@@ -88,11 +93,11 @@ actor APIAuthManager {
         do {
             let parameters: [String: Any] = [
                 "grant_type": "refresh_token",
-                "client_id": APIConfiguration.shared.API_HOST,
-                "client_secret": APIConfiguration.shared.API_KEY,
+                "client_id": getClientId(),
+                "client_secret": getClientSecret(),
                 "refresh_token": refreshToken
             ]
-            let token = try await APIService.shared.load(endpoint: AuthEndpoint.refreshToken(parameters).endpoint, of: TokenDTO.self)
+            let token = try await apiService.load(endpoint: AuthEndpoint.refreshToken(parameters).endpoint, of: TokenDTO.self)
             save(this: token)
             return token.accessToken
         } catch let error {
@@ -100,5 +105,29 @@ actor APIAuthManager {
             AppInfoManager.clear()
             throw APIAuthManagerError.badRequest
         }
+    }
+    
+    private func getClientId() -> String {
+        #if Demo
+            return ""
+        #elseif Develop
+            return ""
+        #elseif Production
+            return ""
+        #else
+            return ""
+        #endif
+    }
+    
+    private func getClientSecret() -> String {
+        #if Demo
+            return ""
+        #elseif Develop
+            return ""
+        #elseif Production
+            return ""
+        #else
+            return ""
+        #endif
     }
 }

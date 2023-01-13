@@ -10,7 +10,6 @@ protocol HomeDependenciesResolver {
     func resolve() -> HomeCoordinator
     func resolve() -> HomeViewController
     func resolve() -> HomeViewModel
-    func resolve() -> HomeRepository
     func resolve() -> HomeUseCase
 }
 
@@ -21,10 +20,6 @@ extension HomeDependenciesResolver {
     
     func resolve() -> HomeViewModel {
         HomeViewModel(dependencies: self)
-    }
-    
-    func resolve() -> HomeRepository {
-        DefaultHomeRepository(dependencies: self)
     }
     
     func resolve() -> HomeUseCase {

@@ -5,7 +5,6 @@
 //  Created by Miguel Ferrer Fornali on 19/11/22.
 //
 
-import Foundation
 import UIKit
 
 final class APIEndpoint {
@@ -90,7 +89,7 @@ final class APIEndpoint {
     
     // MARK: Get URL with BASE_URL
     static func getURL(path: String) -> URL {
-        guard let url = URL(string: APIConfiguration.shared.BASE_URL
+        guard let url = URL(string: getBaseUrl()
         )?.appendingPathComponent(path) else {
             APILogger.this(path, type: .error)
             fatalError()
@@ -140,5 +139,17 @@ final class APIEndpoint {
         }
         request.httpBody = httpBody
         return request
+    }
+    
+    private static func getBaseUrl() -> String {
+        #if Demo
+            return "https://rickandmortyapi.com/api"
+        #elseif Develop
+            return "https://rickandmortyapi.com/api"
+        #elseif Production
+            return "https://rickandmortyapi.com/api"
+        #else
+            return ""
+        #endif
     }
 }
