@@ -12,15 +12,10 @@ protocol HomeExternalDependenciesResolver: CommonExternalDependenciesResolver {
     func resolveAppDependencies() -> AppDependencies
     func resolveHomeCoordinator() -> HomeCoordinator
     func resolveAuthorInfoCoordinator() -> AuthorInfoCoordinator
-    func resolveHomeRepository() -> HomeRepository
 }
 
 extension HomeExternalDependenciesResolver {
     func resolveHomeCoordinator() -> HomeCoordinator {
         DefaultHomeCoordinator(externalDependencies: self, navigationController: resolve())
-    }
-    
-    func resolveHomeRepository() -> HomeRepository {
-        DefaultHomeRepository(dependencies: self)
     }
 }
