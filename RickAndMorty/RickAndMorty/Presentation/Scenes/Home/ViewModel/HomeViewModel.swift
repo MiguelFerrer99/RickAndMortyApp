@@ -20,8 +20,7 @@ final class HomeViewModel {
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<HomeViewModelState, Never>(.idle)
     var state: AnyPublisher<HomeViewModelState, Never>
-    
-    private let categories: [HomeDataCategory] = [.characters, .locations, .episodes]
+    private var categories: [HomeDataCategory] = []
 
     init(dependencies: HomeDependenciesResolver) {
         self.dependencies = dependencies
@@ -50,17 +49,20 @@ private extension HomeViewModel {
         dependencies.resolve()
     }
     
+    var homeUseCase: HomeUseCase {
+        dependencies.resolve()
+    }
+    
     func getInfo() {
         stateSubject.send(.loading)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
-            guard let self = self else { return }
-            self.stateSubject.send(.received(self.categories))
+        getCharacters()
+    }
+    
+    func getCharacters() {
+        Task { @MainActor [weak self] in
+            guard let self = self, let charactersInfo = try? await self.homeUseCase.getCharacters() else { return }
+            categories.append(.characters(info: charactersInfo))
+            stateSubject.send(.received(categories))
         }
     }
 }
-
-// MARK: Subscriptions
-private extension HomeViewModel {}
-
-// MARK: Publishers
-private extension HomeViewModel {}

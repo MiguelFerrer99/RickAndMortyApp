@@ -6,7 +6,7 @@
 //
 
 protocol HomeUseCase {
-    // Add functions to get data from repository
+    func getCharacters() async throws -> CharactersInfoRepresentable
 }
 
 final class DefaultHomeUseCase {
@@ -18,5 +18,7 @@ final class DefaultHomeUseCase {
 }
 
 extension DefaultHomeUseCase: HomeUseCase {
-    // Implement functions and do logic
+    func getCharacters() async throws -> CharactersInfoRepresentable {
+        try await repository.getCharacters()
+    }
 }

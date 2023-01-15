@@ -5,10 +5,10 @@
 //  Created by Miguel Ferrer Fornali on 20/11/22.
 //
 
-enum HomeDataCategory: Int {
-    case characters = 0
-    case locations = 1
-    case episodes = 2
+enum HomeDataCategory {
+    case characters(info: CharactersInfoRepresentable)
+    case locations
+    case episodes
     
     func getTitle() -> String {
         switch self {

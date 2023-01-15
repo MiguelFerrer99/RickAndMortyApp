@@ -5,10 +5,8 @@
 //  Created by Miguel Ferrer Fornali on 19/11/22.
 //
 
-import Combine
-
 protocol HomeRepository {
-    //func getCharacters() -> AnyPublisher<CharactersInfoRepresentable, Error>
+    func getCharacters() async throws -> CharactersInfoRepresentable
 }
 
 final class DefaultHomeRepository {
@@ -22,7 +20,9 @@ final class DefaultHomeRepository {
 }
 
 extension DefaultHomeRepository: HomeRepository {
-//    func getCharacters() -> AnyPublisher<CharactersInfoRepresentable, Error> {
-//        
-//    }
+    func getCharacters() async throws -> CharactersInfoRepresentable {
+        let charactersInfoDTO = try await apiService.load(endpoint: CharactersEndpoint.characters(page: 1).endpoint, of: CharactersInfoDTO.self)
+        let charactersInfo = CharactersInfoRepresented(charactersInfoDTO)
+        return charactersInfo
+    }
 }

@@ -38,7 +38,7 @@ struct CharacterRepresented: CharacterRepresentable {
     var numberOfEpisodes: Int
     
     init(_ dto: CharacterDTO) {
-        id = dto.id
+        id = "\(dto.id)"
         name = dto.name
         status = CharacterStatus(rawValue: dto.status) ?? .unknown
         species = dto.species

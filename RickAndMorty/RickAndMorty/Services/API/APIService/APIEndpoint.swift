@@ -89,10 +89,9 @@ final class APIEndpoint {
     
     // MARK: Get URL with BASE_URL
     static func getURL(path: String) -> URL {
-        guard let url = URL(string: getBaseUrl()
-        )?.appendingPathComponent(path) else {
+        guard let url = URL(string: getBaseUrl())?.appendingPathComponent(path) else {
             APILogger.this(path, type: .error)
-            fatalError()
+            fatalError("Can't build URL")
         }
         return url
     }

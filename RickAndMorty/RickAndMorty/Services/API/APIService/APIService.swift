@@ -10,7 +10,6 @@ import UIKit
 enum APIServiceError: Error {
     case mockNotFound
     case missingToken
-    case invalidToken
     case invalidResponse
     case errorDecodable
     case errorData(Data)
@@ -19,7 +18,6 @@ enum APIServiceError: Error {
         switch self {
         case .mockNotFound: return "Mock not found"
         case .missingToken: return "Access Token not found"
-        case .invalidToken: return "Access Token not valid"
         case .invalidResponse: return "Response not expected"
         case .errorDecodable: return "Error while decoding object. Check your DTO"
         case .errorData(let data): return "Error reponse with data: \(data.prettyPrintedJSONString ?? "")"
@@ -35,12 +33,12 @@ enum APIServiceError: Error {
 }
 
 protocol APIService {
-    func loadAuthorized<T: Decodable>(endpoint: APIEndpoint, of type: T.Type, allowRetry: Bool) async throws -> T
+    func loadAuthorized<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T
     func load<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T
 }
 
 final class DefaultAPIService {
-    private lazy var authManager: APIAuthManager = { APIAuthManager(with: self) }()
+    private lazy var refreshActor: APIRefreshActor = { APIRefreshActor(service: self) }()
     
     // MARK: - loadDemo - Call mocked responses
     private func loadDemo<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T {
@@ -67,12 +65,10 @@ final class DefaultAPIService {
 
 extension DefaultAPIService: APIService {
     // MARK: - loadAuthorized - Call secured API
-    func loadAuthorized<T: Decodable>(endpoint: APIEndpoint, of type: T.Type, allowRetry: Bool = true) async throws -> T {
+    func loadAuthorized<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T {
         var request = endpoint.request
-        endpoint.headers.forEach {
-            request.setValue($0.value, forHTTPHeaderField: $0.key)
-        }
-        let token = try await authManager.validToken()
+        endpoint.headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
+        guard let token = AppInfoManager.get(stringFor: .access_token) else { throw APIServiceError.missingToken }
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         APILogger.thisCall(request)
         #if Demo
@@ -84,17 +80,16 @@ extension DefaultAPIService: APIService {
                 throw APIServiceError.invalidResponse
             }
             if response.statusCode == 401 {
-                if allowRetry {
-                    _ = try await authManager.refreshToken()
-                    return try await loadAuthorized(endpoint: endpoint, of: type, allowRetry: false)
-                }
+                guard let refreshToken = AppInfoManager.get(stringFor: .refresh_token) else { throw APIServiceError.missingToken }
+                let accessToken = try await refreshActor.refresh(with: refreshToken)
+                AppInfoManager.set(.access_token, accessToken)
+                return try await loadAuthorized(endpoint: endpoint, of: type)
             }
             APILogger.thisResponse(response, data: data)
             let decoder = JSONDecoder()
             var parsedData: T!
-            do {
-                parsedData = try decoder.decode(T.self, from: data)
-            } catch {
+            do { parsedData = try decoder.decode(T.self, from: data) }
+            catch {
                 if (200..<300).contains(response.statusCode) {
                     APILogger.thisError(APIServiceError.errorDecodable)
                     throw APIServiceError.errorDecodable
@@ -110,9 +105,7 @@ extension DefaultAPIService: APIService {
     // MARK: - load - Call unprotected API
     func load<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T {
         var request = endpoint.request
-        endpoint.headers.forEach {
-            request.setValue($0.value, forHTTPHeaderField: $0.key)
-        }
+        endpoint.headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
         APILogger.thisCall(request)
         #if Demo
             return try await loadDemo(endpoint: endpoint, of: T.self)

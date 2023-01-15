@@ -6,7 +6,7 @@
 //
 
 struct CharacterDTO: Decodable {
-    let id: String
+    let id: Int
     let name: String
     let status: String
     let species: String
