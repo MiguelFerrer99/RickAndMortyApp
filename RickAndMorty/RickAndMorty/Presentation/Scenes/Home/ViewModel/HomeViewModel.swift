@@ -53,7 +53,7 @@ private extension HomeViewModel {
     func sendStateSubject(_ stateSubject: HomeViewModelState) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.stateSubject.send(.received(self.categories))
+            self.stateSubject.send(stateSubject)
         }
     }
     
