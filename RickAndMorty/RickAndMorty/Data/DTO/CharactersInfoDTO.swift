@@ -6,6 +6,6 @@
 //
 
 struct CharactersInfoDTO: Decodable {
-    let info: CharactersInfoPaginationDTO
+    let info: InfoPaginationDTO
     let results: [CharacterDTO]
 }

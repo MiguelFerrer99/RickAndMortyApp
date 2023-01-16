@@ -29,7 +29,7 @@ final class HomeViewModel {
     
     func viewDidLoad() {
         stateSubject.send(.loading)
-        getCharacters()
+        getInfo()
     }
     
     func openAuthorInfo() {
@@ -57,10 +57,12 @@ private extension HomeViewModel {
         }
     }
     
-    func getCharacters() {
+    func getInfo() {
         Task {
-            guard let charactersInfo = try? await self.homeUseCase.getCharacters() else { return }
-            categories.append(.characters(info: charactersInfo))
+            guard let homeInfo = try? await self.homeUseCase.getInfo() else { return }
+            if let charactersInfo = homeInfo.charactersInfo { categories.append(.characters(info: charactersInfo)) }
+            if let locationsInfo = homeInfo.locationsInfo { categories.append(.locations(info: locationsInfo)) }
+            if let episodesInfo = homeInfo.episodesInfo { categories.append(.episodes(info: episodesInfo)) }
             sendStateSubject(.received(categories))
         }
     }

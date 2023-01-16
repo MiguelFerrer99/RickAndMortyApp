@@ -1,5 +1,5 @@
 //
-//  HomeRepresentables.swift
+//  HomeDataCategory.swift
 //  iOSCleanArchitecture
 //
 //  Created by Miguel Ferrer Fornali on 20/11/22.
@@ -7,8 +7,8 @@
 
 enum HomeDataCategory {
     case characters(info: CharactersInfoRepresentable)
-    case locations
-    case episodes
+    case locations(info: LocationsInfoRepresentable)
+    case episodes(info: EpisodesInfoRepresentable)
     
     func getTitle() -> String {
         switch self {
@@ -19,12 +19,3 @@ enum HomeDataCategory {
     }
 }
 
-protocol HomeDataCollectionViewInfoCellRepresentable {
-    var title: String { get }
-    var urlImage: String { get }
-}
-
-struct DefaultHomeDataCollectionViewInfoCellRepresentable: HomeDataCollectionViewInfoCellRepresentable {
-    var title: String
-    var urlImage: String
-}

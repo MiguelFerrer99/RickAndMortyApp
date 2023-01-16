@@ -99,23 +99,18 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
             guard let category = categories?[safe: indexPath.section] else { return UICollectionReusableView() }
             headerView.configure(with: category, delegate: self)
             return headerView
-        default:
-            return UICollectionReusableView()
+        default: return UICollectionReusableView()
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        guard let _ = categories?[section] else { return 0 }
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 9 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellIdentifier, for: indexPath) as? HomeDataCollectionViewLoadingCell else { return UICollectionViewCell() }
-            return cell
-        } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? HomeDataCollectionViewInfoCell else { return UICollectionViewCell() }
-            return cell
-        }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? HomeDataCollectionViewInfoCell else { return UICollectionViewCell() }
+        return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

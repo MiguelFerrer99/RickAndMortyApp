@@ -6,7 +6,7 @@
 //
 
 protocol HomeUseCase {
-    func getCharacters() async throws -> CharactersInfoRepresentable
+    func getInfo() async throws -> HomeInfoRepresentable
 }
 
 final class DefaultHomeUseCase {
@@ -18,7 +18,11 @@ final class DefaultHomeUseCase {
 }
 
 extension DefaultHomeUseCase: HomeUseCase {
-    func getCharacters() async throws -> CharactersInfoRepresentable {
-        try await repository.getCharacters()
+    func getInfo() async -> HomeInfoRepresentable {
+        async let charactersInfo = try? repository.getCharacters()
+        async let locationsInfo = try? repository.getLocations()
+        async let episodesInfo = try? repository.getEpisodes()
+        let homeInfo = await DefaultHomeInfoRepresentable(charactersInfo: charactersInfo, locationsInfo: locationsInfo, episodesInfo: episodesInfo)
+        return homeInfo
     }
 }
