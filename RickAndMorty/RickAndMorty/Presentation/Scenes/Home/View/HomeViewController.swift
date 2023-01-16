@@ -94,7 +94,7 @@ private extension HomeViewController {
                 guard let self = self else { return }
                 switch state {
                 case .tryAgain:
-                    self.viewModel.tryAgain()
+                    self.viewModel.viewDidLoad()
                 }
             }.store(in: &subscriptions)
     }

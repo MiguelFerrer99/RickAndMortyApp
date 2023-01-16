@@ -28,11 +28,8 @@ final class HomeViewModel {
     }
     
     func viewDidLoad() {
-        getInfo()
-    }
-    
-    func tryAgain() {
-        getInfo()
+        stateSubject.send(.loading)
+        getCharacters()
     }
     
     func openAuthorInfo() {
@@ -53,16 +50,18 @@ private extension HomeViewModel {
         dependencies.resolve()
     }
     
-    func getInfo() {
-        stateSubject.send(.loading)
-        getCharacters()
+    func sendStateSubject(_ stateSubject: HomeViewModelState) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.stateSubject.send(.received(self.categories))
+        }
     }
     
     func getCharacters() {
-        Task { @MainActor [weak self] in
-            guard let self = self, let charactersInfo = try? await self.homeUseCase.getCharacters() else { return }
+        Task {
+            guard let charactersInfo = try? await self.homeUseCase.getCharacters() else { return }
             categories.append(.characters(info: charactersInfo))
-            stateSubject.send(.received(categories))
+            sendStateSubject(.received(categories))
         }
     }
 }
