@@ -108,6 +108,8 @@ private extension HomeViewController {
                     self.viewModel.openAuthorInfo()
                 case .viewAll(let category):
                     self.viewModel.openCategoryDetail(category)
+                case .viewMore(let category):
+                    print(category.getTitle())
                 }
             }.store(in: &subscriptions)
     }

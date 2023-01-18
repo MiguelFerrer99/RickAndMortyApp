@@ -7,4 +7,7 @@
 
 protocol CommonExternalDependenciesResolver {
     func resolveAPIService() -> APIService
+    func resolveCharactersUseCase() -> CharactersUseCase
+    func resolveLocationsUseCase() -> LocationsUseCase
+    func resolveEpisodesUseCase() -> EpisodesUseCase
 }

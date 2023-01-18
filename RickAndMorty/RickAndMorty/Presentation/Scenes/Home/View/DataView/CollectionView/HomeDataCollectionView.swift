@@ -9,9 +9,9 @@ import UIKit
 import Combine
 
 enum HomeDataCollectionViewState {
+    case showTitleViewShadow(Bool)
     case viewAll(HomeDataCategory)
-    case showTitleViewShadow
-    case hideTitleViewShadow
+    case viewMore(HomeDataCategory)
 }
 
 final class HomeDataCollectionView: UICollectionView {
@@ -84,6 +84,16 @@ private extension HomeDataCollectionView {
         contentInset = .init(top: 0, left: 0, bottom: 20, right: 0)
         collectionViewLayout = compositionalLayout
     }
+    
+    func isLastItem(of category: HomeDataCategory, index: Int, section: Int) -> Bool {
+        let isLastPage: Bool
+        switch category {
+        case .characters(let pager): isLastPage = pager.isLastPage
+        case .locations(let pager): isLastPage = pager.isLastPage
+        case .episodes(let pager): isLastPage = pager.isLastPage
+        }
+        return (index == numberOfItems(inSection: section) - 1) && isLastPage
+    }
 }
 
 extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -104,8 +114,12 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let _ = categories?[section] else { return 0 }
-        return 10
+        guard let category = categories?[section] else { return 0 }
+        switch category {
+        case .characters(let pager): return pager.getItems().count
+        case .locations(let pager): return pager.getItems().count
+        case .episodes(let pager): return pager.getItems().count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -113,12 +127,16 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
         return cell
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > 0 {
-            subject.send(.showTitleViewShadow)
-        } else {
-            subject.send(.hideTitleViewShadow)
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let category = categories?[indexPath.section] else { return }
+        if isLastItem(of: category, index: indexPath.item, section: indexPath.section) {
+            subject.send(.viewMore(category))
+            print(category.getTitle())
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        subject.send(.showTitleViewShadow(scrollView.contentOffset.y > 0))
     }
 }
 

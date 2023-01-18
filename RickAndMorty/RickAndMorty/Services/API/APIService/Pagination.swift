@@ -9,22 +9,17 @@ final class Pagination<T> {
     typealias Item = T
     
     fileprivate var items: [Item] = []
-    fileprivate var nextPageUrl: String?
     fileprivate(set) var currentPage = 1
+    var isLastPage: Bool = true
     
-    var isLastPage: Bool { nextPageUrl.isNil }
-    
-    func setItems(_ items: [Item]) {
+    func setItems(_ items: [Item], and isLastPage: Bool) {
+        self.isLastPage = isLastPage
         if currentPage == 1 {
             self.items = items
         } else {
             self.items.append(contentsOf: items)
         }
-        currentPage += 1
-    }
-    
-    func setNextPageUrl(_ nextPageUrl: String?) {
-        self.nextPageUrl = nextPageUrl
+        if !isLastPage { currentPage += 1 }
     }
     
     func getItems() -> [Item] {

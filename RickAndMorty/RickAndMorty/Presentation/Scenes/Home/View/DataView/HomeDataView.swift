@@ -11,6 +11,7 @@ import Combine
 enum HomeDataViewState {
     case didTapTitleImage
     case viewAll(HomeDataCategory)
+    case viewMore(HomeDataCategory)
 }
 
 final class HomeDataView: XibView {
@@ -66,27 +67,20 @@ private extension HomeDataView {
             .sink { [weak self] state in
                 guard let self = self else { return }
                 switch state {
+                case .showTitleViewShadow(let show):
+                    self.showTitleViewShadow(show)
                 case .viewAll(let category):
                     self.subject.send(.viewAll(category))
-                case .showTitleViewShadow:
-                    self.showTitleViewShadow()
-                case .hideTitleViewShadow:
-                    self.hideTitleViewShadow()
+                case .viewMore(let category):
+                    self.subject.send(.viewMore(category))
                 }
             }.store(in: &subscriptions)
     }
     
-    func showTitleViewShadow() {
+    func showTitleViewShadow(_ show: Bool) {
         UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
             guard let self = self else { return }
-            self.titleView.layer.shadowOpacity = 1
-        }
-    }
-    
-    func hideTitleViewShadow() {
-        UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
-            guard let self = self else { return }
-            self.titleView.layer.shadowOpacity = 0
+            self.titleView.layer.shadowOpacity = show ? 1 : 0
         }
     }
     
