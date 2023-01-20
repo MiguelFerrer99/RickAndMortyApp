@@ -13,6 +13,7 @@ enum HomeViewModelState {
     case loading
     case error
     case received([HomeDataCategory])
+    case updated(HomeDataCategory)
 }
 
 final class HomeViewModel {
@@ -106,8 +107,7 @@ private extension HomeViewModel {
         Task {
             guard let charactersInfo = await charactersUseCase.getInfo(ofPage: page) else { return }
             charactersPager.setItems(charactersInfo.results, and: charactersInfo.info.isLast)
-            categories.remove(at: 0)
-            categories.insert(.characters(charactersPager), at: 0)
+            sendStateSubject(.updated(.characters(charactersPager)))
         }
     }
     
@@ -115,8 +115,7 @@ private extension HomeViewModel {
         Task {
             guard let locationsInfo = await locationsUseCase.getInfo(ofPage: page) else { return }
             locationsPager.setItems(locationsInfo.results, and: locationsInfo.info.isLast)
-            categories.remove(at: 1)
-            categories.insert(.locations(locationsPager), at: 1)
+            sendStateSubject(.updated(.locations(locationsPager)))
         }
     }
     
@@ -124,8 +123,7 @@ private extension HomeViewModel {
         Task {
             guard let episodesInfo = await episodesUseCase.getInfo(ofPage: page) else { return }
             episodesPager.setItems(episodesInfo.results, and: episodesInfo.info.isLast)
-            categories.remove(at: 2)
-            categories.insert(.episodes(episodesPager), at: 2)
+            sendStateSubject(.updated(.episodes(episodesPager)))
         }
     }
 }

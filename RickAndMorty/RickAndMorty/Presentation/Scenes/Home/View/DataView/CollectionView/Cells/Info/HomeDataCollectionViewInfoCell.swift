@@ -22,8 +22,8 @@ final class HomeDataCollectionViewInfoCell: UICollectionViewCell {
         setupView()
     }
     
-    func configure(with representable: HomeDataCollectionViewInfoCellRepresentable) {
-        titleLabel.text = representable.title
+    func configure(with representable: HomeDataCollectionViewInfoCellRepresentable, and number: Int) {
+        titleLabel.text = representable.title + " \(number)"
         setUrlImage(with: representable.urlImage)
     }
 }

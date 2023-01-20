@@ -83,6 +83,8 @@ private extension HomeViewController {
                     self.loadingView.receivedError()
                 case .received(let categories):
                     self.showDataView(with: categories)
+                case .updated(let category):
+                    self.dataView.updatedData(category)
                 case .idle: return
                 }
             }.store(in: &subscriptions)
@@ -109,7 +111,7 @@ private extension HomeViewController {
                 case .viewAll(let category):
                     self.viewModel.openCategoryDetail(category)
                 case .viewMore(let category):
-                    print(category.getTitle())
+                    self.viewModel.viewMore(of: category)
                 }
             }.store(in: &subscriptions)
     }

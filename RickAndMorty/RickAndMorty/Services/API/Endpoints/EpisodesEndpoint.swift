@@ -14,7 +14,7 @@ enum EpisodesEndpoint {
             case .episodes(page: let page):
                 return APIEndpoint(path: "/episode",
                                    httpMethod: .get,
-                                   parameters: ["page": page],
+                                   parameters: ["page": "\(page)"],
                                    mock: "Episodes")
             }
         }

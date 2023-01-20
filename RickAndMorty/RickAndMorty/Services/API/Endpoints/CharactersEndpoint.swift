@@ -14,7 +14,7 @@ enum CharactersEndpoint {
             case .characters(page: let page):
                 return APIEndpoint(path: "/character",
                                    httpMethod: .get,
-                                   parameters: ["page": page],
+                                   parameters: ["page": "\(page)"],
                                    mock: "Characters")
             }
         }

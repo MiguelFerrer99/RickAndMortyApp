@@ -42,6 +42,10 @@ final class HomeDataView: XibView {
         collectionView.configure(with: categories)
         moveImageToTop()
     }
+    
+    func updatedData(_ category: HomeDataCategory) {
+        collectionView.update(with: category)
+    }
 }
 
 private extension HomeDataView {

@@ -19,6 +19,9 @@ final class HomeDataCollectionView: UICollectionView {
     var publisher: AnyPublisher<HomeDataCollectionViewState, Never> { subject.eraseToAnyPublisher() }
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     private var categories: [HomeDataCategory]?
+    private var isLoadingCharacters = false { didSet { reloadSection(0, loadingEnabled: isLoadingCharacters) } }
+    private var isLoadingLocations = false { didSet { reloadSection(1, loadingEnabled: isLoadingLocations) } }
+    private var isLoadingEpisodes = false { didSet { reloadSection(2, loadingEnabled: isLoadingEpisodes) } }
     
     init(frame: CGRect) {
         super.init(frame: frame, collectionViewLayout: .init())
@@ -32,6 +35,23 @@ final class HomeDataCollectionView: UICollectionView {
     
     func configure(with categories: [HomeDataCategory]) {
         self.categories = categories
+    }
+    
+    func update(with category: HomeDataCategory) {
+        switch category {
+        case .characters:
+            categories?.remove(at: 0)
+            categories?.insert(category, at: 0)
+            isLoadingCharacters = false
+        case .locations:
+            categories?.remove(at: 1)
+            categories?.insert(category, at: 1)
+            isLoadingLocations = false
+        case .episodes:
+            categories?.remove(at: 2)
+            categories?.insert(category, at: 2)
+            isLoadingEpisodes = false
+        }
     }
 }
 
@@ -85,14 +105,23 @@ private extension HomeDataCollectionView {
         collectionViewLayout = compositionalLayout
     }
     
-    func isLastItem(of category: HomeDataCategory, index: Int, section: Int) -> Bool {
+    func isLastItemAndHaveMore(of category: HomeDataCategory, index: Int, section: Int) -> Bool {
         let isLastPage: Bool
         switch category {
         case .characters(let pager): isLastPage = pager.isLastPage
         case .locations(let pager): isLastPage = pager.isLastPage
         case .episodes(let pager): isLastPage = pager.isLastPage
         }
-        return (index == numberOfItems(inSection: section) - 1) && isLastPage
+        return (index == numberOfItems(inSection: section) - 1) && !isLastPage
+    }
+    
+    func reloadSection(_ section: Int, loadingEnabled: Bool) {
+        UIView.setAnimationsEnabled(false)
+        reloadSections(IndexSet(integer: section))
+        let currentNumberOfItems = numberOfItems(inSection: section)
+        let indexPath = IndexPath(item: loadingEnabled ? currentNumberOfItems : (currentNumberOfItems - 20), section: section)
+        scrollToItem(at: indexPath, at: .right, animated: true)
+        UIView.setAnimationsEnabled(true)
     }
 }
 
@@ -116,22 +145,32 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let category = categories?[section] else { return 0 }
         switch category {
-        case .characters(let pager): return pager.getItems().count
-        case .locations(let pager): return pager.getItems().count
-        case .episodes(let pager): return pager.getItems().count
+        case .characters(let pager): return pager.getItems().count + (isLoadingCharacters ? 1 : 0)
+        case .locations(let pager): return pager.getItems().count + (isLoadingLocations ? 1 : 0)
+        case .episodes(let pager): return pager.getItems().count + (isLoadingEpisodes ? 1 : 0)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? HomeDataCollectionViewInfoCell else { return UICollectionViewCell() }
-        return cell
+        if (isLoadingCharacters || isLoadingLocations || isLoadingEpisodes), (indexPath.item == numberOfItems(inSection: indexPath.section) - 1) {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellIdentifier, for: indexPath) as? HomeDataCollectionViewLoadingCell else { return UICollectionViewCell() }
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? HomeDataCollectionViewInfoCell else { return UICollectionViewCell() }
+            cell.configure(with: DefaultHomeDataCollectionViewInfoCellRepresentable(title: "", urlImage: ""), and: indexPath.item)
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let category = categories?[indexPath.section] else { return }
-        if isLastItem(of: category, index: indexPath.item, section: indexPath.section) {
+        if isLastItemAndHaveMore(of: category, index: indexPath.item, section: indexPath.section) {
+            switch category {
+            case .characters: isLoadingCharacters = true
+            case .locations: isLoadingLocations = true
+            case .episodes: isLoadingEpisodes = true
+            }
             subject.send(.viewMore(category))
-            print(category.getTitle())
         }
     }
     
