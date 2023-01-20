@@ -156,8 +156,20 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellIdentifier, for: indexPath) as? HomeDataCollectionViewLoadingCell else { return UICollectionViewCell() }
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? HomeDataCollectionViewInfoCell else { return UICollectionViewCell() }
-            cell.configure(with: DefaultHomeDataCollectionViewInfoCellRepresentable(title: "", urlImage: ""), and: indexPath.item)
+            guard let category = categories?[indexPath.section], let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? HomeDataCollectionViewInfoCell else { return UICollectionViewCell() }
+            var representable: HomeDataCollectionViewInfoCellRepresentable
+            switch category {
+            case .characters(let pager):
+                let character = pager.getItems()[indexPath.item]
+                representable = DefaultHomeDataCollectionViewInfoCellRepresentable(title: character.name, urlImage: character.urlImage)
+            case .locations(let pager):
+                let location = pager.getItems()[indexPath.item]
+                representable = DefaultHomeDataCollectionViewInfoCellRepresentable(title: location.name)
+            case .episodes(let pager):
+                let episode = pager.getItems()[indexPath.item]
+                representable = DefaultHomeDataCollectionViewInfoCellRepresentable(title: episode.name)
+            }
+            cell.configure(with: representable)
             return cell
         }
     }

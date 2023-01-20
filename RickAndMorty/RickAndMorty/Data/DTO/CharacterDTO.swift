@@ -11,6 +11,7 @@ struct CharacterDTO: Decodable {
     let status: String
     let species: String
     let gender: String
+    let image: String
     let origin: CharacterLocationDTO
     let location: CharacterLocationDTO
     let episodes: [String]
@@ -21,6 +22,7 @@ struct CharacterDTO: Decodable {
         case status
         case species
         case gender
+        case image
         case origin
         case location
         case episodes = "episode"

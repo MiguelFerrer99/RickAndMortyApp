@@ -22,9 +22,9 @@ final class HomeDataCollectionViewInfoCell: UICollectionViewCell {
         setupView()
     }
     
-    func configure(with representable: HomeDataCollectionViewInfoCellRepresentable, and number: Int) {
-        titleLabel.text = representable.title + " \(number)"
-        setUrlImage(with: representable.urlImage)
+    func configure(with representable: HomeDataCollectionViewInfoCellRepresentable) {
+        titleLabel.text = representable.title
+        if let urlImage = representable.urlImage { setUrlImage(with: urlImage) }
     }
 }
 
@@ -32,7 +32,6 @@ private extension HomeDataCollectionViewInfoCell {
     func setupView() {
         configureContainerView()
         configureTitleLabel()
-        configureImageView()
     }
     
     func configureContainerView() {
@@ -40,7 +39,7 @@ private extension HomeDataCollectionViewInfoCell {
         containerView.layer.cornerRadius = 10
     }
     
-    func configureImageView() {
+    func configureImageView(with uiImage: UIImage) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let gradientLayer = CAGradientLayer()
@@ -51,6 +50,8 @@ private extension HomeDataCollectionViewInfoCell {
                                     UIColor.black.withAlphaComponent(0.2).cgColor,
                                     UIColor.clear.cgColor]
             self.imageView.layer.addSublayer(gradientLayer)
+            self.imageView.image = uiImage
+            self.titleLabel.alpha = 1
         }
     }
     
@@ -66,7 +67,11 @@ private extension HomeDataCollectionViewInfoCell {
         }
     }
     
-    func setUrlImage(with url: String) {
-        // TODO: Get URL image with animation
+    func setUrlImage(with urlImage: String) {
+        guard let url = URL(string: urlImage) else { return }
+        URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+            guard let self = self, let data = data, error.isNil, let uiImage = UIImage(data: data) else { return }
+            self.configureImageView(with: uiImage)
+        }
     }
 }

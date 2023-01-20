@@ -22,6 +22,7 @@ protocol CharacterRepresentable {
     var status: CharacterStatus { get }
     var species: String { get }
     var gender: CharacterGender { get }
+    var urlImage: String { get }
     var origin: CharacterLocationRepresentable { get }
     var location: CharacterLocationRepresentable { get }
     var numberOfEpisodes: Int { get }
@@ -33,6 +34,7 @@ struct CharacterRepresented: CharacterRepresentable {
     var status: CharacterStatus
     var species: String
     var gender: CharacterGender
+    var urlImage: String
     var origin: CharacterLocationRepresentable
     var location: CharacterLocationRepresentable
     var numberOfEpisodes: Int
@@ -43,6 +45,7 @@ struct CharacterRepresented: CharacterRepresentable {
         status = CharacterStatus(rawValue: dto.status) ?? .unknown
         species = dto.species
         gender = CharacterGender(rawValue: dto.gender) ?? .male
+        urlImage = dto.image
         origin = CharacterLocationRepresented(dto.origin)
         location = CharacterLocationRepresented(dto.location)
         numberOfEpisodes = dto.episodes.count

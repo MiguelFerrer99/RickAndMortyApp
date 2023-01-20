@@ -7,10 +7,10 @@
 
 protocol HomeDataCollectionViewInfoCellRepresentable {
     var title: String { get }
-    var urlImage: String { get }
+    var urlImage: String? { get }
 }
 
 struct DefaultHomeDataCollectionViewInfoCellRepresentable: HomeDataCollectionViewInfoCellRepresentable {
     var title: String
-    var urlImage: String
+    var urlImage: String?
 }
