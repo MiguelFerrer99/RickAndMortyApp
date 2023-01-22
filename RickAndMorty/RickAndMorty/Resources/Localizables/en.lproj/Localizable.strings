@@ -13,6 +13,7 @@
 "home_charactersSectionTitle" = "Characters";
 "home_locationsSectionTitle" = "Locations";
 "home_episodesSectionTitle" = "Episodes";
+"home_viewMore" = "View more";
 
 /* AuthorInfo */
 "authorInfo_name" = "Miguel Ferrer Fornali";

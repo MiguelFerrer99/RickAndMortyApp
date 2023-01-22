@@ -41,6 +41,7 @@ extension String {
         case charactersSectionTitle = "home_charactersSectionTitle"
         case locationsSectionTitle = "home_locationsSectionTitle"
         case episodesSectionTitle = "home_episodesSectionTitle"
+        case viewMore = "home_viewMore"
     }
     
     enum authorInfo: String, Localizable {

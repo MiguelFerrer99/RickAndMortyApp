@@ -13,6 +13,7 @@ protocol HomeDataCollectionViewSectionHeaderViewProtocol: AnyObject {
 
 final class HomeDataCollectionViewSectionHeaderView: UICollectionReusableView {
     @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var viewMoreLabel: UILabel!
     @IBOutlet private weak var arrowImageView: UIImageView!
     private var category: HomeDataCategory? = nil
     private weak var delegate: HomeDataCollectionViewSectionHeaderViewProtocol?
@@ -32,11 +33,18 @@ final class HomeDataCollectionViewSectionHeaderView: UICollectionReusableView {
 private extension HomeDataCollectionViewSectionHeaderView {
     func setupView() {
         configureTitleLabel()
+        configureViewMoreLabel()
     }
     
     func configureTitleLabel() {
         let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
         titleLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 20)
+    }
+    
+    func configureViewMoreLabel() {
+        let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+        viewMoreLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 20)
+        viewMoreLabel.text = .home.viewMore.localized
     }
     
     @IBAction func didTapButton(_ sender: UIButton) {

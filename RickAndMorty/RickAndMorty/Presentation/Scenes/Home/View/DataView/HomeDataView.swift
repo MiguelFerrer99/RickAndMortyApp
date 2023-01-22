@@ -10,7 +10,6 @@ import Combine
 
 enum HomeDataViewState {
     case didTapTitleImage
-    case viewAll(HomeDataCategory)
     case viewMore(HomeDataCategory)
 }
 
@@ -42,10 +41,6 @@ final class HomeDataView: XibView {
         collectionView.configure(with: categories)
         moveImageToTop()
     }
-    
-    func updatedData(_ category: HomeDataCategory) {
-        collectionView.update(with: category)
-    }
 }
 
 private extension HomeDataView {
@@ -73,8 +68,6 @@ private extension HomeDataView {
                 switch state {
                 case .showTitleViewShadow(let show):
                     self.showTitleViewShadow(show)
-                case .viewAll(let category):
-                    self.subject.send(.viewAll(category))
                 case .viewMore(let category):
                     self.subject.send(.viewMore(category))
                 }

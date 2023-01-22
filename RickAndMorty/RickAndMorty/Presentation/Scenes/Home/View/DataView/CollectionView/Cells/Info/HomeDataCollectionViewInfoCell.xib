@@ -20,11 +20,11 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cAt-TH-dTp" userLabel="Container View">
                         <rect key="frame" x="0.0" y="0.0" width="170" height="177"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Sz9-qL-4Cm">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Sz9-qL-4Cm">
                                 <rect key="frame" x="0.0" y="0.0" width="170" height="177"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVj-05-rEZ" userLabel="Title Label">
-                                <rect key="frame" x="20" y="136.66666666666666" width="130" height="20.333333333333343"/>
+                                <rect key="frame" x="10" y="146.66666666666666" width="150" height="20.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -33,12 +33,12 @@
                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                         <constraints>
                             <constraint firstItem="Sz9-qL-4Cm" firstAttribute="leading" secondItem="cAt-TH-dTp" secondAttribute="leading" id="FYs-zg-m3N"/>
-                            <constraint firstAttribute="trailing" secondItem="dVj-05-rEZ" secondAttribute="trailing" constant="20" id="KW7-C7-X1g"/>
-                            <constraint firstItem="dVj-05-rEZ" firstAttribute="leading" secondItem="cAt-TH-dTp" secondAttribute="leading" constant="20" id="KuD-JV-rGF"/>
+                            <constraint firstAttribute="trailing" secondItem="dVj-05-rEZ" secondAttribute="trailing" constant="10" id="KW7-C7-X1g"/>
+                            <constraint firstItem="dVj-05-rEZ" firstAttribute="leading" secondItem="cAt-TH-dTp" secondAttribute="leading" constant="10" id="KuD-JV-rGF"/>
                             <constraint firstAttribute="bottom" secondItem="Sz9-qL-4Cm" secondAttribute="bottom" id="N7M-OA-hy5"/>
                             <constraint firstAttribute="trailing" secondItem="Sz9-qL-4Cm" secondAttribute="trailing" id="WnF-Cb-H7R"/>
-                            <constraint firstAttribute="bottom" secondItem="dVj-05-rEZ" secondAttribute="bottom" constant="20" id="biX-Ri-WF3"/>
-                            <constraint firstItem="dVj-05-rEZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="cAt-TH-dTp" secondAttribute="top" constant="20" id="gqg-7K-azf"/>
+                            <constraint firstAttribute="bottom" secondItem="dVj-05-rEZ" secondAttribute="bottom" constant="10" id="biX-Ri-WF3"/>
+                            <constraint firstItem="dVj-05-rEZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="cAt-TH-dTp" secondAttribute="top" constant="10" id="gqg-7K-azf"/>
                             <constraint firstItem="Sz9-qL-4Cm" firstAttribute="top" secondItem="cAt-TH-dTp" secondAttribute="top" id="r5T-4y-Xij"/>
                         </constraints>
                     </view>

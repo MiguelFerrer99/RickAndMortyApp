@@ -6,9 +6,9 @@
 //
 
 enum HomeDataCategory {
-    case characters(Pagination<CharacterRepresentable>)
-    case locations(Pagination<LocationRepresentable>)
-    case episodes(Pagination<EpisodeRepresentable>)
+    case characters([CharacterRepresentable])
+    case locations([LocationRepresentable])
+    case episodes([EpisodeRepresentable])
     
     func getTitle() -> String {
         switch self {

@@ -83,8 +83,6 @@ private extension HomeViewController {
                     self.loadingView.receivedError()
                 case .received(let categories):
                     self.showDataView(with: categories)
-                case .updated(let category):
-                    self.dataView.updatedData(category)
                 case .idle: return
                 }
             }.store(in: &subscriptions)
@@ -108,10 +106,8 @@ private extension HomeViewController {
                 switch state {
                 case .didTapTitleImage:
                     self.viewModel.openAuthorInfo()
-                case .viewAll(let category):
-                    self.viewModel.openCategoryDetail(category)
                 case .viewMore(let category):
-                    self.viewModel.viewMore(of: category)
+                    self.viewModel.openCategoryDetail(category)
                 }
             }.store(in: &subscriptions)
     }

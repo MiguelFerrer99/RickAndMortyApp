@@ -17,20 +17,38 @@ final class HomeDataCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabelTrailingConstraint: NSLayoutConstraint!
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupView()
     }
     
     func configure(with representable: HomeDataCollectionViewInfoCellRepresentable) {
-        titleLabel.text = representable.title
-        if let urlImage = representable.urlImage { setUrlImage(with: urlImage) }
+        switch representable.style {
+        case .character(let title, let urlImage):
+            guard let url = URL(string: urlImage) else { return }
+            titleLabel.text = title
+            imageView.load(url: url) { self.showTextAndImage(image: $0) }
+        case .location(let title, let imageName):
+            guard let image = UIImage(named: imageName) else { return }
+            titleLabel.text = title
+            showTextAndImage(image: image)
+        case .episode(let title, let imageName):
+            guard let image = UIImage(named: imageName) else { return }
+            titleLabel.text = title
+            showTextAndImage(image: image)
+        }
     }
 }
 
 private extension HomeDataCollectionViewInfoCell {
     func setupView() {
         configureContainerView()
+        configureImageView()
         configureTitleLabel()
     }
     
@@ -39,7 +57,7 @@ private extension HomeDataCollectionViewInfoCell {
         containerView.layer.cornerRadius = 10
     }
     
-    func configureImageView(with uiImage: UIImage) {
+    func configureImageView() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let gradientLayer = CAGradientLayer()
@@ -50,14 +68,13 @@ private extension HomeDataCollectionViewInfoCell {
                                     UIColor.black.withAlphaComponent(0.2).cgColor,
                                     UIColor.clear.cgColor]
             self.imageView.layer.addSublayer(gradientLayer)
-            self.imageView.image = uiImage
-            self.titleLabel.alpha = 1
+            self.imageView.alpha = 0
         }
     }
     
     func configureTitleLabel() {
         titleLabel.textColor = .white
-        titleLabel.font = .systemFont(ofSize: iPadDevice ? 30 : 16, weight: .semibold)
+        titleLabel.font = .systemFont(ofSize: iPadDevice ? 30 : 15, weight: .semibold)
         if iPadDevice {
             titleLabelLeadingConstraint.constant = 40
             titleLabelBottomConstraint.constant = 40
@@ -67,11 +84,15 @@ private extension HomeDataCollectionViewInfoCell {
         }
     }
     
-    func setUrlImage(with urlImage: String) {
-        guard let url = URL(string: urlImage) else { return }
-        URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
-            guard let self = self, let data = data, error.isNil, let uiImage = UIImage(data: data) else { return }
-            self.configureImageView(with: uiImage)
+    func showTextAndImage(image: UIImage) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.imageView.image = image
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                guard let self = self else { return }
+                self.imageView.alpha = 1
+                self.titleLabel.alpha = 1
+            }, completion: nil)
         }
     }
 }
