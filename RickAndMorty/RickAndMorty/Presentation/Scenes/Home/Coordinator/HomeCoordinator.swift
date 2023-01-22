@@ -42,7 +42,8 @@ extension DefaultHomeCoordinator: HomeCoordinator {
     func openCategoryDetail(_ category: HomeDataCategory) {
         switch category {
         case .characters:
-            print("Open Characters Screen")
+            let coordinator: CharactersCoordinator = dependencies.external.resolveCharactersCoordinator()
+            coordinator.start()
         case .locations:
             print("Open Locations Screen")
         case .episodes:

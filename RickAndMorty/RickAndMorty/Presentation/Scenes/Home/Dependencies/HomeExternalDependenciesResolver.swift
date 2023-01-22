@@ -7,32 +7,17 @@
 
 import UIKit
 
-protocol HomeExternalDependenciesResolver: CommonExternalDependenciesResolver {
+protocol HomeExternalDependenciesResolver {
     func resolve() -> UINavigationController
     func resolveAppDependencies() -> AppDependencies
     func resolveHomeCoordinator() -> HomeCoordinator
-    func resolve() -> HomeRepository
     func resolveAuthorInfoCoordinator() -> AuthorInfoCoordinator
+    func resolveCharactersCoordinator() -> CharactersCoordinator
+    func resolveAPIService() -> APIService
 }
 
 extension HomeExternalDependenciesResolver {
     func resolveHomeCoordinator() -> HomeCoordinator {
         DefaultHomeCoordinator(externalDependencies: self, navigationController: resolve())
-    }
-    
-    func resolve() -> HomeRepository {
-        DefaultHomeRepository(dependencies: self)
-    }
-    
-    func resolveCharactersUseCase() -> CharactersUseCase {
-        DefaultCharactersUseCase(repository: resolve())
-    }
-    
-    func resolveLocationsUseCase() -> LocationsUseCase {
-        DefaultLocationsUseCase(repository: resolve())
-    }
-    
-    func resolveEpisodesUseCase() -> EpisodesUseCase {
-        DefaultEpisodesUseCase(repository: resolve())
     }
 }

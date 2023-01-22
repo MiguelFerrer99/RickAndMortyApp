@@ -33,4 +33,5 @@ final class AppDependencies {
 }
 
 extension AppDependencies: HomeExternalDependenciesResolver,
-                            AuthorInfoExternalDependenciesResolver {}
+                            AuthorInfoExternalDependenciesResolver,
+                            CharactersExternalDependenciesResolver {}

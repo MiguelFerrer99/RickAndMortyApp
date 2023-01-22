@@ -50,18 +50,6 @@ private extension HomeViewModel {
         dependencies.resolve()
     }
     
-    var charactersUseCase: CharactersUseCase {
-        dependencies.external.resolveCharactersUseCase()
-    }
-    
-    var locationsUseCase: LocationsUseCase {
-        dependencies.external.resolveLocationsUseCase()
-    }
-    
-    var episodesUseCase: EpisodesUseCase {
-        dependencies.external.resolveEpisodesUseCase()
-    }
-    
     func sendStateSubject(_ stateSubject: HomeViewModelState) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }

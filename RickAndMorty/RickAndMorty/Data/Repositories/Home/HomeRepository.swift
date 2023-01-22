@@ -12,12 +12,12 @@ protocol HomeRepository {
 }
 
 final class DefaultHomeRepository {
-    private let dependencies: HomeExternalDependenciesResolver
+    private let dependencies: HomeDependenciesResolver
     private let apiService: APIService
     
-    init(dependencies: HomeExternalDependenciesResolver) {
+    init(dependencies: HomeDependenciesResolver) {
         self.dependencies = dependencies
-        self.apiService = dependencies.resolveAPIService()
+        self.apiService = dependencies.external.resolveAPIService()
     }
 }
 

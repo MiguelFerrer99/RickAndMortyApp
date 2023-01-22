@@ -47,7 +47,7 @@ private extension HomeDataCollectionViewSectionHeaderView {
         viewMoreLabel.text = .home.viewMore.localized
     }
     
-    @IBAction func didTapButton(_ sender: UIButton) {
+    @IBAction func didTapViewMoreButton(_ sender: UIButton) {
         guard let category = category else { return }
         delegate?.didTapButton(with: category)
     }
