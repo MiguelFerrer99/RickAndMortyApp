@@ -18,3 +18,12 @@
 /* AuthorInfo */
 "authorInfo_name" = "Miguel Ferrer Fornali";
 "authorInfo_openingMediaError" = "Ha ocurrido un error inesperado. Por favor, intentalo de nuevo más tarde";
+
+/* Characters */
+"characters_title" = "Personajes";
+
+/* Locations */
+"locations_title" = "Sitios";
+
+/* Episodes */
+"episodes_title" = "Episodios";

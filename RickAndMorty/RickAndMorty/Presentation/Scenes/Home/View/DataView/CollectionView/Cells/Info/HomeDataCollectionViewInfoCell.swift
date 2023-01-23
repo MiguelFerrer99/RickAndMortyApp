@@ -16,6 +16,7 @@ final class HomeDataCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabelTrailingConstraint: NSLayoutConstraint!
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+    private var imageCacheManager: ImageCacheManager?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -27,12 +28,20 @@ final class HomeDataCollectionViewInfoCell: UICollectionViewCell {
         setupView()
     }
     
-    func configure(with representable: HomeDataCollectionViewInfoCellRepresentable) {
+    func configure(with representable: HomeDataCollectionViewInfoCellRepresentable, and imageCacheManager: ImageCacheManager) {
+        self.imageCacheManager = imageCacheManager
         switch representable.style {
         case .character(let title, let urlImage):
             guard let url = URL(string: urlImage) else { return }
             titleLabel.text = title
-            imageView.load(url: url) { self.showTextAndImage(image: $0) }
+            if let image = imageCacheManager.get(name: urlImage) {
+                showTextAndImage(image: image)
+            } else {
+                imageView.load(url: url) {
+                    imageCacheManager.add(image: $0, name: urlImage)
+                    self.showTextAndImage(image: $0)
+                }
+            }
         case .location(let title, let imageName):
             guard let image = UIImage(named: imageName) else { return }
             titleLabel.text = title

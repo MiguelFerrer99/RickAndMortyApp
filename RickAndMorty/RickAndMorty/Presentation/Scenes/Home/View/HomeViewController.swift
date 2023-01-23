@@ -49,6 +49,10 @@ private extension HomeViewController {
         dependencies.external.resolve()
     }
     
+    var imageCacheManager: ImageCacheManager {
+        dependencies.external.resolveImageCacheManager()
+    }
+    
     func setupViews() {
         configureLoadingView()
         configureDataView()
@@ -113,7 +117,7 @@ private extension HomeViewController {
     }
     
     func configureNavigationBar() {
-        sceneNavigationController.setNavigationBarHidden(true, animated: false)
+        sceneNavigationController.setNavigationBarHidden(true, animated: true)
     }
     
     func showDataView(with categories: [HomeDataCategory]) {
@@ -122,7 +126,7 @@ private extension HomeViewController {
             guard let self = self else { return }
             self.loadingView.isHidden = true
             self.dataView.isHidden = false
-            self.dataView.receivedData(categories)
+            self.dataView.receivedData(categories, with: self.imageCacheManager)
         }
     }
 }

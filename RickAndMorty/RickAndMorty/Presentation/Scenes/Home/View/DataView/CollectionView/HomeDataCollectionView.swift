@@ -18,6 +18,7 @@ final class HomeDataCollectionView: UICollectionView {
     var publisher: AnyPublisher<HomeDataCollectionViewState, Never> { subject.eraseToAnyPublisher() }
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     private var categories: [HomeDataCategory]?
+    private var imageCacheManager: ImageCacheManager?
     
     init(frame: CGRect) {
         super.init(frame: frame, collectionViewLayout: .init())
@@ -29,8 +30,9 @@ final class HomeDataCollectionView: UICollectionView {
         setupView()
     }
     
-    func configure(with categories: [HomeDataCategory]) {
+    func configure(with categories: [HomeDataCategory], and imageCacheManager: ImageCacheManager) {
         self.categories = categories
+        self.imageCacheManager = imageCacheManager
     }
 }
 
@@ -106,7 +108,9 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let category = categories?[indexPath.section], let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? HomeDataCollectionViewInfoCell else { return UICollectionViewCell() }
+        guard let category = categories?[indexPath.section],
+              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? HomeDataCollectionViewInfoCell,
+              let imageCacheManager = imageCacheManager else { return UICollectionViewCell() }
         var representable: HomeDataCollectionViewInfoCellRepresentable
         switch category {
         case .characters(let items):
@@ -119,7 +123,7 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
             let episode = items[indexPath.item]
             representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .episode(episode.name, "Episode"))
         }
-        cell.configure(with: representable)
+        cell.configure(with: representable, and: imageCacheManager)
         return cell
     }
     
@@ -129,7 +133,12 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
 }
 
 extension HomeDataCollectionView: HomeDataCollectionViewSectionHeaderViewProtocol {
-    func didTapButton(with category: HomeDataCategory) {
+    func didTapTitle(category: HomeDataCategory) {
+        let indexPath = IndexPath(item: 0, section: category.getIndex())
+        scrollToItem(at: indexPath, at: .left, animated: true)
+    }
+    
+    func didTapViewMore(category: HomeDataCategory) {
         subject.send(.viewMore(category))
     }
 }

@@ -8,13 +8,14 @@
 import UIKit
 
 protocol HomeDataCollectionViewSectionHeaderViewProtocol: AnyObject {
-    func didTapButton(with category: HomeDataCategory)
+    func didTapTitle(category: HomeDataCategory)
+    func didTapViewMore(category: HomeDataCategory)
 }
 
 final class HomeDataCollectionViewSectionHeaderView: UICollectionReusableView {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var viewMoreLabel: UILabel!
-    @IBOutlet private weak var arrowImageView: UIImageView!
+    @IBOutlet private weak var stackButtonView: UIStackView!
     private var category: HomeDataCategory? = nil
     private weak var delegate: HomeDataCollectionViewSectionHeaderViewProtocol?
     
@@ -34,11 +35,15 @@ private extension HomeDataCollectionViewSectionHeaderView {
     func setupView() {
         configureTitleLabel()
         configureViewMoreLabel()
+        configureStackButtonView()
     }
     
     func configureTitleLabel() {
         let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
         titleLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 20)
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTitleLabel))
+        titleLabel.addGestureRecognizer(gestureRecognizer)
+        titleLabel.isUserInteractionEnabled = true
     }
     
     func configureViewMoreLabel() {
@@ -47,8 +52,19 @@ private extension HomeDataCollectionViewSectionHeaderView {
         viewMoreLabel.text = .home.viewMore.localized
     }
     
-    @IBAction func didTapViewMoreButton(_ sender: UIButton) {
+    func configureStackButtonView() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapStackButtonView))
+        stackButtonView.addGestureRecognizer(gestureRecognizer)
+        stackButtonView.isUserInteractionEnabled = true
+    }
+    
+    @objc func didTapStackButtonView() {
         guard let category = category else { return }
-        delegate?.didTapButton(with: category)
+        delegate?.didTapViewMore(category: category)
+    }
+    
+    @objc func didTapTitleLabel() {
+        guard let category = category else { return }
+        delegate?.didTapTitle(category: category)
     }
 }

@@ -45,9 +45,11 @@ extension DefaultHomeCoordinator: HomeCoordinator {
             let coordinator: CharactersCoordinator = dependencies.external.resolveCharactersCoordinator()
             coordinator.start()
         case .locations:
-            print("Open Locations Screen")
+            let coordinator: LocationsCoordinator = dependencies.external.resolveLocationsCoordinator()
+            coordinator.start()
         case .episodes:
-            print("Open Episodes Screen")
+            let coordinator: EpisodesCoordinator = dependencies.external.resolveEpisodesCoordinator()
+            coordinator.start()
         }
     }
 }

@@ -37,8 +37,8 @@ final class HomeDataView: XibView {
         bind()
     }
     
-    func receivedData(_ categories: [HomeDataCategory]) {
-        collectionView.configure(with: categories)
+    func receivedData(_ categories: [HomeDataCategory], with imageCacheManager: ImageCacheManager) {
+        collectionView.configure(with: categories, and: imageCacheManager)
         moveImageToTop()
     }
 }

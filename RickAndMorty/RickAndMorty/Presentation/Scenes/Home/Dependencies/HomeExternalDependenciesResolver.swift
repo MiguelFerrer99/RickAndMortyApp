@@ -13,7 +13,10 @@ protocol HomeExternalDependenciesResolver {
     func resolveHomeCoordinator() -> HomeCoordinator
     func resolveAuthorInfoCoordinator() -> AuthorInfoCoordinator
     func resolveCharactersCoordinator() -> CharactersCoordinator
+    func resolveLocationsCoordinator() -> LocationsCoordinator
+    func resolveEpisodesCoordinator() -> EpisodesCoordinator
     func resolveAPIService() -> APIService
+    func resolveImageCacheManager() -> ImageCacheManager
 }
 
 extension HomeExternalDependenciesResolver {

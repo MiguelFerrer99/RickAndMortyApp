@@ -48,4 +48,16 @@ extension String {
         case name = "authorInfo_name"
         case openingMediaError = "authorInfo_openingMediaError"
     }
+    
+    enum characters: String, Localizable {
+        case title = "characters_title"
+    }
+    
+    enum locations: String, Localizable {
+        case title = "locations_title"
+    }
+    
+    enum episodes: String, Localizable {
+        case title = "episodes_title"
+    }
 }

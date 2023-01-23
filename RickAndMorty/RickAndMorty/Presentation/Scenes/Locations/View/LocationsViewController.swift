@@ -1,23 +1,23 @@
 //
-//  CharactersViewController.swift
+//  LocationsViewController.swift
 //  RickAndMorty
 //
-//  Created by Miguel Ferrer Fornali on 22/1/23.
+//  Created by Miguel Ferrer Fornali on 23/1/23.
 //
 
 import UIKit
 import Combine
 
-final class CharactersViewController: UIViewController, UIGestureRecognizerDelegate {
+final class LocationsViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet private weak var containerView: UIView!
-    private let viewModel: CharactersViewModel
-    private let dependencies: CharactersDependenciesResolver
+    private let viewModel: LocationsViewModel
+    private let dependencies: LocationsDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
 
-    init(dependencies: CharactersDependenciesResolver) {
+    init(dependencies: LocationsDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
-        super.init(nibName: "CharactersViewController", bundle: .main)
+        super.init(nibName: "LocationsViewController", bundle: .main)
     }
     
     @available(*, unavailable)
@@ -38,13 +38,13 @@ final class CharactersViewController: UIViewController, UIGestureRecognizerDeleg
     }
 }
 
-private extension CharactersViewController {
+private extension LocationsViewController {
     var sceneNavigationController: UINavigationController {
         dependencies.external.resolve()
     }
     
     func setupView() {
-        // Configure views        
+        // Configure views
     }
     
     func bind() {
@@ -57,7 +57,7 @@ private extension CharactersViewController {
     
     func configureNavigationBar() {
         sceneNavigationController.setNavigationBarHidden(false, animated: true)
-        title = .characters.title.localized
+        title = .locations.title.localized
         let backItemImage = UIImage(systemName: "arrow.left")
         sceneNavigationController.navigationBar.backIndicatorImage = backItemImage
         sceneNavigationController.navigationBar.backIndicatorTransitionMaskImage = backItemImage

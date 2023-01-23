@@ -30,8 +30,14 @@ final class AppDependencies {
     func resolveAPIService() -> APIService {
         DefaultAPIService()
     }
+    
+    func resolveImageCacheManager() -> ImageCacheManager {
+        ImageCacheManager()
+    }
 }
 
 extension AppDependencies: HomeExternalDependenciesResolver,
                             AuthorInfoExternalDependenciesResolver,
-                            CharactersExternalDependenciesResolver {}
+                            CharactersExternalDependenciesResolver,
+                            LocationsExternalDependenciesResolver,
+                            EpisodesExternalDependenciesResolver {}

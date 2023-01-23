@@ -17,4 +17,12 @@ enum HomeDataCategory {
         case .episodes: return .home.episodesSectionTitle.localized
         }
     }
+    
+    func getIndex() -> Int {
+        switch self {
+        case .characters: return 0
+        case .locations: return 1
+        case .episodes: return 2
+        }
+    }
 }
