@@ -26,3 +26,5 @@ enum HomeDataCategory {
         }
     }
 }
+
+typealias CategoriesLastPages = (isLastPageCharacters: Bool, isLastPageLocations: Bool, isLastPageEpisodes: Bool)

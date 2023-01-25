@@ -10,6 +10,8 @@ import UIKit
 protocol EpisodesExternalDependenciesResolver {
     func resolve() -> UINavigationController
     func resolveEpisodesCoordinator() -> EpisodesCoordinator
+    func resolveAPIService() -> APIService
+    func resolveImageCacheManager() -> ImageCacheManager
 }
 
 extension EpisodesExternalDependenciesResolver {

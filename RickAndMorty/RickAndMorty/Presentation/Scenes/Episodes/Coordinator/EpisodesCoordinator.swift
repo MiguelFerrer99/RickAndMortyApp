@@ -8,7 +8,7 @@
 import UIKit
 
 protocol EpisodesCoordinator {
-    func start(with episodes: [EpisodeRepresentable])
+    func start(with representable: EpisodesViewModelRepresentable)
 }
 
 final class DefaultEpisodesCoordinator {
@@ -25,8 +25,8 @@ final class DefaultEpisodesCoordinator {
 }
 
 extension DefaultEpisodesCoordinator: EpisodesCoordinator {
-    func start(with episodes: [EpisodeRepresentable]) {
-        dependencies.episodes = episodes
+    func start(with representable: EpisodesViewModelRepresentable) {
+        dependencies.representable = representable
         navigationController.pushViewController(dependencies.resolve(), animated: true)
     }
 }
@@ -35,7 +35,7 @@ private extension DefaultEpisodesCoordinator {
     struct DefaultEpisodesDependenciesResolver: EpisodesDependenciesResolver {
         let externalDependencies: EpisodesExternalDependenciesResolver
         let coordinator: EpisodesCoordinator
-        var episodes: [EpisodeRepresentable]?
+        var representable: EpisodesViewModelRepresentable?
         
         var external: EpisodesExternalDependenciesResolver {
             externalDependencies
@@ -46,7 +46,7 @@ private extension DefaultEpisodesCoordinator {
         }
         
         func resolve() -> EpisodesViewModel {
-            EpisodesViewModel(dependencies: self, episodes: episodes!)
+            EpisodesViewModel(dependencies: self, representable: representable)
         }
     }
 }

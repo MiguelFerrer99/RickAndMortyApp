@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CharactersViewController" customModule="Rick___Morty" customModuleProvider="target">
             <connections>
+                <outlet property="collectionView" destination="DDe-MP-RTc" id="TsH-Jn-OOs"/>
                 <outlet property="containerView" destination="mlc-wE-MjI" id="A3o-hJ-PJp"/>
                 <outlet property="view" destination="iN0-l3-epB" id="XGf-FR-SLG"/>
             </connections>
@@ -22,7 +23,25 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mlc-wE-MjI" userLabel="Container View">
                     <rect key="frame" x="0.0" y="59" width="389" height="920"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="DDe-MP-RTc" customClass="CharactersCollectionView" customModule="Rick___Morty" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="389" height="920"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cY6-a2-N38">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="DDe-MP-RTc" firstAttribute="top" secondItem="mlc-wE-MjI" secondAttribute="top" id="qGj-LZ-OtW"/>
+                        <constraint firstAttribute="bottom" secondItem="DDe-MP-RTc" secondAttribute="bottom" id="r3j-ze-oyv"/>
+                        <constraint firstAttribute="trailing" secondItem="DDe-MP-RTc" secondAttribute="trailing" id="t2x-zp-Z7D"/>
+                        <constraint firstItem="DDe-MP-RTc" firstAttribute="leading" secondItem="mlc-wE-MjI" secondAttribute="leading" id="zQR-r0-ktj"/>
+                    </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="WhQ-dN-Ogq"/>

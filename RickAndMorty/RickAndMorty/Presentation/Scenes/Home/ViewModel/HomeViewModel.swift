@@ -21,6 +21,7 @@ final class HomeViewModel {
     private let stateSubject = CurrentValueSubject<HomeViewModelState, Never>(.idle)
     var state: AnyPublisher<HomeViewModelState, Never>
     private var categories: [HomeDataCategory] = []
+    private var categoriesLastPages: CategoriesLastPages = (true, true, true)
 
     init(dependencies: HomeDependenciesResolver) {
         self.dependencies = dependencies
@@ -37,7 +38,17 @@ final class HomeViewModel {
     }
     
     func openCategoryDetail(_ category: HomeDataCategory) {
-        coordinator.openCategoryDetail(category)
+        switch category {
+        case .characters(let info):
+            let representable = DefaultCharactersViewModelRepresentable(characters: info, isLastPage: categoriesLastPages.isLastPageCharacters)
+            coordinator.openCharacters(with: representable)
+        case .locations(let info):
+            let representable = DefaultLocationsViewModelRepresentable(locations: info, isLastPage: categoriesLastPages.isLastPageLocations)
+            coordinator.openLocations(with: representable)
+        case .episodes(let info):
+            let representable = DefaultEpisodesViewModelRepresentable(episodes: info, isLastPage: categoriesLastPages.isLastPageEpisodes)
+            coordinator.openEpisodes(with: representable)
+        }
     }
 }
 
@@ -61,12 +72,15 @@ private extension HomeViewModel {
         Task {
             let homeInfo = await homeUseCase.getInfo()
             if let charactersInfo = homeInfo.charactersInfo {
+                categoriesLastPages.isLastPageCharacters = charactersInfo.info.isLast
                 categories.append(.characters(charactersInfo.results))
             }
             if let locationsInfo = homeInfo.locationsInfo {
+                categoriesLastPages.isLastPageLocations = locationsInfo.info.isLast
                 categories.append(.locations(locationsInfo.results))
             }
             if let episodesInfo = homeInfo.episodesInfo {
+                categoriesLastPages.isLastPageEpisodes = episodesInfo.info.isLast
                 categories.append(.episodes(episodesInfo.results))
             }
             sendStateSubject(.received(categories))

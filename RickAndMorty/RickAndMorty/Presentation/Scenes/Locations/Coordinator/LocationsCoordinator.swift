@@ -8,7 +8,7 @@
 import UIKit
 
 protocol LocationsCoordinator {
-    func start(with locations: [LocationRepresentable])
+    func start(with representable: LocationsViewModelRepresentable)
 }
 
 final class DefaultLocationsCoordinator {
@@ -25,8 +25,8 @@ final class DefaultLocationsCoordinator {
 }
 
 extension DefaultLocationsCoordinator: LocationsCoordinator {
-    func start(with locations: [LocationRepresentable]) {
-        dependencies.locations = locations
+    func start(with representable: LocationsViewModelRepresentable) {
+        dependencies.representable = representable
         navigationController.pushViewController(dependencies.resolve(), animated: true)
     }
 }
@@ -35,7 +35,7 @@ private extension DefaultLocationsCoordinator {
     struct DefaultLocationsDependenciesResolver: LocationsDependenciesResolver {
         let externalDependencies: LocationsExternalDependenciesResolver
         let coordinator: LocationsCoordinator
-        var locations: [LocationRepresentable]?
+        var representable: LocationsViewModelRepresentable?
         
         var external: LocationsExternalDependenciesResolver {
             externalDependencies
@@ -46,7 +46,7 @@ private extension DefaultLocationsCoordinator {
         }
         
         func resolve() -> LocationsViewModel {
-            LocationsViewModel(dependencies: self, locations: locations!)
+            LocationsViewModel(dependencies: self, representable: representable)
         }
     }
 }

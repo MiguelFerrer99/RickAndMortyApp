@@ -16,11 +16,11 @@ final class LocationsViewModel {
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<LocationsViewModelState, Never>(.idle)
     var state: AnyPublisher<LocationsViewModelState, Never>
-    private let locations: [LocationRepresentable]
+    private let representable: LocationsViewModelRepresentable?
 
-    init(dependencies: LocationsDependenciesResolver, locations: [LocationRepresentable]) {
+    init(dependencies: LocationsDependenciesResolver, representable: LocationsViewModelRepresentable?) {
         self.dependencies = dependencies
-        self.locations = locations
+        self.representable = representable
         state = stateSubject.eraseToAnyPublisher()
     }
     

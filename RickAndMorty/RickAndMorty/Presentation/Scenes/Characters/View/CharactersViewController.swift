@@ -10,6 +10,7 @@ import Combine
 
 final class CharactersViewController: UIViewController {
     @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var collectionView: CharactersCollectionView!
     private let viewModel: CharactersViewModel
     private let dependencies: CharactersDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
@@ -27,7 +28,6 @@ final class CharactersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
         bind()
         viewModel.viewDidLoad()
     }
@@ -43,8 +43,8 @@ private extension CharactersViewController {
         dependencies.external.resolve()
     }
     
-    func setupView() {
-        // Configure views        
+    var imageCacheManager: ImageCacheManager {
+        dependencies.external.resolveImageCacheManager()
     }
     
     func bind() {
@@ -52,7 +52,15 @@ private extension CharactersViewController {
     }
     
     func bindViewModel() {
-        // Bind ViewModel states
+        viewModel.state
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .charactersReceived(let pager):
+                    self.collectionView.configure(with: pager, and: self.imageCacheManager)
+                case .idle: return
+                }
+            }.store(in: &subscriptions)
     }
     
     func configureNavigationBar() {

@@ -16,11 +16,11 @@ final class EpisodesViewModel {
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<EpisodesViewModelState, Never>(.idle)
     var state: AnyPublisher<EpisodesViewModelState, Never>
-    private let episodes: [EpisodeRepresentable]
+    private let representable: EpisodesViewModelRepresentable?
 
-    init(dependencies: EpisodesDependenciesResolver, episodes: [EpisodeRepresentable]) {
+    init(dependencies: EpisodesDependenciesResolver, representable: EpisodesViewModelRepresentable?) {
         self.dependencies = dependencies
-        self.episodes = episodes
+        self.representable = representable
         state = stateSubject.eraseToAnyPublisher()
     }
     
