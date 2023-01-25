@@ -16,14 +16,16 @@ final class EpisodesViewModel {
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<EpisodesViewModelState, Never>(.idle)
     var state: AnyPublisher<EpisodesViewModelState, Never>
+    private let episodes: [EpisodeRepresentable]
 
-    init(dependencies: EpisodesDependenciesResolver) {
+    init(dependencies: EpisodesDependenciesResolver, episodes: [EpisodeRepresentable]) {
         self.dependencies = dependencies
+        self.episodes = episodes
         state = stateSubject.eraseToAnyPublisher()
     }
     
     func viewDidLoad() {
-        // Subscribe events and execute UseCases
+        // Execute UseCases
     }
 }
 
@@ -32,9 +34,3 @@ private extension EpisodesViewModel {
         dependencies.resolve()
     }
 }
-
-// MARK: Subscriptions
-private extension EpisodesViewModel {}
-
-// MARK: Publishers
-private extension EpisodesViewModel {}

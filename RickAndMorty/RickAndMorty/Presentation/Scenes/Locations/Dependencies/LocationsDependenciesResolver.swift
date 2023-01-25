@@ -18,8 +18,4 @@ extension LocationsDependenciesResolver {
     func resolve() -> LocationsViewController {
         LocationsViewController(dependencies: self)
     }
-    
-    func resolve() -> LocationsViewModel {
-        LocationsViewModel(dependencies: self)
-    }
 }

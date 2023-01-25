@@ -41,15 +41,15 @@ extension DefaultHomeCoordinator: HomeCoordinator {
     
     func openCategoryDetail(_ category: HomeDataCategory) {
         switch category {
-        case .characters:
+        case .characters(let info):
             let coordinator: CharactersCoordinator = dependencies.external.resolveCharactersCoordinator()
-            coordinator.start()
-        case .locations:
+            coordinator.start(with: info)
+        case .locations(let info):
             let coordinator: LocationsCoordinator = dependencies.external.resolveLocationsCoordinator()
-            coordinator.start()
-        case .episodes:
+            coordinator.start(with: info)
+        case .episodes(let info):
             let coordinator: EpisodesCoordinator = dependencies.external.resolveEpisodesCoordinator()
-            coordinator.start()
+            coordinator.start(with: info)
         }
     }
 }

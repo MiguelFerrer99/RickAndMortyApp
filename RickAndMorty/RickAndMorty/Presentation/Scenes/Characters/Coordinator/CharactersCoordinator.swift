@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CharactersCoordinator {
-    func start()
+    func start(with: [CharacterRepresentable])
 }
 
 final class DefaultCharactersCoordinator {
@@ -25,7 +25,8 @@ final class DefaultCharactersCoordinator {
 }
 
 extension DefaultCharactersCoordinator: CharactersCoordinator {
-    func start() {
+    func start(with characters: [CharacterRepresentable]) {
+        dependencies.characters = characters
         navigationController.pushViewController(dependencies.resolve(), animated: true)
     }
 }
@@ -34,6 +35,7 @@ private extension DefaultCharactersCoordinator {
     struct DefaultCharactersDependenciesResolver: CharactersDependenciesResolver {
         let externalDependencies: CharactersExternalDependenciesResolver
         let coordinator: CharactersCoordinator
+        var characters: [CharacterRepresentable]?
         
         var external: CharactersExternalDependenciesResolver {
             externalDependencies
@@ -41,6 +43,10 @@ private extension DefaultCharactersCoordinator {
         
         func resolve() -> CharactersCoordinator {
             coordinator
+        }
+        
+        func resolve() -> CharactersViewModel {
+            CharactersViewModel(dependencies: self, characters: characters!)
         }
     }
 }

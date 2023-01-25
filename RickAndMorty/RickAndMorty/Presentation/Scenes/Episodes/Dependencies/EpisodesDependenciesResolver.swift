@@ -18,8 +18,4 @@ extension EpisodesDependenciesResolver {
     func resolve() -> EpisodesViewController {
         EpisodesViewController(dependencies: self)
     }
-    
-    func resolve() -> EpisodesViewModel {
-        EpisodesViewModel(dependencies: self)
-    }
 }

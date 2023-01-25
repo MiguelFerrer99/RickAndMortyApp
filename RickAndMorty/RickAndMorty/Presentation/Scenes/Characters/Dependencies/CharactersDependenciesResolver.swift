@@ -18,8 +18,4 @@ extension CharactersDependenciesResolver {
     func resolve() -> CharactersViewController {
         CharactersViewController(dependencies: self)
     }
-    
-    func resolve() -> CharactersViewModel {
-        CharactersViewModel(dependencies: self)
-    }
 }

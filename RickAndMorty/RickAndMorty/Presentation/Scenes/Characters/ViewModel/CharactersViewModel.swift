@@ -16,14 +16,16 @@ final class CharactersViewModel {
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<CharactersViewModelState, Never>(.idle)
     var state: AnyPublisher<CharactersViewModelState, Never>
+    private let characters: [CharacterRepresentable]
 
-    init(dependencies: CharactersDependenciesResolver) {
+    init(dependencies: CharactersDependenciesResolver, characters: [CharacterRepresentable]) {
         self.dependencies = dependencies
+        self.characters = characters
         state = stateSubject.eraseToAnyPublisher()
     }
     
     func viewDidLoad() {
-        // Subscribe events and execute UseCases
+        // Execute UseCases
     }
 }
 
@@ -32,9 +34,3 @@ private extension CharactersViewModel {
         dependencies.resolve()
     }
 }
-
-// MARK: Subscriptions
-private extension CharactersViewModel {}
-
-// MARK: Publishers
-private extension CharactersViewModel {}
