@@ -37,6 +37,7 @@ extension String {
     }
     
     enum home: String, Localizable {
+        case title = "home_title"
         case loadingErrorTitle = "home_loadingErrorTitle"
         case charactersSectionTitle = "home_charactersSectionTitle"
         case locationsSectionTitle = "home_locationsSectionTitle"

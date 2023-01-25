@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-final class CharactersViewController: UIViewController, UIGestureRecognizerDelegate {
+final class CharactersViewController: UIViewController {
     @IBOutlet private weak var containerView: UIView!
     private let viewModel: CharactersViewModel
     private let dependencies: CharactersDependenciesResolver
@@ -56,13 +56,6 @@ private extension CharactersViewController {
     }
     
     func configureNavigationBar() {
-        sceneNavigationController.setNavigationBarHidden(false, animated: true)
-        title = .characters.title.localized
-        let backItemImage = UIImage(systemName: "arrow.left")
-        sceneNavigationController.navigationBar.backIndicatorImage = backItemImage
-        sceneNavigationController.navigationBar.backIndicatorTransitionMaskImage = backItemImage
-        sceneNavigationController.navigationBar.backItem?.title = ""
-        sceneNavigationController.interactivePopGestureRecognizer?.delegate = self
-        sceneNavigationController.interactivePopGestureRecognizer?.isEnabled = true
+        configureNavigationBar(with: .characters.title.localized)
     }
 }

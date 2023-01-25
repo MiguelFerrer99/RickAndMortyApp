@@ -9,6 +9,7 @@
 "tryAgainButtonView_title" = "Inténtalo de nuevo";
 
 /* Home */
+"home_title" = "Home";
 "home_loadingErrorTitle" = "Ha ocurrido un error inesperado. Por favor, intentalo de nuevo más tarde";
 "home_charactersSectionTitle" = "Personajes";
 "home_locationsSectionTitle" = "Sitios";

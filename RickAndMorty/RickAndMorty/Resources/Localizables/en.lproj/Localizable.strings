@@ -9,6 +9,7 @@
 "tryAgainButtonView_title" = "Try again";
 
 /* Home */
+"home_title" = "Home";
 "home_loadingErrorTitle" = "An unexpected error has occurred. Please try again later";
 "home_charactersSectionTitle" = "Characters";
 "home_locationsSectionTitle" = "Locations";

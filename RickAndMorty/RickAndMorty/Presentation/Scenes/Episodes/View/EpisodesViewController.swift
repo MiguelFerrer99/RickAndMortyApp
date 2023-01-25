@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-final class EpisodesViewController: UIViewController, UIGestureRecognizerDelegate {
+final class EpisodesViewController: UIViewController {
     @IBOutlet private weak var containerView: UIView!
     private let viewModel: EpisodesViewModel
     private let dependencies: EpisodesDependenciesResolver
@@ -56,13 +56,6 @@ private extension EpisodesViewController {
     }
     
     func configureNavigationBar() {
-        sceneNavigationController.setNavigationBarHidden(false, animated: true)
-        title = .episodes.title.localized
-        let backItemImage = UIImage(systemName: "arrow.left")
-        sceneNavigationController.navigationBar.backIndicatorImage = backItemImage
-        sceneNavigationController.navigationBar.backIndicatorTransitionMaskImage = backItemImage
-        sceneNavigationController.navigationBar.backItem?.title = ""
-        sceneNavigationController.interactivePopGestureRecognizer?.delegate = self
-        sceneNavigationController.interactivePopGestureRecognizer?.isEnabled = true
+        configureNavigationBar(with: .episodes.title.localized)
     }
 }
