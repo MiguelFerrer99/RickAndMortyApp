@@ -10,6 +10,7 @@ import Combine
 import Foundation
 
 enum EpisodesCollectionViewState {
+    case showNavigationBarShadow(Bool)
     case viewMore
 }
 
@@ -86,5 +87,9 @@ extension EpisodesCollectionView: UICollectionViewDelegate, UICollectionViewData
         let minSpacingColumns: CGFloat = 10
         let cellWidth = frame.width/2 - (leftContentInset + minSpacingColumns)
         return CGSize(width: cellWidth, height: cellWidth)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        subject.send(.showNavigationBarShadow(scrollView.contentOffset.y > 0))
     }
 }

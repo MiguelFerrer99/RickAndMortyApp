@@ -1,22 +1,23 @@
 //
-//  CharactersCollectionView.swift
+//  LocationsCollectionView.swift
 //  RickAndMorty
 //
-//  Created by Miguel Ferrer Fornali on 25/1/23.
+//  Created by Miguel Ferrer Fornali on 26/1/23.
 //
 
 import UIKit
 import Combine
 import Foundation
 
-enum CharactersCollectionViewState {
+enum LocationsCollectionViewState {
+    case showNavigationBarShadow(Bool)
     case viewMore
 }
 
-final class CharactersCollectionView: UICollectionView {
-    private var subject = PassthroughSubject<CharactersCollectionViewState, Never>()
-    var publisher: AnyPublisher<CharactersCollectionViewState, Never> { subject.eraseToAnyPublisher() }
-    private var charactersPager: Pagination<CharacterRepresentable>?
+final class LocationsCollectionView: UICollectionView {
+    private var subject = PassthroughSubject<LocationsCollectionViewState, Never>()
+    var publisher: AnyPublisher<LocationsCollectionViewState, Never> { subject.eraseToAnyPublisher() }
+    private var locationsPager: Pagination<LocationRepresentable>?
     private var imageCacheManager: ImageCacheManager?
     
     init(frame: CGRect) {
@@ -29,16 +30,16 @@ final class CharactersCollectionView: UICollectionView {
         setupView()
     }
     
-    func configure(with charactersPager: Pagination<CharacterRepresentable>, and imageCacheManager: ImageCacheManager) {
-        self.charactersPager = charactersPager
+    func configure(with locationsPager: Pagination<LocationRepresentable>, and imageCacheManager: ImageCacheManager) {
+        self.locationsPager = locationsPager
         self.imageCacheManager = imageCacheManager
         reloadData()
     }
 }
 
-private extension CharactersCollectionView {
+private extension LocationsCollectionView {
     var infoCellIdentifier: String {
-        String(describing: type(of: CharactersCollectionViewInfoCell()))
+        String(describing: type(of: LocationsCollectionViewInfoCell()))
     }
     
     func setupView() {
@@ -54,23 +55,23 @@ private extension CharactersCollectionView {
     }
     
     func shouldLoadMoreItems(index: Int) -> Bool {
-        guard let charactersPager = charactersPager else { return false }
+        guard let locationsPager = locationsPager else { return false }
         let itemsLeftToLastItem = 6
-        return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!charactersPager.isLastPage)
+        return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!locationsPager.isLastPage)
     }
 }
 
-extension CharactersCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension LocationsCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let charactersPager = charactersPager else { return 0 }
-        return charactersPager.getItems().count
+        guard let locationsPager = locationsPager else { return 0 }
+        return locationsPager.getItems().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? CharactersCollectionViewInfoCell,
-              let character = charactersPager?.getItems()[indexPath.item],
+        guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? LocationsCollectionViewInfoCell,
+              let location = locationsPager?.getItems()[indexPath.item],
               let imageCacheManager = imageCacheManager else { return UICollectionViewCell() }
-        let representable = DefaultCharactersCollectionViewInfoCellRepresentable(title: character.name, urlImage: character.urlImage)
+        let representable = DefaultLocationsCollectionViewInfoCellRepresentable(title: location.name)
         cell.configure(with: representable, and: imageCacheManager)
         return cell
     }
@@ -86,5 +87,9 @@ extension CharactersCollectionView: UICollectionViewDelegate, UICollectionViewDa
         let minSpacingColumns: CGFloat = 10
         let cellWidth = frame.width/2 - (leftContentInset + minSpacingColumns)
         return CGSize(width: cellWidth, height: cellWidth)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        subject.send(.showNavigationBarShadow(scrollView.contentOffset.y > 0))
     }
 }

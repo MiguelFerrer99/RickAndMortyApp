@@ -14,6 +14,7 @@ final class CharactersViewController: UIViewController {
     private let viewModel: CharactersViewModel
     private let dependencies: CharactersDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
+    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
 
     init(dependencies: CharactersDependenciesResolver) {
         self.dependencies = dependencies
@@ -69,6 +70,8 @@ private extension CharactersViewController {
             .sink { [weak self] state in
                 guard let self = self else { return }
                 switch state {
+                case .showNavigationBarShadow(let show):
+                    self.showNavigationBarShadow(show)
                 case .viewMore:
                     self.viewModel.viewMoreCharacters()
                 }
@@ -77,5 +80,22 @@ private extension CharactersViewController {
     
     func configureNavigationBar() {
         configureNavigationBar(with: .characters.title.localized)
+        setupNavigationBarShadow()
+    }
+    
+    func setupNavigationBarShadow() {
+        sceneNavigationController.navigationBar.clipsToBounds = false
+        sceneNavigationController.navigationBar.layer.masksToBounds = false
+        sceneNavigationController.navigationBar.layer.shadowRadius = iPadDevice ? 10 : 5
+        sceneNavigationController.navigationBar.layer.shadowOpacity = 0
+        sceneNavigationController.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        sceneNavigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
+    }
+    
+    func showNavigationBarShadow(_ show: Bool) {
+        UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
+            guard let self = self else { return }
+            self.sceneNavigationController.navigationBar.layer.shadowOpacity = show ? 1 : 0
+        }
     }
 }

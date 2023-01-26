@@ -14,6 +14,7 @@ final class LocationsViewController: UIViewController {
     private let viewModel: LocationsViewModel
     private let dependencies: LocationsDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
+    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
 
     init(dependencies: LocationsDependenciesResolver) {
         self.dependencies = dependencies
@@ -69,6 +70,8 @@ private extension LocationsViewController {
             .sink { [weak self] state in
                 guard let self = self else { return }
                 switch state {
+                case .showNavigationBarShadow(let show):
+                    self.showNavigationBarShadow(show)
                 case .viewMore:
                     self.viewModel.viewMoreLocations()
                 }
@@ -77,5 +80,22 @@ private extension LocationsViewController {
     
     func configureNavigationBar() {
         configureNavigationBar(with: .locations.title.localized)
+        setupNavigationBarShadow()
+    }
+    
+    func setupNavigationBarShadow() {
+        sceneNavigationController.navigationBar.clipsToBounds = false
+        sceneNavigationController.navigationBar.layer.masksToBounds = false
+        sceneNavigationController.navigationBar.layer.shadowRadius = iPadDevice ? 10 : 5
+        sceneNavigationController.navigationBar.layer.shadowOpacity = 0
+        sceneNavigationController.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        sceneNavigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
+    }
+    
+    func showNavigationBarShadow(_ show: Bool) {
+        UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
+            guard let self = self else { return }
+            self.sceneNavigationController.navigationBar.layer.shadowOpacity = show ? 1 : 0
+        }
     }
 }
