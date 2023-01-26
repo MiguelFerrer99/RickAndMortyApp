@@ -31,6 +31,10 @@ final class LocationsViewModel {
         setLocations()
     }
     
+    func goBack() {
+        coordinator.back()
+    }
+    
     func viewMoreLocations() {
         loadMoreLocations()
     }

@@ -31,8 +31,16 @@ final class CharactersViewModel {
         setCharacters()
     }
     
+    func goBack() {
+        coordinator.back()
+    }
+    
     func viewMoreCharacters() {
         loadMoreCharacters()
+    }
+    
+    func searchCharaters(with text: String) {
+        print(text)
     }
 }
 

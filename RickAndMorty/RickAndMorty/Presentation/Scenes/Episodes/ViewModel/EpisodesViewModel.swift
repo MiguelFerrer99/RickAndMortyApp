@@ -31,6 +31,10 @@ final class EpisodesViewModel {
         setEpisodes()
     }
     
+    func goBack() {
+        coordinator.back()
+    }
+    
     func viewMoreEpisodes() {
         loadMoreEpisodes()
     }

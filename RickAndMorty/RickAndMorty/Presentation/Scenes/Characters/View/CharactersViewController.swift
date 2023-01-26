@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 final class CharactersViewController: UIViewController {
-    @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var searchView: CharactersSearchView!
     @IBOutlet private weak var collectionView: CharactersCollectionView!
     private let viewModel: CharactersViewModel
     private let dependencies: CharactersDependenciesResolver
@@ -50,6 +50,7 @@ private extension CharactersViewController {
     
     func bind() {
         bindViewModel()
+        bindSearchView()
         bindCollectionView()
     }
     
@@ -61,6 +62,17 @@ private extension CharactersViewController {
                 case .charactersReceived(let pager):
                     self.collectionView.configure(with: pager, and: self.imageCacheManager)
                 case .idle: return
+                }
+            }.store(in: &subscriptions)
+    }
+    
+    func bindSearchView() {
+        searchView.publisher
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .searched(let text):
+                    self.viewModel.searchCharaters(with: text)
                 }
             }.store(in: &subscriptions)
     }
@@ -81,6 +93,8 @@ private extension CharactersViewController {
     func configureNavigationBar() {
         configureNavigationBar(with: .characters.title.localized)
         setupNavigationBarShadow()
+        updateRightNavigationBarButton()
+        navigationItem.leftBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
     }
     
     func setupNavigationBarShadow() {
@@ -97,5 +111,26 @@ private extension CharactersViewController {
             guard let self = self else { return }
             self.sceneNavigationController.navigationBar.layer.shadowOpacity = show ? 1 : 0
         }
+    }
+    
+    func updateRightNavigationBarButton() {
+        if searchView.isHidden {
+            searchView.close()
+            navigationItem.rightBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
+        } else {
+            navigationItem.rightBarButtonItem = BackBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
+        }
+    }
+    
+    @objc func didTapBackButton() {
+        viewModel.goBack()
+    }
+    
+    @objc func didTapRightNavigationBarButton() {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: { [weak self] in
+            guard let self = self else { return }
+            self.searchView.isHidden.toggle()
+            self.updateRightNavigationBarButton()
+        }, completion: nil)
     }
 }

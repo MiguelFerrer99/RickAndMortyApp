@@ -22,6 +22,7 @@
 
 /* Characters */
 "characters_title" = "Characters";
+"characters_searchPlaceholder" = "Search characters...";
 
 /* Locations */
 "locations_title" = "Locations";

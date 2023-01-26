@@ -81,6 +81,7 @@ private extension LocationsViewController {
     func configureNavigationBar() {
         configureNavigationBar(with: .locations.title.localized)
         setupNavigationBarShadow()
+        navigationItem.leftBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
     }
     
     func setupNavigationBarShadow() {
@@ -90,6 +91,10 @@ private extension LocationsViewController {
         sceneNavigationController.navigationBar.layer.shadowOpacity = 0
         sceneNavigationController.navigationBar.layer.shadowColor = UIColor.black.cgColor
         sceneNavigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
+    }
+    
+    @objc func didTapBackButton() {
+        viewModel.goBack()
     }
     
     func showNavigationBarShadow(_ show: Bool) {

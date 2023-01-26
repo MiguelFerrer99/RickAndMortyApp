@@ -9,6 +9,7 @@ import UIKit
 
 protocol CharactersCoordinator {
     func start(with representable: CharactersViewModelRepresentable)
+    func back()
 }
 
 final class DefaultCharactersCoordinator {
@@ -28,6 +29,10 @@ extension DefaultCharactersCoordinator: CharactersCoordinator {
     func start(with representable: CharactersViewModelRepresentable) {
         dependencies.representable = representable
         navigationController.pushViewController(dependencies.resolve(), animated: true)
+    }
+    
+    func back() {
+        navigationController.popViewController(animated: true)
     }
 }
 

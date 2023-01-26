@@ -7,7 +7,7 @@
 
 import UIKit
 
-fileprivate final class BackBarButtonItem: UIBarButtonItem {
+final class BackBarButtonItem: UIBarButtonItem {
     override var menu: UIMenu? {
         set {}
         get { return super.menu }
@@ -17,15 +17,9 @@ fileprivate final class BackBarButtonItem: UIBarButtonItem {
 extension UIViewController: UIGestureRecognizerDelegate {
     func configureNavigationBar(with title: String) {
         self.title = title
-        let backItemImage = UIImage(systemName: "arrow.left")
         navigationItem.backBarButtonItem = nil
-        navigationItem.leftBarButtonItem = BackBarButtonItem(image: backItemImage, style: .plain, target: self, action: #selector(didTapBackButton))
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-    }
-    
-    @objc private func didTapBackButton() {
-        navigationController?.popViewController(animated: true)
     }
 }

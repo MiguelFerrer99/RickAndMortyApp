@@ -22,6 +22,7 @@
 
 /* Characters */
 "characters_title" = "Personajes";
+"characters_searchPlaceholder" = "Busca personajes...";
 
 /* Locations */
 "locations_title" = "Sitios";

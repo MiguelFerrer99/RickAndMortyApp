@@ -9,6 +9,7 @@ import UIKit
 
 protocol LocationsCoordinator {
     func start(with representable: LocationsViewModelRepresentable)
+    func back()
 }
 
 final class DefaultLocationsCoordinator {
@@ -28,6 +29,10 @@ extension DefaultLocationsCoordinator: LocationsCoordinator {
     func start(with representable: LocationsViewModelRepresentable) {
         dependencies.representable = representable
         navigationController.pushViewController(dependencies.resolve(), animated: true)
+    }
+    
+    func back() {
+        navigationController.popViewController(animated: true)
     }
 }
 

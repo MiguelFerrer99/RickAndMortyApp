@@ -52,6 +52,7 @@ extension String {
     
     enum characters: String, Localizable {
         case title = "characters_title"
+        case searchPlaceholder = "characters_searchPlaceholder"
     }
     
     enum locations: String, Localizable {
