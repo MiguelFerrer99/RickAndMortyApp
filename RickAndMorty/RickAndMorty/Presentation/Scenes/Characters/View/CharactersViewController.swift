@@ -49,6 +49,7 @@ private extension CharactersViewController {
     
     func bind() {
         bindViewModel()
+        bindCollectionView()
     }
     
     func bindViewModel() {
@@ -59,6 +60,17 @@ private extension CharactersViewController {
                 case .charactersReceived(let pager):
                     self.collectionView.configure(with: pager, and: self.imageCacheManager)
                 case .idle: return
+                }
+            }.store(in: &subscriptions)
+    }
+    
+    func bindCollectionView() {
+        collectionView.publisher
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .viewMore:
+                    self.viewModel.viewMoreCharacters()
                 }
             }.store(in: &subscriptions)
     }

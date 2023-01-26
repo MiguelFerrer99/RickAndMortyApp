@@ -14,3 +14,13 @@ struct DefaultCharactersViewModelRepresentable: CharactersViewModelRepresentable
     var characters: [CharacterRepresentable]
     var isLastPage: Bool
 }
+
+protocol CharactersCollectionViewInfoCellRepresentable {
+    var title: String { get }
+    var urlImage: String { get }
+}
+
+struct DefaultCharactersCollectionViewInfoCellRepresentable: CharactersCollectionViewInfoCellRepresentable {
+    var title: String
+    var urlImage: String
+}

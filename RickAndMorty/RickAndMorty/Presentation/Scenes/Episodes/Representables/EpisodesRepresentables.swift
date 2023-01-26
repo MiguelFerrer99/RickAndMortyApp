@@ -14,3 +14,11 @@ struct DefaultEpisodesViewModelRepresentable: EpisodesViewModelRepresentable {
     var episodes: [EpisodeRepresentable]
     var isLastPage: Bool
 }
+
+protocol EpisodesCollectionViewInfoCellRepresentable {
+    var title: String { get }
+}
+
+struct DefaultEpisodesCollectionViewInfoCellRepresentable: EpisodesCollectionViewInfoCellRepresentable {
+    var title: String
+}

@@ -12,10 +12,20 @@ protocol EpisodesDependenciesResolver {
     func resolve() -> EpisodesCoordinator
     func resolve() -> EpisodesViewController
     func resolve() -> EpisodesViewModel
+    func resolve() -> EpisodesUseCase
+    func resolve() -> EpisodesRepository
 }
 
 extension EpisodesDependenciesResolver {
     func resolve() -> EpisodesViewController {
         EpisodesViewController(dependencies: self)
+    }
+    
+    func resolve() -> EpisodesUseCase {
+        DefaultEpisodesUseCase(dependencies: self)
+    }
+    
+    func resolve() -> EpisodesRepository {
+        DefaultEpisodesRepository(dependencies: self)
     }
 }

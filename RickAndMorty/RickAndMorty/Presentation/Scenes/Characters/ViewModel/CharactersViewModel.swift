@@ -5,6 +5,7 @@
 //  Created by Miguel Ferrer Fornali on 22/1/23.
 //
 
+import Foundation
 import Combine
 
 enum CharactersViewModelState {
@@ -27,14 +28,43 @@ final class CharactersViewModel {
     }
     
     func viewDidLoad() {
-        guard let representable = representable else { return }
-        charactersPager.setItems(representable.characters, and: representable.isLastPage)
-        stateSubject.send(.charactersReceived(charactersPager))
+        setCharacters()
+    }
+    
+    func viewMoreCharacters() {
+        loadMoreCharacters()
     }
 }
 
 private extension CharactersViewModel {
     var coordinator: CharactersCoordinator {
         dependencies.resolve()
+    }
+    
+    var charactersUseCase: CharactersUseCase {
+        dependencies.resolve()
+    }
+    
+    func setCharacters() {
+        guard let representable = representable else { return }
+        charactersPager.setItems(representable.characters, and: representable.isLastPage)
+        stateSubject.send(.charactersReceived(charactersPager))
+    }
+    
+    func sendStateSubject(_ stateSubject: CharactersViewModelState) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.stateSubject.send(stateSubject)
+        }
+    }
+    
+    func loadMoreCharacters() {
+        Task {
+            let charactersInfo = await charactersUseCase.getCharacters(ofPage: charactersPager.currentPage)
+            if let charactersInfo = charactersInfo {
+                charactersPager.setItems(charactersInfo.results, and: charactersInfo.info.isLast)
+                sendStateSubject(.charactersReceived(charactersPager))
+            }
+        }
     }
 }

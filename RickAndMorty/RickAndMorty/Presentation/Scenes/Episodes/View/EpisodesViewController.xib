@@ -11,7 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EpisodesViewController" customModule="Rick___Morty" customModuleProvider="target">
             <connections>
-                <outlet property="containerView" destination="WIQ-Qk-H3n" id="VR8-lK-6qt"/>
+                <outlet property="collectionView" destination="9Vl-2H-n7h" id="LzW-3r-0Ax"/>
+                <outlet property="containerView" destination="tnk-kv-wdI" id="kO6-ms-yKD"/>
                 <outlet property="view" destination="iN0-l3-epB" id="XGf-FR-SLG"/>
             </connections>
         </placeholder>
@@ -20,19 +21,37 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WIQ-Qk-H3n" userLabel="Container View">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tnk-kv-wdI" userLabel="Container View">
                     <rect key="frame" x="0.0" y="59" width="393" height="793"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="9Vl-2H-n7h" customClass="EpisodesCollectionView" customModule="Rick___Morty" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="T9p-3N-1Zf">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="9Vl-2H-n7h" secondAttribute="bottom" id="5GO-2W-OfY"/>
+                        <constraint firstAttribute="trailing" secondItem="9Vl-2H-n7h" secondAttribute="trailing" id="9UG-Fb-kBd"/>
+                        <constraint firstItem="9Vl-2H-n7h" firstAttribute="leading" secondItem="tnk-kv-wdI" secondAttribute="leading" id="ocb-Qg-9tP"/>
+                        <constraint firstItem="9Vl-2H-n7h" firstAttribute="top" secondItem="tnk-kv-wdI" secondAttribute="top" id="scO-yV-b37"/>
+                    </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="n2I-Nm-a9j"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" systemColor="tintColor"/>
             <constraints>
-                <constraint firstItem="n2I-Nm-a9j" firstAttribute="trailing" secondItem="WIQ-Qk-H3n" secondAttribute="trailing" id="31W-l7-K8B"/>
-                <constraint firstItem="WIQ-Qk-H3n" firstAttribute="leading" secondItem="n2I-Nm-a9j" secondAttribute="leading" id="NOe-XT-7ny"/>
-                <constraint firstAttribute="bottom" secondItem="WIQ-Qk-H3n" secondAttribute="bottom" id="PPc-Mz-bJF"/>
-                <constraint firstItem="WIQ-Qk-H3n" firstAttribute="top" secondItem="n2I-Nm-a9j" secondAttribute="top" id="VtX-qC-DEr"/>
+                <constraint firstItem="tnk-kv-wdI" firstAttribute="top" secondItem="n2I-Nm-a9j" secondAttribute="top" id="J6U-Zf-kwS"/>
+                <constraint firstItem="n2I-Nm-a9j" firstAttribute="trailing" secondItem="tnk-kv-wdI" secondAttribute="trailing" id="JWD-40-645"/>
+                <constraint firstItem="tnk-kv-wdI" firstAttribute="leading" secondItem="n2I-Nm-a9j" secondAttribute="leading" id="XBj-e2-srG"/>
+                <constraint firstAttribute="bottom" secondItem="tnk-kv-wdI" secondAttribute="bottom" id="gUm-Yd-DeE"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="13" y="42"/>

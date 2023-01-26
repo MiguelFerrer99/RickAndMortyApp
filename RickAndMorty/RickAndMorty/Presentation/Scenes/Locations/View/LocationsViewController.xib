@@ -11,7 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationsViewController" customModule="Rick___Morty" customModuleProvider="target">
             <connections>
-                <outlet property="containerView" destination="mlc-wE-MjI" id="cuK-nN-YRE"/>
+                <outlet property="collectionView" destination="7TK-lY-mfB" id="gZ7-si-70z"/>
+                <outlet property="containerView" destination="Hq5-O8-XpC" id="InE-zx-lPn"/>
                 <outlet property="view" destination="iN0-l3-epB" id="XGf-FR-SLG"/>
             </connections>
         </placeholder>
@@ -20,19 +21,37 @@
             <rect key="frame" x="0.0" y="0.0" width="389" height="979"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mlc-wE-MjI" userLabel="Container View">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hq5-O8-XpC" userLabel="Container View">
                     <rect key="frame" x="0.0" y="59" width="389" height="920"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="7TK-lY-mfB" customClass="LocationsCollectionView" customModule="Rick___Morty" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="389" height="920"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="3jA-zh-jXC">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="7TK-lY-mfB" firstAttribute="top" secondItem="Hq5-O8-XpC" secondAttribute="top" id="SNy-d6-yGo"/>
+                        <constraint firstAttribute="bottom" secondItem="7TK-lY-mfB" secondAttribute="bottom" id="Xby-Zl-YvT"/>
+                        <constraint firstAttribute="trailing" secondItem="7TK-lY-mfB" secondAttribute="trailing" id="atL-W2-I5c"/>
+                        <constraint firstItem="7TK-lY-mfB" firstAttribute="leading" secondItem="Hq5-O8-XpC" secondAttribute="leading" id="sdi-el-hHC"/>
+                    </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="WhQ-dN-Ogq"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" systemColor="tintColor"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="mlc-wE-MjI" secondAttribute="bottom" id="2E1-tt-wxu"/>
-                <constraint firstItem="mlc-wE-MjI" firstAttribute="top" secondItem="WhQ-dN-Ogq" secondAttribute="top" id="LRq-gG-W8J"/>
-                <constraint firstItem="WhQ-dN-Ogq" firstAttribute="trailing" secondItem="mlc-wE-MjI" secondAttribute="trailing" id="hjK-w6-OM6"/>
-                <constraint firstItem="mlc-wE-MjI" firstAttribute="leading" secondItem="WhQ-dN-Ogq" secondAttribute="leading" id="q5w-ds-Jec"/>
+                <constraint firstItem="WhQ-dN-Ogq" firstAttribute="trailing" secondItem="Hq5-O8-XpC" secondAttribute="trailing" id="CGs-k6-BWR"/>
+                <constraint firstAttribute="bottom" secondItem="Hq5-O8-XpC" secondAttribute="bottom" id="N5b-cV-gJc"/>
+                <constraint firstItem="Hq5-O8-XpC" firstAttribute="top" secondItem="WhQ-dN-Ogq" secondAttribute="top" id="NGi-g9-zVT"/>
+                <constraint firstItem="Hq5-O8-XpC" firstAttribute="leading" secondItem="WhQ-dN-Ogq" secondAttribute="leading" id="cgq-bF-CDy"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="8.3969465648854964" y="191.90140845070422"/>

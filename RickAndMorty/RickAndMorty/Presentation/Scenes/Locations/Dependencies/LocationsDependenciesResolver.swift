@@ -12,10 +12,20 @@ protocol LocationsDependenciesResolver {
     func resolve() -> LocationsCoordinator
     func resolve() -> LocationsViewController
     func resolve() -> LocationsViewModel
+    func resolve() -> LocationsUseCase
+    func resolve() -> LocationRepository
 }
 
 extension LocationsDependenciesResolver {
     func resolve() -> LocationsViewController {
         LocationsViewController(dependencies: self)
+    }
+    
+    func resolve() -> LocationsUseCase {
+        DefaultLocationsUseCase(dependencies: self)
+    }
+    
+    func resolve() -> LocationRepository {
+        DefaultLocationRepository(dependencies: self)
     }
 }

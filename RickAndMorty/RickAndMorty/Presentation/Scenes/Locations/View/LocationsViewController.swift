@@ -10,6 +10,7 @@ import Combine
 
 final class LocationsViewController: UIViewController {
     @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var collectionView: LocationsCollectionView!
     private let viewModel: LocationsViewModel
     private let dependencies: LocationsDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
@@ -27,7 +28,6 @@ final class LocationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
         bind()
         viewModel.viewDidLoad()
     }
@@ -43,16 +43,36 @@ private extension LocationsViewController {
         dependencies.external.resolve()
     }
     
-    func setupView() {
-        // Configure views
+    var imageCacheManager: ImageCacheManager {
+        dependencies.external.resolveImageCacheManager()
     }
     
     func bind() {
         bindViewModel()
+        bindCollectionView()
     }
     
     func bindViewModel() {
-        // Bind ViewModel states
+        viewModel.state
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .locationsReceived(let pager):
+                    self.collectionView.configure(with: pager, and: self.imageCacheManager)
+                case .idle: return
+                }
+            }.store(in: &subscriptions)
+    }
+    
+    func bindCollectionView() {
+        collectionView.publisher
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .viewMore:
+                    self.viewModel.viewMoreLocations()
+                }
+            }.store(in: &subscriptions)
     }
     
     func configureNavigationBar() {

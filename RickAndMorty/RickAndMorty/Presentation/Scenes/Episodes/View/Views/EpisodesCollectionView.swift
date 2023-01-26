@@ -1,22 +1,22 @@
 //
-//  CharactersCollectionView.swift
+//  EpisodesCollectionView.swift
 //  RickAndMorty
 //
-//  Created by Miguel Ferrer Fornali on 25/1/23.
+//  Created by Miguel Ferrer Fornali on 26/1/23.
 //
 
 import UIKit
 import Combine
 import Foundation
 
-enum CharactersCollectionViewState {
+enum EpisodesCollectionViewState {
     case viewMore
 }
 
-final class CharactersCollectionView: UICollectionView {
-    private var subject = PassthroughSubject<CharactersCollectionViewState, Never>()
-    var publisher: AnyPublisher<CharactersCollectionViewState, Never> { subject.eraseToAnyPublisher() }
-    private var charactersPager: Pagination<CharacterRepresentable>?
+final class EpisodesCollectionView: UICollectionView {
+    private var subject = PassthroughSubject<EpisodesCollectionViewState, Never>()
+    var publisher: AnyPublisher<EpisodesCollectionViewState, Never> { subject.eraseToAnyPublisher() }
+    private var episodesPager: Pagination<EpisodeRepresentable>?
     private var imageCacheManager: ImageCacheManager?
     
     init(frame: CGRect) {
@@ -29,16 +29,16 @@ final class CharactersCollectionView: UICollectionView {
         setupView()
     }
     
-    func configure(with charactersPager: Pagination<CharacterRepresentable>, and imageCacheManager: ImageCacheManager) {
-        self.charactersPager = charactersPager
+    func configure(with episodesPager: Pagination<EpisodeRepresentable>, and imageCacheManager: ImageCacheManager) {
+        self.episodesPager = episodesPager
         self.imageCacheManager = imageCacheManager
         reloadData()
     }
 }
 
-private extension CharactersCollectionView {
+private extension EpisodesCollectionView {
     var infoCellIdentifier: String {
-        String(describing: type(of: CharactersCollectionViewInfoCell()))
+        String(describing: type(of: EpisodesCollectionViewInfoCell()))
     }
     
     func setupView() {
@@ -54,23 +54,23 @@ private extension CharactersCollectionView {
     }
     
     func shouldLoadMoreItems(index: Int) -> Bool {
-        guard let charactersPager = charactersPager else { return false }
+        guard let episodesPager = episodesPager else { return false }
         let itemsLeftToLastItem = 6
-        return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!charactersPager.isLastPage)
+        return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!episodesPager.isLastPage)
     }
 }
 
-extension CharactersCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension EpisodesCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let charactersPager = charactersPager else { return 0 }
-        return charactersPager.getItems().count
+        guard let episodesPager = episodesPager else { return 0 }
+        return episodesPager.getItems().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? CharactersCollectionViewInfoCell,
-              let character = charactersPager?.getItems()[indexPath.item],
+        guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? EpisodesCollectionViewInfoCell,
+              let episode = episodesPager?.getItems()[indexPath.item],
               let imageCacheManager = imageCacheManager else { return UICollectionViewCell() }
-        let representable = DefaultCharactersCollectionViewInfoCellRepresentable(title: character.name, urlImage: character.urlImage)
+        let representable = DefaultEpisodesCollectionViewInfoCellRepresentable(title: episode.name)
         cell.configure(with: representable, and: imageCacheManager)
         return cell
     }

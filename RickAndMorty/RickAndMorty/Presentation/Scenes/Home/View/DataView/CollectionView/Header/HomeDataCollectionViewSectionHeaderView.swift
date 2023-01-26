@@ -40,7 +40,7 @@ private extension HomeDataCollectionViewSectionHeaderView {
     
     func configureTitleLabel() {
         let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-        titleLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 20)
+        titleLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 18)
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTitleLabel))
         titleLabel.addGestureRecognizer(gestureRecognizer)
         titleLabel.isUserInteractionEnabled = true
@@ -48,7 +48,7 @@ private extension HomeDataCollectionViewSectionHeaderView {
     
     func configureViewMoreLabel() {
         let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-        viewMoreLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 20)
+        viewMoreLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 18)
         viewMoreLabel.text = .home.viewMore.localized
     }
     

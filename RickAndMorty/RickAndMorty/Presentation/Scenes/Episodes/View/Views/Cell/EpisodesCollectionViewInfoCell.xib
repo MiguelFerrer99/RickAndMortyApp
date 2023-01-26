@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="EpisodesCollectionViewInfoCell" customModule="Rick___Morty" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="215" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="215" height="200"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jLJ-Bm-efM" userLabel="Container View">
+                        <rect key="frame" x="0.0" y="0.0" width="215" height="200"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UGO-dp-DKs">
+                                <rect key="frame" x="0.0" y="0.0" width="215" height="200"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d14-VK-IM8" userLabel="Title Label">
+                                <rect key="frame" x="10" y="169.66666666666666" width="195" height="20.333333333333343"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="d14-VK-IM8" secondAttribute="trailing" constant="10" id="6cF-y7-ghb"/>
+                            <constraint firstItem="UGO-dp-DKs" firstAttribute="leading" secondItem="jLJ-Bm-efM" secondAttribute="leading" id="BdA-hb-Qs9"/>
+                            <constraint firstItem="d14-VK-IM8" firstAttribute="leading" secondItem="jLJ-Bm-efM" secondAttribute="leading" constant="10" id="MPr-T5-Vyk"/>
+                            <constraint firstAttribute="bottom" secondItem="UGO-dp-DKs" secondAttribute="bottom" id="MfI-rx-sCV"/>
+                            <constraint firstItem="d14-VK-IM8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jLJ-Bm-efM" secondAttribute="top" constant="10" id="Td3-lK-jJe"/>
+                            <constraint firstAttribute="trailing" secondItem="UGO-dp-DKs" secondAttribute="trailing" id="fQy-yc-j1W"/>
+                            <constraint firstItem="UGO-dp-DKs" firstAttribute="top" secondItem="jLJ-Bm-efM" secondAttribute="top" id="lNK-4H-y2K"/>
+                            <constraint firstAttribute="bottom" secondItem="d14-VK-IM8" secondAttribute="bottom" constant="10" id="rZn-nw-L2j"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="jLJ-Bm-efM" secondAttribute="bottom" id="1FC-yk-twG"/>
+                <constraint firstItem="jLJ-Bm-efM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="3bt-tP-okQ"/>
+                <constraint firstItem="jLJ-Bm-efM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="dW2-yp-PGX"/>
+                <constraint firstAttribute="trailing" secondItem="jLJ-Bm-efM" secondAttribute="trailing" id="vnh-cM-fPw"/>
+            </constraints>
+            <size key="customSize" width="215" height="200"/>
+            <connections>
+                <outlet property="containerView" destination="jLJ-Bm-efM" id="eHH-rK-xmx"/>
+                <outlet property="imageView" destination="UGO-dp-DKs" id="SLu-h3-Ex4"/>
+                <outlet property="titleLabel" destination="d14-VK-IM8" id="50u-sG-rg1"/>
+                <outlet property="titleLabelBottomConstraint" destination="rZn-nw-L2j" id="OHO-L9-KkN"/>
+                <outlet property="titleLabelLeadingConstraint" destination="MPr-T5-Vyk" id="htk-71-9TT"/>
+                <outlet property="titleLabelTopConstraint" destination="Td3-lK-jJe" id="IAg-X2-30Y"/>
+                <outlet property="titleLabelTrailingConstraint" destination="6cF-y7-ghb" id="fLF-4T-tXt"/>
+            </connections>
+            <point key="canvasLocation" x="52.671755725190835" y="72.535211267605632"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

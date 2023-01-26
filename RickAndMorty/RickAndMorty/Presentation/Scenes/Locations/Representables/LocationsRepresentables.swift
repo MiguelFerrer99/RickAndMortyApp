@@ -14,3 +14,11 @@ struct DefaultLocationsViewModelRepresentable: LocationsViewModelRepresentable {
     var locations: [LocationRepresentable]
     var isLastPage: Bool
 }
+
+protocol LocationsCollectionViewInfoCellRepresentable {
+    var title: String { get }
+}
+
+struct DefaultLocationsCollectionViewInfoCellRepresentable: LocationsCollectionViewInfoCellRepresentable {
+    var title: String
+}
