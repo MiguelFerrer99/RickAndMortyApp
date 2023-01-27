@@ -11,6 +11,8 @@ import Combine
 final class CharactersViewController: UIViewController {
     @IBOutlet private weak var searchView: CharactersSearchView!
     @IBOutlet private weak var collectionView: CharactersCollectionView!
+    @IBOutlet private weak var collectionViewToContainerViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var collectionViewToSearchViewTopConstraint: NSLayoutConstraint!
     private let viewModel: CharactersViewModel
     private let dependencies: CharactersDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
@@ -83,7 +85,7 @@ private extension CharactersViewController {
                 guard let self = self else { return }
                 switch state {
                 case .showNavigationBarShadow(let show):
-                    self.showNavigationBarShadow(show)
+                    self.searchView.isHidden ? self.showNavigationBarShadow(show) : self.searchView.showShadow(show)
                 case .viewMore:
                     self.viewModel.viewMoreCharacters()
                 }
@@ -131,6 +133,11 @@ private extension CharactersViewController {
             guard let self = self else { return }
             self.searchView.isHidden.toggle()
             self.updateRightNavigationBarButton()
+            self.showNavigationBarShadow(self.searchView.isHidden && self.collectionView.contentOffset.y > 0)
+            self.searchView.showShadow(!self.searchView.isHidden && self.collectionView.contentOffset.y > 0)
+            self.collectionViewToContainerViewTopConstraint.priority = UILayoutPriority(self.searchView.isHidden ? 1000 : 999)
+            self.collectionViewToSearchViewTopConstraint.priority = UILayoutPriority(self.searchView.isHidden ? 999 : 1000)
+            self.view.layoutIfNeeded()
         }, completion: nil)
     }
 }

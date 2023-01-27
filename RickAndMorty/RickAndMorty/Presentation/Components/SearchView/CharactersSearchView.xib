@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CharactersSearchView" customModule="Rick___Morty" customModuleProvider="target">
             <connections>
-                <outlet property="containerView" destination="GBe-ka-gI0" id="NmO-CI-jQ6"/>
+                <outlet property="containerView" destination="GBe-ka-gI0" id="Ydb-QN-pgl"/>
                 <outlet property="deleteTextButtonView" destination="lPy-5H-Fsb" id="TH6-mQ-dFq"/>
                 <outlet property="textfield" destination="6Db-YD-9hW" id="wJg-to-TOA"/>
             </connections>
@@ -111,10 +111,10 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="GBe-ka-gI0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Eur-Tf-Ruu"/>
-                <constraint firstAttribute="bottom" secondItem="GBe-ka-gI0" secondAttribute="bottom" constant="20" id="FpB-vT-EAe"/>
-                <constraint firstItem="GBe-ka-gI0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="MxT-QP-quy"/>
-                <constraint firstAttribute="trailing" secondItem="GBe-ka-gI0" secondAttribute="trailing" constant="20" id="csQ-wt-X2u"/>
+                <constraint firstItem="GBe-ka-gI0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="1X6-X6-Yw7"/>
+                <constraint firstAttribute="trailing" secondItem="GBe-ka-gI0" secondAttribute="trailing" constant="20" id="1lv-3H-3XD"/>
+                <constraint firstAttribute="bottom" secondItem="GBe-ka-gI0" secondAttribute="bottom" constant="20" id="M1L-ak-frj"/>
+                <constraint firstItem="GBe-ka-gI0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="lqp-7b-gvS"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="72.463768115942031" y="323.4375"/>
