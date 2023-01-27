@@ -36,7 +36,7 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
-                        <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" id="Dp6-yS-QvU" customClass="CharactersSearchView" customModule="Rick___Morty" customModuleProvider="target">
+                        <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" id="Dp6-yS-QvU" customClass="SearchView" customModule="Rick___Morty" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="8" width="389" height="92"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>

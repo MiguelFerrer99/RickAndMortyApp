@@ -11,50 +11,62 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EpisodesViewController" customModule="Rick___Morty" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="9Vl-2H-n7h" id="LzW-3r-0Ax"/>
-                <outlet property="containerView" destination="tnk-kv-wdI" id="kO6-ms-yKD"/>
+                <outlet property="collectionView" destination="DDe-MP-RTc" id="JJN-h4-Vy2"/>
+                <outlet property="collectionViewToContainerViewTopConstraint" destination="kST-CD-HLP" id="g0S-S6-OFb"/>
+                <outlet property="collectionViewToSearchViewTopConstraint" destination="CEJ-Zn-Gww" id="wIc-oa-fJi"/>
+                <outlet property="containerView" destination="mlc-wE-MjI" id="axx-4W-5By"/>
+                <outlet property="searchView" destination="Dp6-yS-QvU" id="SON-Wh-6yq"/>
                 <outlet property="view" destination="iN0-l3-epB" id="XGf-FR-SLG"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <rect key="frame" x="0.0" y="0.0" width="389" height="979"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tnk-kv-wdI" userLabel="Container View">
-                    <rect key="frame" x="0.0" y="59" width="393" height="793"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mlc-wE-MjI" userLabel="Container View">
+                    <rect key="frame" x="0.0" y="59" width="389" height="920"/>
                     <subviews>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="9Vl-2H-n7h" customClass="EpisodesCollectionView" customModule="Rick___Morty" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="DDe-MP-RTc" userLabel="Episodes Collection View" customClass="EpisodesCollectionView" customModule="Rick___Morty" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="389" height="920"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="T9p-3N-1Zf">
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="cY6-a2-N38">
                                 <size key="itemSize" width="128" height="128"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
+                        <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" id="Dp6-yS-QvU" customClass="SearchView" customModule="Rick___Morty" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="7" width="388" height="92"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="9Vl-2H-n7h" secondAttribute="bottom" id="5GO-2W-OfY"/>
-                        <constraint firstAttribute="trailing" secondItem="9Vl-2H-n7h" secondAttribute="trailing" id="9UG-Fb-kBd"/>
-                        <constraint firstItem="9Vl-2H-n7h" firstAttribute="leading" secondItem="tnk-kv-wdI" secondAttribute="leading" id="ocb-Qg-9tP"/>
-                        <constraint firstItem="9Vl-2H-n7h" firstAttribute="top" secondItem="tnk-kv-wdI" secondAttribute="top" id="scO-yV-b37"/>
+                        <constraint firstItem="Dp6-yS-QvU" firstAttribute="top" secondItem="mlc-wE-MjI" secondAttribute="top" id="1SD-tT-2Yk"/>
+                        <constraint firstItem="DDe-MP-RTc" firstAttribute="leading" secondItem="mlc-wE-MjI" secondAttribute="leading" id="9es-7i-IlD"/>
+                        <constraint firstItem="DDe-MP-RTc" firstAttribute="top" secondItem="Dp6-yS-QvU" secondAttribute="bottom" priority="999" id="CEJ-Zn-Gww"/>
+                        <constraint firstAttribute="trailing" secondItem="DDe-MP-RTc" secondAttribute="trailing" id="TWQ-2U-hdZ"/>
+                        <constraint firstItem="Dp6-yS-QvU" firstAttribute="leading" secondItem="mlc-wE-MjI" secondAttribute="leading" id="TuB-Lh-ZrO"/>
+                        <constraint firstAttribute="bottom" secondItem="DDe-MP-RTc" secondAttribute="bottom" id="gNb-b8-iHU"/>
+                        <constraint firstAttribute="trailing" secondItem="Dp6-yS-QvU" secondAttribute="trailing" id="jcC-ch-Rtr"/>
+                        <constraint firstItem="DDe-MP-RTc" firstAttribute="top" secondItem="mlc-wE-MjI" secondAttribute="top" id="kST-CD-HLP"/>
                     </constraints>
                 </view>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="n2I-Nm-a9j"/>
+            <viewLayoutGuide key="safeArea" id="WhQ-dN-Ogq"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" systemColor="tintColor"/>
             <constraints>
-                <constraint firstItem="tnk-kv-wdI" firstAttribute="top" secondItem="n2I-Nm-a9j" secondAttribute="top" id="J6U-Zf-kwS"/>
-                <constraint firstItem="n2I-Nm-a9j" firstAttribute="trailing" secondItem="tnk-kv-wdI" secondAttribute="trailing" id="JWD-40-645"/>
-                <constraint firstItem="tnk-kv-wdI" firstAttribute="leading" secondItem="n2I-Nm-a9j" secondAttribute="leading" id="XBj-e2-srG"/>
-                <constraint firstAttribute="bottom" secondItem="tnk-kv-wdI" secondAttribute="bottom" id="gUm-Yd-DeE"/>
+                <constraint firstAttribute="bottom" secondItem="mlc-wE-MjI" secondAttribute="bottom" id="2E1-tt-wxu"/>
+                <constraint firstItem="mlc-wE-MjI" firstAttribute="top" secondItem="WhQ-dN-Ogq" secondAttribute="top" id="LRq-gG-W8J"/>
+                <constraint firstItem="WhQ-dN-Ogq" firstAttribute="trailing" secondItem="mlc-wE-MjI" secondAttribute="trailing" id="hjK-w6-OM6"/>
+                <constraint firstItem="mlc-wE-MjI" firstAttribute="leading" secondItem="WhQ-dN-Ogq" secondAttribute="leading" id="q5w-ds-Jec"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="13" y="42"/>
+            <point key="canvasLocation" x="8.3969465648854964" y="191.90140845070422"/>
         </view>
     </objects>
     <resources>

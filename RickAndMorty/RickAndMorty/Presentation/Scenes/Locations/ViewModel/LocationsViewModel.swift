@@ -38,6 +38,10 @@ final class LocationsViewModel {
     func viewMoreLocations() {
         loadMoreLocations()
     }
+    
+    func searchEpisodes(with text: String) {
+        print(text)
+    }
 }
 
 private extension LocationsViewModel {

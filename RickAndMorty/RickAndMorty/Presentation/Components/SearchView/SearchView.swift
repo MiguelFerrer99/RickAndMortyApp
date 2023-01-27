@@ -12,7 +12,7 @@ enum CharactersSearchViewState {
     case searched(String)
 }
 
-final class CharactersSearchView: XibView {
+final class SearchView: XibView {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var textfield: UITextField!
     @IBOutlet private weak var deleteTextButtonView: UIView!
@@ -46,7 +46,7 @@ final class CharactersSearchView: XibView {
     }
 }
 
-private extension CharactersSearchView {
+private extension SearchView {
     func setupView() {
         configureShadow()
         configureContainerView()
@@ -91,7 +91,7 @@ private extension CharactersSearchView {
     }
 }
 
-extension CharactersSearchView: UITextFieldDelegate {
+extension SearchView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let text = textfield.text else { return true }
         textfield.resignFirstResponder()

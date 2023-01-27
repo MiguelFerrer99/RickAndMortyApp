@@ -9,8 +9,11 @@ import UIKit
 import Combine
 
 final class EpisodesViewController: UIViewController {
+    @IBOutlet private weak var searchView: SearchView!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var collectionView: EpisodesCollectionView!
+    @IBOutlet private weak var collectionViewToContainerViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var collectionViewToSearchViewTopConstraint: NSLayoutConstraint!
     private let viewModel: EpisodesViewModel
     private let dependencies: EpisodesDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
@@ -50,6 +53,7 @@ private extension EpisodesViewController {
     
     func bind() {
         bindViewModel()
+        bindSearchView()
         bindCollectionView()
     }
     
@@ -65,13 +69,24 @@ private extension EpisodesViewController {
             }.store(in: &subscriptions)
     }
     
+    func bindSearchView() {
+        searchView.publisher
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .searched(let text):
+                    self.viewModel.searchLocations(with: text)
+                }
+            }.store(in: &subscriptions)
+    }
+    
     func bindCollectionView() {
         collectionView.publisher
             .sink { [weak self] state in
                 guard let self = self else { return }
                 switch state {
                 case .showNavigationBarShadow(let show):
-                    self.showNavigationBarShadow(show)
+                    self.searchView.isHidden ? self.showNavigationBarShadow(show) : self.searchView.showShadow(show)
                 case .viewMore:
                     self.viewModel.viewMoreEpisodes()
                 }
@@ -81,6 +96,7 @@ private extension EpisodesViewController {
     func configureNavigationBar() {
         configureNavigationBar(with: .episodes.title.localized)
         setupNavigationBarShadow()
+        updateRightNavigationBarButton()
         navigationItem.leftBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
     }
     
@@ -93,14 +109,36 @@ private extension EpisodesViewController {
         sceneNavigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
     }
     
-    @objc func didTapBackButton() {
-        viewModel.goBack()
-    }
-    
     func showNavigationBarShadow(_ show: Bool) {
         UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
             guard let self = self else { return }
             self.sceneNavigationController.navigationBar.layer.shadowOpacity = show ? 1 : 0
         }
+    }
+    
+    func updateRightNavigationBarButton() {
+        if searchView.isHidden {
+            searchView.close()
+            navigationItem.rightBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
+        } else {
+            navigationItem.rightBarButtonItem = BackBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
+        }
+    }
+    
+    @objc func didTapBackButton() {
+        viewModel.goBack()
+    }
+    
+    @objc func didTapRightNavigationBarButton() {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: { [weak self] in
+            guard let self = self else { return }
+            self.searchView.isHidden.toggle()
+            self.updateRightNavigationBarButton()
+            self.showNavigationBarShadow(self.searchView.isHidden && self.collectionView.contentOffset.y > 0)
+            self.searchView.showShadow(!self.searchView.isHidden && self.collectionView.contentOffset.y > 0)
+            self.collectionViewToContainerViewTopConstraint.priority = UILayoutPriority(self.searchView.isHidden ? 1000 : 999)
+            self.collectionViewToSearchViewTopConstraint.priority = UILayoutPriority(self.searchView.isHidden ? 999 : 1000)
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
 }

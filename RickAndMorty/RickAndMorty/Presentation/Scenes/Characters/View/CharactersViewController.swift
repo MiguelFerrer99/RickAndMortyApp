@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 final class CharactersViewController: UIViewController {
-    @IBOutlet private weak var searchView: CharactersSearchView!
+    @IBOutlet private weak var searchView: SearchView!
     @IBOutlet private weak var collectionView: CharactersCollectionView!
     @IBOutlet private weak var collectionViewToContainerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var collectionViewToSearchViewTopConstraint: NSLayoutConstraint!
