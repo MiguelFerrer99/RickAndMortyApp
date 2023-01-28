@@ -35,11 +35,21 @@ final class CharactersCollectionView: UICollectionView {
         self.imageCacheManager = imageCacheManager
         reloadData()
     }
+    
+    func scrollToTop() {
+        if numberOfItems(inSection: 0) > 0 {
+            scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+        }
+    }
 }
 
 private extension CharactersCollectionView {
     var infoCellIdentifier: String {
         String(describing: type(of: CharactersCollectionViewInfoCell()))
+    }
+    
+    var emptyCellIdentifier: String {
+        String(describing: type(of: CharactersCollectionViewEmptyCell()))
     }
     
     func setupView() {
@@ -52,11 +62,13 @@ private extension CharactersCollectionView {
     func registerCells() {
         let infoCellNib = UINib(nibName: infoCellIdentifier, bundle: .main)
         register(infoCellNib, forCellWithReuseIdentifier: infoCellIdentifier)
+        let emptyCellNib = UINib(nibName: emptyCellIdentifier, bundle: .main)
+        register(emptyCellNib, forCellWithReuseIdentifier: emptyCellIdentifier)
     }
     
     func shouldLoadMoreItems(index: Int) -> Bool {
         guard let charactersPager = charactersPager else { return false }
-        let itemsLeftToLastItem = 6
+        let itemsLeftToLastItem = 4
         return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!charactersPager.isLastPage)
     }
 }
@@ -64,16 +76,22 @@ private extension CharactersCollectionView {
 extension CharactersCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let charactersPager = charactersPager else { return 0 }
-        return charactersPager.getItems().count
+        return charactersPager.getItems().isEmpty ? 1 : charactersPager.getItems().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? CharactersCollectionViewInfoCell,
-              let character = charactersPager?.getItems()[indexPath.item],
-              let imageCacheManager = imageCacheManager else { return UICollectionViewCell() }
-        let representable = DefaultCharactersCollectionViewInfoCellRepresentable(title: character.name, urlImage: character.urlImage)
-        cell.configure(with: representable, and: imageCacheManager)
-        return cell
+        guard let charactersPager = charactersPager else { return UICollectionViewCell() }
+        if charactersPager.getItems().isEmpty {
+            guard let cell = dequeueReusableCell(withReuseIdentifier: emptyCellIdentifier, for: indexPath) as? CharactersCollectionViewEmptyCell else { return UICollectionViewCell() }
+            return cell
+        } else {
+            guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? CharactersCollectionViewInfoCell,
+                  let character = charactersPager.getItems()[safe: indexPath.item],
+                  let imageCacheManager = imageCacheManager else { return UICollectionViewCell() }
+            let representable = DefaultCharactersCollectionViewInfoCellRepresentable(title: character.name, urlImage: character.urlImage)
+            cell.configure(with: representable, and: imageCacheManager)
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -83,10 +101,14 @@ extension CharactersCollectionView: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let leftContentInset: CGFloat = 20
-        let minSpacingColumns: CGFloat = 10
-        let cellWidth = frame.width/2 - (leftContentInset + minSpacingColumns)
-        return CGSize(width: cellWidth, height: cellWidth)
+        let size = CGSize(width: frame.width - 40, height: frame.height - 100)
+        guard let charactersPager = charactersPager else { return size }
+        if charactersPager.getItems().isNotEmpty {
+            let leftContentInset: CGFloat = 20
+            let minSpacingColumns: CGFloat = 10
+            let cellWidth = frame.width/2 - (leftContentInset + minSpacingColumns)
+            return CGSize(width: cellWidth, height: cellWidth)
+        } else { return size }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

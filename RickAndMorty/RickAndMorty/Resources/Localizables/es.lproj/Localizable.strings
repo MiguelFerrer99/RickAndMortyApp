@@ -23,9 +23,14 @@
 /* Characters */
 "characters_title" = "Personajes";
 "characters_searchPlaceholder" = "Busca personajes...";
+"characters_empty" = "No hay resultados disponibles";
 
 /* Locations */
 "locations_title" = "Sitios";
+"locations_searchPlaceholder" = "Busca sitios...";
+"locations_empty" = "No hay resultados disponibles";
 
 /* Episodes */
 "episodes_title" = "Episodios";
+"episodes_searchPlaceholder" = "Busca episodios...";
+"episodes_empty" = "No hay resultados disponibles";

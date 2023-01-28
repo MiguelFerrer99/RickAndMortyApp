@@ -53,13 +53,18 @@ extension String {
     enum characters: String, Localizable {
         case title = "characters_title"
         case searchPlaceholder = "characters_searchPlaceholder"
+        case empty = "characters_empty"
     }
     
     enum locations: String, Localizable {
         case title = "locations_title"
+        case searchPlaceholder = "locations_searchPlaceholder"
+        case empty = "locations_empty"
     }
     
     enum episodes: String, Localizable {
         case title = "episodes_title"
+        case searchPlaceholder = "episodes_searchPlaceholder"
+        case empty = "episodes_empty"
     }
 }

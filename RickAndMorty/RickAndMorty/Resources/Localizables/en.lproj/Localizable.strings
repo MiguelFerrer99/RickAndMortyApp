@@ -23,9 +23,14 @@
 /* Characters */
 "characters_title" = "Characters";
 "characters_searchPlaceholder" = "Search characters...";
+"characters_empty" = "There are not available results";
 
 /* Locations */
 "locations_title" = "Locations";
+"locations_searchPlaceholder" = "Search locations...";
+"locations_empty" = "There are not available results";
 
 /* Episodes */
 "episodes_title" = "Episodes";
+"episodes_searchPlaceholder" = "Search episodes...";
+"episodes_empty" = "There are not available results";

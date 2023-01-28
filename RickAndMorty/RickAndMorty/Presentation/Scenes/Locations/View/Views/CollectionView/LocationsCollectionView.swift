@@ -35,11 +35,21 @@ final class LocationsCollectionView: UICollectionView {
         self.imageCacheManager = imageCacheManager
         reloadData()
     }
+    
+    func scrollToTop() {
+        if numberOfItems(inSection: 0) > 0 {
+            scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+        }
+    }
 }
 
 private extension LocationsCollectionView {
     var infoCellIdentifier: String {
         String(describing: type(of: LocationsCollectionViewInfoCell()))
+    }
+    
+    var emptyCellIdentifier: String {
+        String(describing: type(of: LocationsCollectionViewEmptyCell()))
     }
     
     func setupView() {
@@ -52,11 +62,13 @@ private extension LocationsCollectionView {
     func registerCells() {
         let infoCellNib = UINib(nibName: infoCellIdentifier, bundle: .main)
         register(infoCellNib, forCellWithReuseIdentifier: infoCellIdentifier)
+        let emptyCellNib = UINib(nibName: emptyCellIdentifier, bundle: .main)
+        register(emptyCellNib, forCellWithReuseIdentifier: emptyCellIdentifier)
     }
     
     func shouldLoadMoreItems(index: Int) -> Bool {
         guard let locationsPager = locationsPager else { return false }
-        let itemsLeftToLastItem = 6
+        let itemsLeftToLastItem = 4
         return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!locationsPager.isLastPage)
     }
 }
@@ -64,16 +76,21 @@ private extension LocationsCollectionView {
 extension LocationsCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let locationsPager = locationsPager else { return 0 }
-        return locationsPager.getItems().count
+        return locationsPager.getItems().isEmpty ? 1 : locationsPager.getItems().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? LocationsCollectionViewInfoCell,
-              let location = locationsPager?.getItems()[indexPath.item],
-              let imageCacheManager = imageCacheManager else { return UICollectionViewCell() }
-        let representable = DefaultLocationsCollectionViewInfoCellRepresentable(title: location.name)
-        cell.configure(with: representable, and: imageCacheManager)
-        return cell
+        guard let locationsPager = locationsPager else { return UICollectionViewCell() }
+        if locationsPager.getItems().isEmpty {
+            guard let cell = dequeueReusableCell(withReuseIdentifier: emptyCellIdentifier, for: indexPath) as? LocationsCollectionViewEmptyCell else { return UICollectionViewCell() }
+            return cell
+        } else {
+            guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? LocationsCollectionViewInfoCell,
+                  let location = locationsPager.getItems()[safe: indexPath.item] else { return UICollectionViewCell() }
+            let representable = DefaultLocationsCollectionViewInfoCellRepresentable(title: location.name)
+            cell.configure(with: representable)
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -83,10 +100,14 @@ extension LocationsCollectionView: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let leftContentInset: CGFloat = 20
-        let minSpacingColumns: CGFloat = 10
-        let cellWidth = frame.width/2 - (leftContentInset + minSpacingColumns)
-        return CGSize(width: cellWidth, height: cellWidth)
+        let size = CGSize(width: frame.width - 40, height: frame.height - 100)
+        guard let locationsPager = locationsPager else { return size }
+        if locationsPager.getItems().isNotEmpty {
+            let leftContentInset: CGFloat = 20
+            let minSpacingColumns: CGFloat = 10
+            let cellWidth = frame.width/2 - (leftContentInset + minSpacingColumns)
+            return CGSize(width: cellWidth, height: cellWidth)
+        } else { return size }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

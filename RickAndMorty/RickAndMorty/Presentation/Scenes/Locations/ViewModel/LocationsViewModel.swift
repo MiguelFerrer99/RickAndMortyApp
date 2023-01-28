@@ -20,6 +20,7 @@ final class LocationsViewModel {
     var state: AnyPublisher<LocationsViewModelState, Never>
     private let representable: LocationsViewModelRepresentable?
     private let locationsPager = Pagination<LocationRepresentable>()
+    var locationNameFiltered: String?
 
     init(dependencies: LocationsDependenciesResolver, representable: LocationsViewModelRepresentable?) {
         self.dependencies = dependencies
@@ -35,12 +36,14 @@ final class LocationsViewModel {
         coordinator.back()
     }
     
-    func viewMoreLocations() {
-        loadMoreLocations()
+    func clearFilteredLocationsPager() {
+        locationNameFiltered = nil
+        locationsPager.reset()
+        sendStateSubject(.locationsReceived(locationsPager))
     }
     
-    func searchEpisodes(with text: String) {
-        print(text)
+    func loadLocations() {
+        loadLocations(with: locationNameFiltered)
     }
 }
 
@@ -66,13 +69,11 @@ private extension LocationsViewModel {
         }
     }
     
-    func loadMoreLocations() {
+    func loadLocations(with name: String?) {
         Task {
-            let locationsInfo = await locationsUseCase.getLocations(ofPage: locationsPager.currentPage)
-            if let locationsInfo = locationsInfo {
-                locationsPager.setItems(locationsInfo.results, and: locationsInfo.info.isLast)
-                sendStateSubject(.locationsReceived(locationsPager))
-            }
+            let locationsInfo = await locationsUseCase.getLocations(withName: name, ofPage: locationsPager.currentPage)
+            locationsPager.setItems(locationsInfo.results, and: locationsInfo.info.isLast)
+            sendStateSubject(.locationsReceived(locationsPager))
         }
     }
 }

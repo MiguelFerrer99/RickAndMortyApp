@@ -6,7 +6,7 @@
 //
 
 protocol CharactersUseCase {
-    func getCharacters(ofPage page: Int) async -> CharactersInfoRepresentable?
+    func getCharacters(withName name: String?, ofPage page: Int) async -> CharactersInfoRepresentable
 }
 
 final class DefaultCharactersUseCase {
@@ -18,8 +18,12 @@ final class DefaultCharactersUseCase {
 }
 
 extension DefaultCharactersUseCase: CharactersUseCase {
-    func getCharacters(ofPage page: Int) async -> CharactersInfoRepresentable? {
-        let charactersInfo = try? await repository.getCharacters(ofPage: page)
-        return charactersInfo
+    func getCharacters(withName name: String? = nil, ofPage page: Int) async -> CharactersInfoRepresentable {
+        do {
+            let charactersInfo = try await repository.getCharacters(withName: name, ofPage: page)
+            return charactersInfo
+        } catch {
+            return CharactersInfoRepresented()
+        }
     }
 }

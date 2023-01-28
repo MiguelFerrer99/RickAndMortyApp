@@ -6,9 +6,9 @@
 //
 
 protocol HomeRepository {
-    func getCharacters(ofPage page: Int) async throws -> CharactersInfoRepresentable
-    func getLocations(ofPage page: Int) async throws -> LocationsInfoRepresentable
-    func getEpisodes(ofPage page: Int) async throws -> EpisodesInfoRepresentable
+    func getCharacters() async throws -> CharactersInfoRepresentable
+    func getLocations() async throws -> LocationsInfoRepresentable
+    func getEpisodes() async throws -> EpisodesInfoRepresentable
 }
 
 final class DefaultHomeRepository {
@@ -22,20 +22,20 @@ final class DefaultHomeRepository {
 }
 
 extension DefaultHomeRepository: HomeRepository {
-    func getCharacters(ofPage page: Int) async throws -> CharactersInfoRepresentable {
-        let charactersInfoDTO = try await apiService.load(endpoint: CharactersEndpoint.characters(page: page).endpoint, of: CharactersInfoDTO.self)
+    func getCharacters() async throws -> CharactersInfoRepresentable {
+        let charactersInfoDTO = try await apiService.load(endpoint: CharactersEndpoint.characters(name: nil, page: nil).endpoint, of: CharactersInfoDTO.self)
         let charactersInfo = CharactersInfoRepresented(charactersInfoDTO)
         return charactersInfo
     }
     
-    func getLocations(ofPage page: Int) async throws -> LocationsInfoRepresentable {
-        let locationsInfoDTO = try await apiService.load(endpoint: LocationsEndpoint.locations(page: page).endpoint, of: LocationsInfoDTO.self)
+    func getLocations() async throws -> LocationsInfoRepresentable {
+        let locationsInfoDTO = try await apiService.load(endpoint: LocationsEndpoint.locations(name: nil, page: nil).endpoint, of: LocationsInfoDTO.self)
         let locationsInfo = LocationsInfoRepresented(locationsInfoDTO)
         return locationsInfo
     }
     
-    func getEpisodes(ofPage page: Int) async throws -> EpisodesInfoRepresentable {
-        let episodesInfoDTO = try await apiService.load(endpoint: EpisodesEndpoint.episodes(page: page).endpoint, of: EpisodesInfoDTO.self)
+    func getEpisodes() async throws -> EpisodesInfoRepresentable {
+        let episodesInfoDTO = try await apiService.load(endpoint: EpisodesEndpoint.episodes(name: nil, page: nil).endpoint, of: EpisodesInfoDTO.self)
         let episodesInfo = EpisodesInfoRepresented(episodesInfoDTO)
         return episodesInfo
     }

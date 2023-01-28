@@ -6,7 +6,7 @@
 //
 
 protocol CharactersRepository {
-    func getCharacters(ofPage page: Int) async throws -> CharactersInfoRepresentable
+    func getCharacters(withName name: String?, ofPage page: Int) async throws -> CharactersInfoRepresentable
 }
 
 final class DefaultCharactersRepository {
@@ -20,8 +20,8 @@ final class DefaultCharactersRepository {
 }
 
 extension DefaultCharactersRepository: CharactersRepository {
-    func getCharacters(ofPage page: Int) async throws -> CharactersInfoRepresentable {
-        let charactersInfoDTO = try await apiService.load(endpoint: CharactersEndpoint.characters(page: page).endpoint, of: CharactersInfoDTO.self)
+    func getCharacters(withName name: String? = nil, ofPage page: Int) async throws -> CharactersInfoRepresentable {
+        let charactersInfoDTO = try await apiService.load(endpoint: CharactersEndpoint.characters(name: name, page: page).endpoint, of: CharactersInfoDTO.self)
         let charactersInfo = CharactersInfoRepresented(charactersInfoDTO)
         return charactersInfo
     }

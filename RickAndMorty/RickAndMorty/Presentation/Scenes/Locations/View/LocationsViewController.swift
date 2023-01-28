@@ -32,6 +32,7 @@ final class LocationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
         bind()
         viewModel.viewDidLoad()
     }
@@ -51,6 +52,14 @@ private extension LocationsViewController {
         dependencies.external.resolveImageCacheManager()
     }
     
+    func setupView() {
+        configureSearchView()
+    }
+    
+    func configureSearchView() {
+        searchView.configure(with: .locations.searchPlaceholder.localized)
+    }
+    
     func bind() {
         bindViewModel()
         bindSearchView()
@@ -64,6 +73,7 @@ private extension LocationsViewController {
                 switch state {
                 case .locationsReceived(let pager):
                     self.collectionView.configure(with: pager, and: self.imageCacheManager)
+                    if pager.currentPage == 1 { self.collectionView.scrollToTop() }
                 case .idle: return
                 }
             }.store(in: &subscriptions)
@@ -75,7 +85,9 @@ private extension LocationsViewController {
                 guard let self = self else { return }
                 switch state {
                 case .searched(let text):
-                    self.viewModel.searchEpisodes(with: text)
+                    self.viewModel.clearFilteredLocationsPager()
+                    self.viewModel.locationNameFiltered = text
+                    self.viewModel.loadLocations()
                 }
             }.store(in: &subscriptions)
     }
@@ -88,7 +100,7 @@ private extension LocationsViewController {
                 case .showNavigationBarShadow(let show):
                     self.searchView.isHidden ? self.showNavigationBarShadow(show) : self.searchView.showShadow(show)
                 case .viewMore:
-                    self.viewModel.viewMoreLocations()
+                    self.viewModel.loadLocations()
                 }
             }.store(in: &subscriptions)
     }
@@ -134,11 +146,18 @@ private extension LocationsViewController {
             guard let self = self else { return }
             self.searchView.isHidden.toggle()
             self.updateRightNavigationBarButton()
+            if self.searchView.isHidden {
+                self.viewModel.clearFilteredLocationsPager()
+                self.viewModel.loadLocations()
+            }
             self.showNavigationBarShadow(self.searchView.isHidden && self.collectionView.contentOffset.y > 0)
             self.searchView.showShadow(!self.searchView.isHidden && self.collectionView.contentOffset.y > 0)
             self.collectionViewToContainerViewTopConstraint.priority = UILayoutPriority(self.searchView.isHidden ? 1000 : 999)
             self.collectionViewToSearchViewTopConstraint.priority = UILayoutPriority(self.searchView.isHidden ? 999 : 1000)
             self.view.layoutIfNeeded()
-        }, completion: nil)
+        }, completion: { [weak self] finished in
+            guard let self = self else { return }
+            if finished, !self.searchView.isHidden { self.searchView.showKeyboard() }
+        })
     }
 }

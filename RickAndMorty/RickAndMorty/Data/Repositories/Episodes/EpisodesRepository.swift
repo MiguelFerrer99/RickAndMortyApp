@@ -6,7 +6,7 @@
 //
 
 protocol EpisodesRepository {
-    func getEpisodes(ofPage page: Int) async throws -> EpisodesInfoRepresentable
+    func getEpisodes(withName name: String?, ofPage page: Int) async throws -> EpisodesInfoRepresentable
 }
 
 final class DefaultEpisodesRepository {
@@ -20,8 +20,8 @@ final class DefaultEpisodesRepository {
 }
 
 extension DefaultEpisodesRepository: EpisodesRepository {
-    func getEpisodes(ofPage page: Int) async throws -> EpisodesInfoRepresentable {
-        let episodesInfoDTO = try await apiService.load(endpoint: EpisodesEndpoint.episodes(page: page).endpoint, of: EpisodesInfoDTO.self)
+    func getEpisodes(withName name: String?, ofPage page: Int) async throws -> EpisodesInfoRepresentable {
+        let episodesInfoDTO = try await apiService.load(endpoint: EpisodesEndpoint.episodes(name: name, page: page).endpoint, of: EpisodesInfoDTO.self)
         let episodesInfo = EpisodesInfoRepresented(episodesInfoDTO)
         return episodesInfo
     }

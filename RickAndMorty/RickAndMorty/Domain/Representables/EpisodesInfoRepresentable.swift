@@ -18,4 +18,9 @@ struct EpisodesInfoRepresented: EpisodesInfoRepresentable {
         info = InfoPaginationRepresented(dto.info)
         results = dto.results.compactMap { EpisodeRepresented($0) }
     }
+    
+    init() {
+        info = InfoPaginationRepresented()
+        results = []
+    }
 }

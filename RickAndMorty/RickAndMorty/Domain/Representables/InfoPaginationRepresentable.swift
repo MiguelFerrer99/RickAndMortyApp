@@ -21,4 +21,10 @@ struct InfoPaginationRepresented: InfoPaginationRepresentable {
         pages = dto.pages
         isLast = dto.next.isNil
     }
+    
+    init() {
+        count = 0
+        pages = 0
+        isLast = true
+    }
 }

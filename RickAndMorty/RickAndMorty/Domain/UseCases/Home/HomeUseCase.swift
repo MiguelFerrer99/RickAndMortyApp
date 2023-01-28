@@ -19,9 +19,9 @@ final class DefaultHomeUseCase {
 
 extension DefaultHomeUseCase: HomeUseCase {
     func getInfo() async -> HomeInfoRepresentable {
-        async let charactersInfo = try? repository.getCharacters(ofPage: 1)
-        async let locationsInfo = try? repository.getLocations(ofPage: 1)
-        async let episodesInfo = try? repository.getEpisodes(ofPage: 1)
+        async let charactersInfo = try? repository.getCharacters()
+        async let locationsInfo = try? repository.getLocations()
+        async let episodesInfo = try? repository.getEpisodes()
         let homeInfo = await DefaultHomeInfoRepresentable(charactersInfo: charactersInfo, locationsInfo: locationsInfo, episodesInfo: episodesInfo)
         return homeInfo
     }

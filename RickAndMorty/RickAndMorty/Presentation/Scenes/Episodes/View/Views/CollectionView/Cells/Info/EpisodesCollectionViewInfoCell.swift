@@ -1,5 +1,5 @@
 //
-//  LocationsCollectionViewInfoCell.swift
+//  EpisodesCollectionViewInfoCell.swift
 //  RickAndMorty
 //
 //  Created by Miguel Ferrer Fornali on 26/1/23.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LocationsCollectionViewInfoCell: UICollectionViewCell {
+final class EpisodesCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -16,7 +16,6 @@ final class LocationsCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabelTrailingConstraint: NSLayoutConstraint!
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-    private var imageCacheManager: ImageCacheManager?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -28,15 +27,14 @@ final class LocationsCollectionViewInfoCell: UICollectionViewCell {
         setupView()
     }
     
-    func configure(with representable: LocationsCollectionViewInfoCellRepresentable, and imageCacheManager: ImageCacheManager) {
-        self.imageCacheManager = imageCacheManager
+    func configure(with representable: EpisodesCollectionViewInfoCellRepresentable) {
         titleLabel.text = representable.title
-        guard let image = UIImage(named: "Location") else { return }
+        guard let image = UIImage(named: "Episode") else { return }
         showTextAndImage(image: image)
     }
 }
 
-private extension LocationsCollectionViewInfoCell {
+private extension EpisodesCollectionViewInfoCell {
     func setupView() {
         configureContainerView()
         configureImageView()

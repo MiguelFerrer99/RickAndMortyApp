@@ -25,4 +25,9 @@ final class Pagination<T> {
     func getItems() -> [Item] {
         return items
     }
+    
+    func reset() {
+        currentPage = 1
+        items.removeAll()
+    }
 }

@@ -18,4 +18,9 @@ struct LocationsInfoRepresented: LocationsInfoRepresentable {
         info = InfoPaginationRepresented(dto.info)
         results = dto.results.compactMap { LocationRepresented($0) }
     }
+    
+    init() {
+        info = InfoPaginationRepresented()
+        results = []
+    }
 }

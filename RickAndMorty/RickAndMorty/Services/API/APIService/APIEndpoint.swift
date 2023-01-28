@@ -39,7 +39,7 @@ final class APIEndpoint {
     var path: String
     var httpMethod: HTTPMethod
     var encoding: Encoding
-    var parameters: [String: Any]
+    var parameters: [String: String]
     var headers: [String: String]
     var images: [String: UIImage]
     var videos: [String: String]
@@ -71,7 +71,7 @@ final class APIEndpoint {
     
     init(path: String,
          httpMethod: HTTPMethod,
-         parameters: [String: Any] = [:],
+         parameters: [String: String] = [:],
          encoding: Encoding = .json,
          headers: [String: String] = [:],
          images: [String: UIImage] = [:],
@@ -124,7 +124,7 @@ final class APIEndpoint {
     func setURLEncoding(for url: URL) -> URLRequest {
         var components = URLComponents(string: url.absoluteString)!
         components.queryItems = self.parameters.map { (key, value) in
-            URLQueryItem(name: key, value: value as? String)
+            URLQueryItem(name: key, value: value)
         }
         components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         return URLRequest(url: components.url!)

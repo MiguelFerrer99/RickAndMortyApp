@@ -15,7 +15,7 @@ actor APIRefreshActor {
     // MARK: - refresh - Call API for refreshToken
     func refresh(with refreshToken: String) async throws -> String {
         do {
-            let parameters: [String: Any] = [
+            let parameters: [String: String] = [
                 "grant_type": "refresh_token",
                 "client_id": getClientId(),
                 "client_secret": getClientSecret(),

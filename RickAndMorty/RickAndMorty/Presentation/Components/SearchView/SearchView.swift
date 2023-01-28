@@ -31,11 +31,8 @@ final class SearchView: XibView {
         setupView()
     }
     
-    func close() {
-        textfield.text?.removeAll()
-        deleteTextButtonView.isHidden = true
-        textfield.resignFirstResponder()
-        showShadow(false)
+    func configure(with placeholderText: String) {
+        textfield.placeholder = placeholderText
     }
     
     func showShadow(_ show: Bool) {
@@ -43,6 +40,17 @@ final class SearchView: XibView {
             guard let self = self else { return }
             self.layer.shadowOpacity = show ? 1 : 0
         }
+    }
+    
+    func close() {
+        textfield.text?.removeAll()
+        deleteTextButtonView.isHidden = true
+        textfield.resignFirstResponder()
+        showShadow(false)
+    }
+    
+    func showKeyboard() {
+        textfield.becomeFirstResponder()
     }
 }
 
@@ -78,7 +86,6 @@ private extension SearchView {
         textfield.enablesReturnKeyAutomatically = true
         textfield.autocorrectionType = .no
         textfield.autocapitalizationType = .sentences
-        textfield.placeholder = .characters.searchPlaceholder.localized
     }
     
     @objc func didTapContainerView() {

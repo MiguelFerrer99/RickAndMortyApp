@@ -35,11 +35,21 @@ final class EpisodesCollectionView: UICollectionView {
         self.imageCacheManager = imageCacheManager
         reloadData()
     }
+    
+    func scrollToTop() {
+        if numberOfItems(inSection: 0) > 0 {
+            scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+        }
+    }
 }
 
 private extension EpisodesCollectionView {
     var infoCellIdentifier: String {
         String(describing: type(of: EpisodesCollectionViewInfoCell()))
+    }
+    
+    var emptyCellIdentifier: String {
+        String(describing: type(of: EpisodesCollectionViewEmptyCell()))
     }
     
     func setupView() {
@@ -52,11 +62,13 @@ private extension EpisodesCollectionView {
     func registerCells() {
         let infoCellNib = UINib(nibName: infoCellIdentifier, bundle: .main)
         register(infoCellNib, forCellWithReuseIdentifier: infoCellIdentifier)
+        let emptyCellNib = UINib(nibName: emptyCellIdentifier, bundle: .main)
+        register(emptyCellNib, forCellWithReuseIdentifier: emptyCellIdentifier)
     }
     
     func shouldLoadMoreItems(index: Int) -> Bool {
         guard let episodesPager = episodesPager else { return false }
-        let itemsLeftToLastItem = 6
+        let itemsLeftToLastItem = 4
         return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!episodesPager.isLastPage)
     }
 }
@@ -64,16 +76,21 @@ private extension EpisodesCollectionView {
 extension EpisodesCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let episodesPager = episodesPager else { return 0 }
-        return episodesPager.getItems().count
+        return episodesPager.getItems().isEmpty ? 1 : episodesPager.getItems().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? EpisodesCollectionViewInfoCell,
-              let episode = episodesPager?.getItems()[indexPath.item],
-              let imageCacheManager = imageCacheManager else { return UICollectionViewCell() }
-        let representable = DefaultEpisodesCollectionViewInfoCellRepresentable(title: episode.name)
-        cell.configure(with: representable, and: imageCacheManager)
-        return cell
+        guard let episodesPager = episodesPager else { return UICollectionViewCell() }
+        if episodesPager.getItems().isEmpty {
+            guard let cell = dequeueReusableCell(withReuseIdentifier: emptyCellIdentifier, for: indexPath) as? EpisodesCollectionViewEmptyCell else { return UICollectionViewCell() }
+            return cell
+        } else {
+            guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? EpisodesCollectionViewInfoCell,
+                  let episode = episodesPager.getItems()[safe: indexPath.item] else { return UICollectionViewCell() }
+            let representable = DefaultEpisodesCollectionViewInfoCellRepresentable(title: episode.name)
+            cell.configure(with: representable)
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -83,10 +100,14 @@ extension EpisodesCollectionView: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let leftContentInset: CGFloat = 20
-        let minSpacingColumns: CGFloat = 10
-        let cellWidth = frame.width/2 - (leftContentInset + minSpacingColumns)
-        return CGSize(width: cellWidth, height: cellWidth)
+        let size = CGSize(width: frame.width - 40, height: frame.height - 100)
+        guard let episodesPager = episodesPager else { return size }
+        if episodesPager.getItems().isNotEmpty {
+            let leftContentInset: CGFloat = 20
+            let minSpacingColumns: CGFloat = 10
+            let cellWidth = frame.width/2 - (leftContentInset + minSpacingColumns)
+            return CGSize(width: cellWidth, height: cellWidth)
+        } else { return size }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

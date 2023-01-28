@@ -6,15 +6,18 @@
 //
 
 enum CharactersEndpoint {
-    case characters(page: Int)
+    case characters(name: String?, page: Int?)
     
     var endpoint: APIEndpoint {
         get {
             switch self {
-            case .characters(page: let page):
+            case .characters(name: let optionalName, page: let optionalPage):
+                var parameters: [String: String] = [:]
+                if let page = optionalPage { parameters["page"] = "\(page)" }
+                if let name = optionalName { parameters["name"] = name }
                 return APIEndpoint(path: "/character",
                                    httpMethod: .get,
-                                   parameters: ["page": "\(page)"],
+                                   parameters: parameters,
                                    mock: "Characters")
             }
         }

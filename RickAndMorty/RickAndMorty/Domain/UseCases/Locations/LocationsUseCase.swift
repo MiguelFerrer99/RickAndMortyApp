@@ -6,7 +6,7 @@
 //
 
 protocol LocationsUseCase {
-    func getLocations(ofPage page: Int) async -> LocationsInfoRepresentable?
+    func getLocations(withName name: String?, ofPage page: Int) async -> LocationsInfoRepresentable
 }
 
 final class DefaultLocationsUseCase {
@@ -18,8 +18,12 @@ final class DefaultLocationsUseCase {
 }
 
 extension DefaultLocationsUseCase: LocationsUseCase {
-    func getLocations(ofPage page: Int) async -> LocationsInfoRepresentable? {
-        let locationsInfo = try? await repository.getLocations(ofPage: page)
-        return locationsInfo
+    func getLocations(withName name: String?, ofPage page: Int) async -> LocationsInfoRepresentable {
+        do {
+            let locationsInfo = try await repository.getLocations(withName: name, ofPage: page)
+            return locationsInfo
+        } catch {
+            return LocationsInfoRepresented()
+        }
     }
 }

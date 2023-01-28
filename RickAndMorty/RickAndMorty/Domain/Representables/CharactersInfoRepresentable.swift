@@ -18,4 +18,9 @@ struct CharactersInfoRepresented: CharactersInfoRepresentable {
         info = InfoPaginationRepresented(dto.info)
         results = dto.results.compactMap { CharacterRepresented($0) }
     }
+    
+    init() {
+        info = InfoPaginationRepresented()
+        results = []
+    }
 }

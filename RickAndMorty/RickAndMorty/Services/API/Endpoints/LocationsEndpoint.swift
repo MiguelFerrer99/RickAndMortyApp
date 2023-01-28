@@ -6,15 +6,18 @@
 //
 
 enum LocationsEndpoint {
-    case locations(page: Int)
+    case locations(name: String?, page: Int?)
     
     var endpoint: APIEndpoint {
         get {
             switch self {
-            case .locations(page: let page):
+            case .locations(name: let optionalName, page: let optionalPage):
+                var parameters: [String: String] = [:]
+                if let page = optionalPage { parameters["page"] = "\(page)" }
+                if let name = optionalName { parameters["name"] = name }
                 return APIEndpoint(path: "/location",
                                    httpMethod: .get,
-                                   parameters: ["page": "\(page)"],
+                                   parameters: parameters,
                                    mock: "Locations")
             }
         }

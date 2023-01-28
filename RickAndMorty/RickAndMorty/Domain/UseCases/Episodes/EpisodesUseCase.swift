@@ -6,7 +6,7 @@
 //
 
 protocol EpisodesUseCase {
-    func getEpisodes(ofPage page: Int) async -> EpisodesInfoRepresentable?
+    func getEpisodes(withName name: String?, ofPage page: Int) async -> EpisodesInfoRepresentable
 }
 
 final class DefaultEpisodesUseCase {
@@ -18,8 +18,12 @@ final class DefaultEpisodesUseCase {
 }
 
 extension DefaultEpisodesUseCase: EpisodesUseCase {
-    func getEpisodes(ofPage page: Int) async -> EpisodesInfoRepresentable? {
-        let episodesInfo = try? await repository.getEpisodes(ofPage: page)
-        return episodesInfo
+    func getEpisodes(withName name: String?, ofPage page: Int) async -> EpisodesInfoRepresentable {
+        do {
+            let episodesInfo = try await repository.getEpisodes(withName: name, ofPage: page)
+            return episodesInfo
+        } catch {
+            return EpisodesInfoRepresented()
+        }
     }
 }

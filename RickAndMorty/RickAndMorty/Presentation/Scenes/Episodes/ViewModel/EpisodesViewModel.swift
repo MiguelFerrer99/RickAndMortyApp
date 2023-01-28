@@ -20,6 +20,7 @@ final class EpisodesViewModel {
     var state: AnyPublisher<EpisodesViewModelState, Never>
     private let representable: EpisodesViewModelRepresentable?
     private let episodesPager = Pagination<EpisodeRepresentable>()
+    var episodeNameFiltered: String?
 
     init(dependencies: EpisodesDependenciesResolver, representable: EpisodesViewModelRepresentable?) {
         self.dependencies = dependencies
@@ -35,12 +36,14 @@ final class EpisodesViewModel {
         coordinator.back()
     }
     
-    func viewMoreEpisodes() {
-        loadMoreEpisodes()
+    func clearFilteredEpisodesPager() {
+        episodeNameFiltered = nil
+        episodesPager.reset()
+        sendStateSubject(.episodesReceived(episodesPager))
     }
     
-    func searchLocations(with text: String) {
-        print(text)
+    func loadEpisodes() {
+        loadEpisodes(with: episodeNameFiltered)
     }
 }
 
@@ -67,13 +70,11 @@ private extension EpisodesViewModel {
         }
     }
     
-    func loadMoreEpisodes() {
+    func loadEpisodes(with name: String?) {
         Task {
-            let episodesInfo = await episodesUseCase.getEpisodes(ofPage: episodesPager.currentPage)
-            if let episodesInfo = episodesInfo {
-                episodesPager.setItems(episodesInfo.results, and: episodesInfo.info.isLast)
-                sendStateSubject(.episodesReceived(episodesPager))
-            }
+            let episodesInfo = await episodesUseCase.getEpisodes(withName: name, ofPage: episodesPager.currentPage)
+            episodesPager.setItems(episodesInfo.results, and: episodesInfo.info.isLast)
+            sendStateSubject(.episodesReceived(episodesPager))
         }
     }
 }

@@ -6,7 +6,7 @@
 //
 
 protocol LocationRepository {
-    func getLocations(ofPage page: Int) async throws -> LocationsInfoRepresentable
+    func getLocations(withName name: String?, ofPage page: Int) async throws -> LocationsInfoRepresentable
 }
 
 final class DefaultLocationRepository {
@@ -20,8 +20,8 @@ final class DefaultLocationRepository {
 }
 
 extension DefaultLocationRepository: LocationRepository {
-    func getLocations(ofPage page: Int) async throws -> LocationsInfoRepresentable {
-        let locactionsInfoDTO = try await apiService.load(endpoint: LocationsEndpoint.locations(page: page).endpoint, of: LocationsInfoDTO.self)
+    func getLocations(withName name: String?, ofPage page: Int) async throws -> LocationsInfoRepresentable {
+        let locactionsInfoDTO = try await apiService.load(endpoint: LocationsEndpoint.locations(name: name, page: page).endpoint, of: LocationsInfoDTO.self)
         let locationsInfo = LocationsInfoRepresented(locactionsInfoDTO)
         return locationsInfo
     }

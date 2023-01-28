@@ -20,7 +20,8 @@ final class CharactersViewModel {
     var state: AnyPublisher<CharactersViewModelState, Never>
     private let representable: CharactersViewModelRepresentable?
     private let charactersPager = Pagination<CharacterRepresentable>()
-
+    var characterNameFiltered: String?
+    
     init(dependencies: CharactersDependenciesResolver, representable: CharactersViewModelRepresentable?) {
         self.dependencies = dependencies
         self.representable = representable
@@ -35,12 +36,14 @@ final class CharactersViewModel {
         coordinator.back()
     }
     
-    func viewMoreCharacters() {
-        loadMoreCharacters()
+    func clearFilteredCharactersPager() {
+        characterNameFiltered = nil
+        charactersPager.reset()
+        sendStateSubject(.charactersReceived(charactersPager))
     }
     
-    func searchCharaters(with text: String) {
-        print(text)
+    func loadCharaters() {
+        loadCharacters(with: characterNameFiltered)
     }
 }
 
@@ -66,13 +69,11 @@ private extension CharactersViewModel {
         }
     }
     
-    func loadMoreCharacters() {
+    func loadCharacters(with name: String?) {
         Task {
-            let charactersInfo = await charactersUseCase.getCharacters(ofPage: charactersPager.currentPage)
-            if let charactersInfo = charactersInfo {
-                charactersPager.setItems(charactersInfo.results, and: charactersInfo.info.isLast)
-                sendStateSubject(.charactersReceived(charactersPager))
-            }
+            let charactersInfo = await charactersUseCase.getCharacters(withName: name, ofPage: charactersPager.currentPage)
+            charactersPager.setItems(charactersInfo.results, and: charactersInfo.info.isLast)
+            sendStateSubject(.charactersReceived(charactersPager))
         }
     }
 }
