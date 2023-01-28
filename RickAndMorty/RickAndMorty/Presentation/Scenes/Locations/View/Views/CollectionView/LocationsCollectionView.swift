@@ -87,7 +87,7 @@ extension LocationsCollectionView: UICollectionViewDelegate, UICollectionViewDat
         } else {
             guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? LocationsCollectionViewInfoCell,
                   let location = locationsPager.getItems()[safe: indexPath.item] else { return UICollectionViewCell() }
-            let representable = DefaultLocationsCollectionViewInfoCellRepresentable(title: location.name)
+            let representable = DefaultLocationsCollectionViewInfoCellRepresentable(title: location.name, image: location.image)
             cell.configure(with: representable)
             return cell
         }

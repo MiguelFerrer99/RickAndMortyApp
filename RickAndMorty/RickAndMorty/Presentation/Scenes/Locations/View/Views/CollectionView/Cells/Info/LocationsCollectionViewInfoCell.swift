@@ -29,7 +29,7 @@ final class LocationsCollectionViewInfoCell: UICollectionViewCell {
     
     func configure(with representable: LocationsCollectionViewInfoCellRepresentable) {
         titleLabel.text = representable.title
-        guard let image = UIImage(named: "Location") else { return }
+        guard let image = UIImage(named: representable.image) else { return }
         showTextAndImage(image: image)
     }
 }

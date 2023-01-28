@@ -48,12 +48,12 @@ private extension HomeDataCollectionView {
     func setupView() {
         delegate = self
         dataSource = self
-        registerCells()
+        registerCell()
         registerHeader()
         configureLayout()
     }
     
-    func registerCells() {
+    func registerCell() {
         let infoCellNib = UINib(nibName: infoCellIdentifier, bundle: .main)
         register(infoCellNib, forCellWithReuseIdentifier: infoCellIdentifier)
     }
@@ -118,7 +118,7 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
             representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .character(character.name, character.urlImage))
         case .locations(let items):
             let location = items[indexPath.item]
-            representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .location(location.name, "Location"))
+            representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .location(location.name, location.image))
         case .episodes(let items):
             let episode = items[indexPath.item]
             representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .episode(episode.name, "Episode"))

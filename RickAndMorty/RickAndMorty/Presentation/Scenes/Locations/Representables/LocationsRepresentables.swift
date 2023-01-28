@@ -17,8 +17,10 @@ struct DefaultLocationsViewModelRepresentable: LocationsViewModelRepresentable {
 
 protocol LocationsCollectionViewInfoCellRepresentable {
     var title: String { get }
+    var image: String { get }
 }
 
 struct DefaultLocationsCollectionViewInfoCellRepresentable: LocationsCollectionViewInfoCellRepresentable {
     var title: String
+    var image: String
 }
