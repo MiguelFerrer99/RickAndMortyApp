@@ -121,7 +121,7 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
             representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .location(location.name, location.image))
         case .episodes(let items):
             let episode = items[indexPath.item]
-            representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .episode(episode.name, "Episode"))
+            representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .episode(episode.name, episode.episode, "Episode"))
         }
         cell.configure(with: representable, and: imageCacheManager)
         return cell

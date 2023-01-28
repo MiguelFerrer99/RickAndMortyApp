@@ -11,6 +11,7 @@ final class EpisodesCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var episodeLabel: UILabel!
     @IBOutlet private weak var titleLabelLeadingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabelBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabelTopConstraint: NSLayoutConstraint!
@@ -29,6 +30,7 @@ final class EpisodesCollectionViewInfoCell: UICollectionViewCell {
     
     func configure(with representable: EpisodesCollectionViewInfoCellRepresentable) {
         titleLabel.text = representable.title
+        episodeLabel.text = representable.episode
         guard let image = UIImage(named: "Episode") else { return }
         showTextAndImage(image: image)
     }
@@ -39,6 +41,7 @@ private extension EpisodesCollectionViewInfoCell {
         configureContainerView()
         configureImageView()
         configureTitleLabel()
+        configureEpisodeLabel()
     }
     
     func configureContainerView() {
@@ -73,6 +76,13 @@ private extension EpisodesCollectionViewInfoCell {
         }
     }
     
+    func configureEpisodeLabel() {
+        episodeLabel.textColor = .white
+        episodeLabel.font = UIFont(name: "GetSchwifty-Regular", size: iPadDevice ? 100 : 40)
+        episodeLabel.shadowColor = .black
+        episodeLabel.shadowOffset = CGSize(width: 2, height: 3)
+    }
+    
     func showTextAndImage(image: UIImage) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -81,6 +91,7 @@ private extension EpisodesCollectionViewInfoCell {
                 guard let self = self else { return }
                 self.imageView.alpha = 1
                 self.titleLabel.alpha = 1
+                self.episodeLabel.alpha = 1
             }, completion: nil)
         }
     }

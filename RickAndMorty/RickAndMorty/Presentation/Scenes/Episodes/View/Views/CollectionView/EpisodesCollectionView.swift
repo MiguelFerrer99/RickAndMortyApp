@@ -87,7 +87,7 @@ extension EpisodesCollectionView: UICollectionViewDelegate, UICollectionViewData
         } else {
             guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? EpisodesCollectionViewInfoCell,
                   let episode = episodesPager.getItems()[safe: indexPath.item] else { return UICollectionViewCell() }
-            let representable = DefaultEpisodesCollectionViewInfoCellRepresentable(title: episode.name)
+            let representable = DefaultEpisodesCollectionViewInfoCellRepresentable(title: episode.name, episode: episode.episode)
             cell.configure(with: representable)
             return cell
         }

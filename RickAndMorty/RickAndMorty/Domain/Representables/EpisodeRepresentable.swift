@@ -11,7 +11,6 @@ protocol EpisodeRepresentable {
     var id: String { get }
     var name: String { get }
     var airDate: Date { get }
-    var season: String { get }
     var episode: String { get }
     var numberOfCharacters: Int { get }
 }
@@ -20,7 +19,6 @@ struct EpisodeRepresented: EpisodeRepresentable {
     var id: String
     var name: String
     var airDate: Date
-    var season: String
     var episode: String
     var numberOfCharacters: Int
     
@@ -28,8 +26,7 @@ struct EpisodeRepresented: EpisodeRepresentable {
         self.id = "\(dto.id)"
         self.name = dto.name
         self.airDate = dto.air_date.toDate(dateFormat: "MMMM d, yyyy") ?? Date()
-        self.season = dto.episode.substring(3) ?? ""
-        self.episode = dto.episode.substring(ofLast: 3) ?? ""
+        self.episode = dto.episode
         self.numberOfCharacters = dto.characters.count
     }
 }

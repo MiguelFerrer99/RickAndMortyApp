@@ -11,6 +11,7 @@ final class HomeDataCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var episodeLabel: UILabel!
     @IBOutlet private weak var titleLabelLeadingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabelBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabelTopConstraint: NSLayoutConstraint!
@@ -46,10 +47,11 @@ final class HomeDataCollectionViewInfoCell: UICollectionViewCell {
             guard let image = UIImage(named: imageName) else { return }
             titleLabel.text = title
             showTextAndImage(image: image)
-        case .episode(let title, let imageName):
+        case .episode(let title, let episode, let imageName):
             guard let image = UIImage(named: imageName) else { return }
             titleLabel.text = title
-            showTextAndImage(image: image)
+            episodeLabel.text = "\(episode)"
+            showTextAndImage(image: image, isEpisode: true)
         }
     }
 }
@@ -59,6 +61,7 @@ private extension HomeDataCollectionViewInfoCell {
         configureContainerView()
         configureImageView()
         configureTitleLabel()
+        configureEpisodeLabel()
     }
     
     func configureContainerView() {
@@ -93,7 +96,14 @@ private extension HomeDataCollectionViewInfoCell {
         }
     }
     
-    func showTextAndImage(image: UIImage) {
+    func configureEpisodeLabel() {
+        episodeLabel.textColor = .white
+        episodeLabel.font = UIFont(name: "GetSchwifty-Regular", size: iPadDevice ? 70 : 30)
+        episodeLabel.shadowColor = .black
+        episodeLabel.shadowOffset = CGSize(width: 2, height: 3)
+    }
+    
+    func showTextAndImage(image: UIImage, isEpisode: Bool = false) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.imageView.image = image
@@ -101,6 +111,7 @@ private extension HomeDataCollectionViewInfoCell {
                 guard let self = self else { return }
                 self.imageView.alpha = 1
                 self.titleLabel.alpha = 1
+                self.episodeLabel.alpha = isEpisode ? 1 : 0
             }, completion: nil)
         }
     }
