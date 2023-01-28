@@ -5,7 +5,6 @@
 //  Created by Miguel Ferrer Fornali on 19/11/22.
 //
 
-import Foundation
 import UIKit
 
 final class APIEndpoint {
@@ -40,7 +39,7 @@ final class APIEndpoint {
     var path: String
     var httpMethod: HTTPMethod
     var encoding: Encoding
-    var parameters: [String: Any]
+    var parameters: [String: String]
     var headers: [String: String]
     var images: [String: UIImage]
     var videos: [String: String]
@@ -72,7 +71,7 @@ final class APIEndpoint {
     
     init(path: String,
          httpMethod: HTTPMethod,
-         parameters: [String: Any] = [:],
+         parameters: [String: String] = [:],
          encoding: Encoding = .json,
          headers: [String: String] = [:],
          images: [String: UIImage] = [:],
@@ -90,10 +89,9 @@ final class APIEndpoint {
     
     // MARK: Get URL with BASE_URL
     static func getURL(path: String) -> URL {
-        guard let url = URL(string: APIConfiguration.shared.BASE_URL
-        )?.appendingPathComponent(path) else {
+        guard let url = URL(string: getBaseUrl())?.appendingPathComponent(path) else {
             APILogger.this(path, type: .error)
-            fatalError()
+            fatalError("Can't build URL")
         }
         return url
     }
@@ -126,7 +124,7 @@ final class APIEndpoint {
     func setURLEncoding(for url: URL) -> URLRequest {
         var components = URLComponents(string: url.absoluteString)!
         components.queryItems = self.parameters.map { (key, value) in
-            URLQueryItem(name: key, value: value as? String)
+            URLQueryItem(name: key, value: value)
         }
         components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         return URLRequest(url: components.url!)
@@ -140,5 +138,17 @@ final class APIEndpoint {
         }
         request.httpBody = httpBody
         return request
+    }
+    
+    private static func getBaseUrl() -> String {
+        #if Demo
+            return "https://rickandmortyapi.com/api"
+        #elseif Develop
+            return "https://rickandmortyapi.com/api"
+        #elseif Production
+            return "https://rickandmortyapi.com/api"
+        #else
+            return ""
+        #endif
     }
 }

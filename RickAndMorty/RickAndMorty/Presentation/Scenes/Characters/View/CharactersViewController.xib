@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CharactersViewController" customModule="Rick___Morty" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="DDe-MP-RTc" id="TsH-Jn-OOs"/>
+                <outlet property="collectionViewToContainerViewTopConstraint" destination="kST-CD-HLP" id="GyD-aZ-z0e"/>
+                <outlet property="collectionViewToSearchViewTopConstraint" destination="CEJ-Zn-Gww" id="y61-pd-uW2"/>
+                <outlet property="searchView" destination="Dp6-yS-QvU" id="g02-J9-GcD"/>
+                <outlet property="view" destination="iN0-l3-epB" id="XGf-FR-SLG"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="389" height="979"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mlc-wE-MjI" userLabel="Container View">
+                    <rect key="frame" x="0.0" y="59" width="389" height="920"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="DDe-MP-RTc" customClass="CharactersCollectionView" customModule="Rick___Morty" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="389" height="920"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="cY6-a2-N38">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" id="Dp6-yS-QvU" customClass="SearchView" customModule="Rick___Morty" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="8" width="389" height="92"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="Dp6-yS-QvU" firstAttribute="top" secondItem="mlc-wE-MjI" secondAttribute="top" id="1SD-tT-2Yk"/>
+                        <constraint firstItem="DDe-MP-RTc" firstAttribute="leading" secondItem="mlc-wE-MjI" secondAttribute="leading" id="9es-7i-IlD"/>
+                        <constraint firstItem="DDe-MP-RTc" firstAttribute="top" secondItem="Dp6-yS-QvU" secondAttribute="bottom" priority="999" id="CEJ-Zn-Gww"/>
+                        <constraint firstAttribute="trailing" secondItem="DDe-MP-RTc" secondAttribute="trailing" id="TWQ-2U-hdZ"/>
+                        <constraint firstItem="Dp6-yS-QvU" firstAttribute="leading" secondItem="mlc-wE-MjI" secondAttribute="leading" id="TuB-Lh-ZrO"/>
+                        <constraint firstAttribute="bottom" secondItem="DDe-MP-RTc" secondAttribute="bottom" id="gNb-b8-iHU"/>
+                        <constraint firstAttribute="trailing" secondItem="Dp6-yS-QvU" secondAttribute="trailing" id="jcC-ch-Rtr"/>
+                        <constraint firstItem="DDe-MP-RTc" firstAttribute="top" secondItem="mlc-wE-MjI" secondAttribute="top" id="kST-CD-HLP"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="WhQ-dN-Ogq"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="tintColor" systemColor="tintColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="mlc-wE-MjI" secondAttribute="bottom" id="2E1-tt-wxu"/>
+                <constraint firstItem="mlc-wE-MjI" firstAttribute="top" secondItem="WhQ-dN-Ogq" secondAttribute="top" id="LRq-gG-W8J"/>
+                <constraint firstItem="WhQ-dN-Ogq" firstAttribute="trailing" secondItem="mlc-wE-MjI" secondAttribute="trailing" id="hjK-w6-OM6"/>
+                <constraint firstItem="mlc-wE-MjI" firstAttribute="leading" secondItem="WhQ-dN-Ogq" secondAttribute="leading" id="q5w-ds-Jec"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="8.3969465648854964" y="191.90140845070422"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

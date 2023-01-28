@@ -6,17 +6,23 @@
 //
 
 protocol HomeUseCase {
-    // Add functions to get data from repository
+    func getInfo() async -> HomeInfoRepresentable
 }
 
 final class DefaultHomeUseCase {
     private let repository: HomeRepository
 
-    init(dependencies: LoadingDependenciesResolver) {
+    init(dependencies: HomeDependenciesResolver) {
         self.repository = dependencies.resolve()
     }
 }
 
 extension DefaultHomeUseCase: HomeUseCase {
-    // Implement functions and do logic
+    func getInfo() async -> HomeInfoRepresentable {
+        async let charactersInfo = try? repository.getCharacters()
+        async let locationsInfo = try? repository.getLocations()
+        async let episodesInfo = try? repository.getEpisodes()
+        let homeInfo = await DefaultHomeInfoRepresentable(charactersInfo: charactersInfo, locationsInfo: locationsInfo, episodesInfo: episodesInfo)
+        return homeInfo
+    }
 }

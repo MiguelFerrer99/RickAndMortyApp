@@ -8,15 +8,36 @@
 import UIKit
 
 final class AppDependencies {
-    static let shared = AppDependencies()
+    private let navigationController = UINavigationController()
+    private var window: UIWindow?
     
-    var window: UIWindow?
+    func setWindow(_ window: UIWindow) {
+        self.window = window
+    }
     
-    private init() {}
+    func getWindow() -> UIWindow? {
+        window
+    }
     
     func resolve() -> UINavigationController {
-        UINavigationController()
+        navigationController
+    }
+    
+    func resolveAppDependencies() -> AppDependencies {
+        self
+    }
+    
+    func resolveAPIService() -> APIService {
+        DefaultAPIService()
+    }
+    
+    func resolveImageCacheManager() -> ImageCacheManager {
+        ImageCacheManager()
     }
 }
 
-extension AppDependencies: LoadingExternalDependenciesResolver {}
+extension AppDependencies: HomeExternalDependenciesResolver,
+                            AuthorInfoExternalDependenciesResolver,
+                            CharactersExternalDependenciesResolver,
+                            LocationsExternalDependenciesResolver,
+                            EpisodesExternalDependenciesResolver {}

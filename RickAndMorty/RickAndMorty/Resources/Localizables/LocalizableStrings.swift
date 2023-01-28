@@ -32,12 +32,39 @@ extension Localizable {
 }
 
 extension String {
-    enum loading: String, Localizable {
-        case errorTitle = "loading_errorTitle"
-        case errorButton = "loading_errorButton"
-    }
-    
     enum tryAgainButtonView: String, Localizable {
         case title = "tryAgainButtonView_title"
+    }
+    
+    enum home: String, Localizable {
+        case title = "home_title"
+        case loadingErrorTitle = "home_loadingErrorTitle"
+        case charactersSectionTitle = "home_charactersSectionTitle"
+        case locationsSectionTitle = "home_locationsSectionTitle"
+        case episodesSectionTitle = "home_episodesSectionTitle"
+        case viewMore = "home_viewMore"
+    }
+    
+    enum authorInfo: String, Localizable {
+        case name = "authorInfo_name"
+        case openingMediaError = "authorInfo_openingMediaError"
+    }
+    
+    enum characters: String, Localizable {
+        case title = "characters_title"
+        case searchPlaceholder = "characters_searchPlaceholder"
+        case empty = "characters_empty"
+    }
+    
+    enum locations: String, Localizable {
+        case title = "locations_title"
+        case searchPlaceholder = "locations_searchPlaceholder"
+        case empty = "locations_empty"
+    }
+    
+    enum episodes: String, Localizable {
+        case title = "episodes_title"
+        case searchPlaceholder = "episodes_searchPlaceholder"
+        case empty = "episodes_empty"
     }
 }

@@ -8,6 +8,29 @@
 /* TryAgainButtonView */
 "tryAgainButtonView_title" = "Try again";
 
-/* Loading */
-"loading_errorTitle" = "An unexpected error has occurred. Please try again later";
-"loading_errorButton" = "Try again";
+/* Home */
+"home_title" = "Home";
+"home_loadingErrorTitle" = "An unexpected error has occurred. Please try again later";
+"home_charactersSectionTitle" = "Characters";
+"home_locationsSectionTitle" = "Locations";
+"home_episodesSectionTitle" = "Episodes";
+"home_viewMore" = "View more";
+
+/* AuthorInfo */
+"authorInfo_name" = "Miguel Ferrer Fornali";
+"authorInfo_openingMediaError" = "An unexpected error has occurred. Please try again later";
+
+/* Characters */
+"characters_title" = "Characters";
+"characters_searchPlaceholder" = "Search characters...";
+"characters_empty" = "There are not available results";
+
+/* Locations */
+"locations_title" = "Locations";
+"locations_searchPlaceholder" = "Search locations...";
+"locations_empty" = "There are not available results";
+
+/* Episodes */
+"episodes_title" = "Episodes";
+"episodes_searchPlaceholder" = "Search episodes...";
+"episodes_empty" = "There are not available results";

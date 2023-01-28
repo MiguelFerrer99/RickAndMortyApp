@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchView" customModule="Rick___Morty" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="GBe-ka-gI0" id="Ydb-QN-pgl"/>
+                <outlet property="deleteTextButtonView" destination="lPy-5H-Fsb" id="TH6-mQ-dFq"/>
+                <outlet property="textfield" destination="6Db-YD-9hW" id="wJg-to-TOA"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="472" height="90"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GBe-ka-gI0" userLabel="Container View">
+                    <rect key="frame" x="20" y="20" width="432" height="50"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="esa-9k-iOP" userLabel="Container Stack View">
+                            <rect key="frame" x="0.0" y="0.0" width="432" height="50"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gI6-nG-w1a" userLabel="Image View Container">
+                                    <rect key="frame" x="0.0" y="2" width="46" height="46"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="8QT-SK-CL3" userLabel="Image View">
+                                            <rect key="frame" x="13" y="13.5" width="20" height="18.5"/>
+                                            <color key="tintColor" name="AccentColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="E9S-Zl-JJN"/>
+                                                <constraint firstAttribute="width" constant="20" id="KgO-kC-u3N"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="8QT-SK-CL3" firstAttribute="centerX" secondItem="gI6-nG-w1a" secondAttribute="centerX" id="9B5-Qy-P3X"/>
+                                        <constraint firstAttribute="trailing" secondItem="8QT-SK-CL3" secondAttribute="trailing" constant="13" id="JNG-N8-Qqa"/>
+                                        <constraint firstItem="8QT-SK-CL3" firstAttribute="leading" secondItem="gI6-nG-w1a" secondAttribute="leading" constant="13" id="SU7-bC-GOv"/>
+                                        <constraint firstAttribute="bottom" secondItem="8QT-SK-CL3" secondAttribute="bottom" constant="13" id="ebg-65-z6C"/>
+                                        <constraint firstItem="8QT-SK-CL3" firstAttribute="centerY" secondItem="gI6-nG-w1a" secondAttribute="centerY" id="lAO-nM-bNX"/>
+                                        <constraint firstItem="8QT-SK-CL3" firstAttribute="top" secondItem="gI6-nG-w1a" secondAttribute="top" constant="13" id="mub-7l-MBK"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4u4-UL-53N" userLabel="Text Field View">
+                                    <rect key="frame" x="46" y="0.0" width="386" height="50"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search characters..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Db-YD-9hW" userLabel="Text Field">
+                                            <rect key="frame" x="0.0" y="13" width="386" height="24"/>
+                                            <color key="tintColor" name="AccentColor"/>
+                                            <color key="textColor" name="AccentColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                            <connections>
+                                                <action selector="textFieldTextChanged:" destination="-1" eventType="editingChanged" id="XpE-T5-v2f"/>
+                                            </connections>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="6Db-YD-9hW" secondAttribute="bottom" constant="13" id="FMo-Tr-lX7"/>
+                                        <constraint firstItem="6Db-YD-9hW" firstAttribute="leading" secondItem="4u4-UL-53N" secondAttribute="leading" id="Gcl-f2-ucJ"/>
+                                        <constraint firstItem="6Db-YD-9hW" firstAttribute="top" secondItem="4u4-UL-53N" secondAttribute="top" constant="13" id="RcY-fi-cqe"/>
+                                        <constraint firstAttribute="trailing" secondItem="6Db-YD-9hW" secondAttribute="trailing" id="jBv-i1-ua7"/>
+                                    </constraints>
+                                </view>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lPy-5H-Fsb" userLabel="Delete Text Button View">
+                                    <rect key="frame" x="432" y="0.0" width="26" height="50"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ulk-tZ-3ce" userLabel="Delete Text Button">
+                                            <rect key="frame" x="13" y="13" width="0.0" height="24"/>
+                                            <color key="tintColor" name="AccentColor"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal">
+                                                <imageReference key="image" image="xmark.circle.fill" catalog="system" symbolScale="medium"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="didTapDeleteTextButton:" destination="-1" eventType="touchUpInside" id="Rmd-8e-VFm"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="ulk-tZ-3ce" firstAttribute="centerX" secondItem="lPy-5H-Fsb" secondAttribute="centerX" id="ISn-iL-mrv"/>
+                                        <constraint firstAttribute="trailing" secondItem="ulk-tZ-3ce" secondAttribute="trailing" constant="13" id="WF5-W2-rMb"/>
+                                        <constraint firstAttribute="bottom" secondItem="ulk-tZ-3ce" secondAttribute="bottom" constant="13" id="aMJ-pL-YCi"/>
+                                        <constraint firstItem="ulk-tZ-3ce" firstAttribute="centerY" secondItem="lPy-5H-Fsb" secondAttribute="centerY" id="j87-Mv-jbW"/>
+                                        <constraint firstItem="ulk-tZ-3ce" firstAttribute="leading" secondItem="lPy-5H-Fsb" secondAttribute="leading" constant="13" id="rQe-wa-snB"/>
+                                        <constraint firstItem="ulk-tZ-3ce" firstAttribute="top" secondItem="lPy-5H-Fsb" secondAttribute="top" constant="13" id="ztG-Bh-hMS"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="esa-9k-iOP" secondAttribute="trailing" id="4Br-fN-XxP"/>
+                        <constraint firstAttribute="bottom" secondItem="esa-9k-iOP" secondAttribute="bottom" id="Ye7-5F-FrJ"/>
+                        <constraint firstItem="esa-9k-iOP" firstAttribute="leading" secondItem="GBe-ka-gI0" secondAttribute="leading" id="pjW-wn-0NR"/>
+                        <constraint firstItem="esa-9k-iOP" firstAttribute="top" secondItem="GBe-ka-gI0" secondAttribute="top" id="upS-QJ-8wW"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="GBe-ka-gI0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="1X6-X6-Yw7"/>
+                <constraint firstAttribute="trailing" secondItem="GBe-ka-gI0" secondAttribute="trailing" constant="20" id="1lv-3H-3XD"/>
+                <constraint firstAttribute="bottom" secondItem="GBe-ka-gI0" secondAttribute="bottom" constant="20" id="M1L-ak-frj"/>
+                <constraint firstItem="GBe-ka-gI0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="lqp-7b-gvS"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="72.463768115942031" y="323.4375"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="xmark.circle.fill" catalog="system" width="128" height="123"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

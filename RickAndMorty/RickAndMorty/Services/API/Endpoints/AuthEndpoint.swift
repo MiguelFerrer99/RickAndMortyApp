@@ -5,11 +5,9 @@
 //  Created by Miguel Ferrer Fornali on 19/11/22.
 //
 
-import Foundation
-
 enum AuthEndpoint {
-    case login([String:Any])
-    case refreshToken([String:Any])
+    case login([String: String])
+    case refreshToken([String: String])
     
     var endpoint: APIEndpoint {
         get {
