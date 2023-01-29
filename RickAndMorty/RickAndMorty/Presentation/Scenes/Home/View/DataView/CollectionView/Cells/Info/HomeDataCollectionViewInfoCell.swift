@@ -24,6 +24,7 @@ final class HomeDataCollectionViewInfoCell: UICollectionViewCell {
         super.prepareForReuse()
         imageView.image = nil
         titleLabel.alpha = 0
+        episodeLabel.alpha = 0
         configureImageView()
     }
     
