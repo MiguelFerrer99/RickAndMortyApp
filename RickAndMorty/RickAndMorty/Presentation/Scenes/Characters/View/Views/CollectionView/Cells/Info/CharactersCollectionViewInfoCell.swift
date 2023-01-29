@@ -17,11 +17,12 @@ final class CharactersCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabelTrailingConstraint: NSLayoutConstraint!
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     private var imageCacheManager: ImageCacheManager?
-    private var gradientLayer = CAGradientLayer()
+    private let gradientLayer = CAGradientLayer()
     
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
+        titleLabel.alpha = 0
         configureImageView()
     }
     
@@ -72,6 +73,7 @@ private extension CharactersCollectionViewInfoCell {
     }
     
     func configureTitleLabel() {
+        titleLabel.alpha = 0
         titleLabel.textColor = .white
         titleLabel.font = .systemFont(ofSize: iPadDevice ? 30 : 15, weight: .semibold)
         if iPadDevice {

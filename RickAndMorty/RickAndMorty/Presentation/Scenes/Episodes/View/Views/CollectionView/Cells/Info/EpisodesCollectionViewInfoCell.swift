@@ -17,11 +17,13 @@ final class EpisodesCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabelTrailingConstraint: NSLayoutConstraint!
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-    private var gradientLayer = CAGradientLayer()
+    private let gradientLayer = CAGradientLayer()
     
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
+        titleLabel.alpha = 0
+        episodeLabel.alpha = 0
         configureImageView()
     }
     
@@ -66,6 +68,7 @@ private extension EpisodesCollectionViewInfoCell {
     }
     
     func configureTitleLabel() {
+        titleLabel.alpha = 0
         titleLabel.textColor = .white
         titleLabel.font = .systemFont(ofSize: iPadDevice ? 30 : 15, weight: .semibold)
         if iPadDevice {
@@ -78,6 +81,7 @@ private extension EpisodesCollectionViewInfoCell {
     }
     
     func configureEpisodeLabel() {
+        episodeLabel.alpha = 0
         episodeLabel.textColor = .white
         episodeLabel.font = UIFont(name: "GetSchwifty-Regular", size: iPadDevice ? 100 : 40)
         episodeLabel.shadowColor = .black
