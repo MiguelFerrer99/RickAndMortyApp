@@ -121,7 +121,7 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
             representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .location(location.name, location.image))
         case .episodes(let items):
             let episode = items[indexPath.item]
-            representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .episode(episode.name, episode.episode, "Episode"))
+            representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .episode(episode.name, episode.season, episode.episode))
         }
         cell.configure(with: representable, and: imageCacheManager)
         return cell
@@ -134,8 +134,10 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
 
 extension HomeDataCollectionView: HomeDataCollectionViewSectionHeaderViewProtocol {
     func didTapTitle(category: HomeDataCategory) {
-        let indexPath = IndexPath(item: 0, section: category.getIndex())
-        scrollToItem(at: indexPath, at: .left, animated: true)
+        if numberOfItems(inSection: category.getIndex()) > 0 {
+            let indexPath = IndexPath(item: 0, section: category.getIndex())
+            scrollToItem(at: indexPath, at: .left, animated: true)
+        }
     }
     
     func didTapViewMore(category: HomeDataCategory) {

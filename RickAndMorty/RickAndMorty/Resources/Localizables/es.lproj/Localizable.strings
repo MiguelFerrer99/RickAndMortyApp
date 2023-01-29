@@ -15,6 +15,8 @@
 "home_locationsSectionTitle" = "Sitios";
 "home_episodesSectionTitle" = "Episodios";
 "home_viewMore" = "Ver más";
+"home_episodeSeason" = "Temporada %i";
+"home_episodeEpisode" = "Episodio %i";
 
 /* AuthorInfo */
 "authorInfo_name" = "Miguel Ferrer Fornali";
@@ -34,3 +36,5 @@
 "episodes_title" = "Episodios";
 "episodes_searchPlaceholder" = "Busca episodios...";
 "episodes_empty" = "No hay resultados disponibles";
+"episodes_season" = "Temporada %i";
+"episodes_episode" = "Episodio %i";

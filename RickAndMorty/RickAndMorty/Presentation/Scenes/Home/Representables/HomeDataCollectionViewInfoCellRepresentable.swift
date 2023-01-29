@@ -8,7 +8,7 @@
 enum HomeDataCollectionViewInfoCellStyle {
     case character(String, String)
     case location(String, String)
-    case episode(String, String, String)
+    case episode(String, Int, Int)
 }
 
 protocol HomeDataCollectionViewInfoCellRepresentable {

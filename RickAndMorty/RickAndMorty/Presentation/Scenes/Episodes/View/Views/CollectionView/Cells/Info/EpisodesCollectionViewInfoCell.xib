@@ -20,10 +20,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jLJ-Bm-efM" userLabel="Container View">
                         <rect key="frame" x="0.0" y="0.0" width="215" height="200"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UGO-dp-DKs">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UGO-dp-DKs">
                                 <rect key="frame" x="0.0" y="0.0" width="215" height="200"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSS-23-ymf" userLabel="Episode Label">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSS-23-ymf" userLabel="Episode Label">
                                 <rect key="frame" x="10" y="20" width="195" height="160"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -68,10 +68,6 @@
                 <outlet property="episodeLabel" destination="SSS-23-ymf" id="RRf-ML-Qak"/>
                 <outlet property="imageView" destination="UGO-dp-DKs" id="SLu-h3-Ex4"/>
                 <outlet property="titleLabel" destination="d14-VK-IM8" id="50u-sG-rg1"/>
-                <outlet property="titleLabelBottomConstraint" destination="rZn-nw-L2j" id="OHO-L9-KkN"/>
-                <outlet property="titleLabelLeadingConstraint" destination="MPr-T5-Vyk" id="htk-71-9TT"/>
-                <outlet property="titleLabelTopConstraint" destination="Td3-lK-jJe" id="IAg-X2-30Y"/>
-                <outlet property="titleLabelTrailingConstraint" destination="6cF-y7-ghb" id="fLF-4T-tXt"/>
             </connections>
             <point key="canvasLocation" x="52.671755725190835" y="72.535211267605632"/>
         </collectionViewCell>

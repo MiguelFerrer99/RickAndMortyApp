@@ -43,6 +43,8 @@ extension String {
         case locationsSectionTitle = "home_locationsSectionTitle"
         case episodesSectionTitle = "home_episodesSectionTitle"
         case viewMore = "home_viewMore"
+        case episodeSeason = "home_episodeSeason"
+        case episodeEpisode = "home_episodeEpisode"
     }
     
     enum authorInfo: String, Localizable {
@@ -66,5 +68,7 @@ extension String {
         case title = "episodes_title"
         case searchPlaceholder = "episodes_searchPlaceholder"
         case empty = "episodes_empty"
+        case season = "episodes_season"
+        case episode = "episodes_episode"
     }
 }

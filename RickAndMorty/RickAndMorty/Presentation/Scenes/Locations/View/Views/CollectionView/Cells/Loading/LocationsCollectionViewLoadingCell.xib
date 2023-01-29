@@ -17,23 +17,41 @@
                 <rect key="frame" x="0.0" y="0.0" width="163" height="200"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Hxr-TZ-YiI" customClass="LottieAnimationView" customModule="Lottie">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nwm-3E-chr" userLabel="Container View">
                         <rect key="frame" x="56.666666666666657" y="75" width="50" height="50"/>
+                        <subviews>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Hxr-TZ-YiI" customClass="LottieAnimationView" customModule="Lottie">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Tkx-yV-wJ0"/>
+                                    <constraint firstAttribute="width" secondItem="Hxr-TZ-YiI" secondAttribute="height" multiplier="1:1" id="qOS-5Y-zzQ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="Loader"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="Tkx-yV-wJ0"/>
-                            <constraint firstAttribute="width" secondItem="Hxr-TZ-YiI" secondAttribute="height" multiplier="1:1" id="qOS-5Y-zzQ"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="centerX" secondItem="nwm-3E-chr" secondAttribute="centerX" id="A6g-1u-iuv"/>
+                            <constraint firstAttribute="bottom" secondItem="Hxr-TZ-YiI" secondAttribute="bottom" id="DOQ-Sc-xSP"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="centerY" secondItem="nwm-3E-chr" secondAttribute="centerY" id="EXo-Sl-IAp"/>
+                            <constraint firstAttribute="trailing" secondItem="Hxr-TZ-YiI" secondAttribute="trailing" id="J0f-MI-agv"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="leading" secondItem="nwm-3E-chr" secondAttribute="leading" id="eRn-AR-9tn"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="top" secondItem="nwm-3E-chr" secondAttribute="top" id="mcu-tg-YaS"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="Loader"/>
-                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Hxr-TZ-YiI" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Ri2-HV-y98"/>
-                <constraint firstItem="Hxr-TZ-YiI" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="ZAw-mT-v96"/>
+                <constraint firstAttribute="trailing" secondItem="nwm-3E-chr" secondAttribute="trailing" id="12a-jw-nyN"/>
+                <constraint firstItem="nwm-3E-chr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="DMp-8R-TRm"/>
+                <constraint firstItem="nwm-3E-chr" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="XKo-M1-d6V"/>
+                <constraint firstItem="nwm-3E-chr" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="lBL-JL-cHx"/>
+                <constraint firstItem="nwm-3E-chr" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="mBt-QD-KLT"/>
+                <constraint firstAttribute="bottom" secondItem="nwm-3E-chr" secondAttribute="bottom" id="yur-1U-Umh"/>
             </constraints>
             <size key="customSize" width="163" height="200"/>
             <connections>

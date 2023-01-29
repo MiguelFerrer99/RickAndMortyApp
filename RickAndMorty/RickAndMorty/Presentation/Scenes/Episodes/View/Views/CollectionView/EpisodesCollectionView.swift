@@ -19,7 +19,7 @@ final class EpisodesCollectionView: UICollectionView {
     var publisher: AnyPublisher<EpisodesCollectionViewState, Never> { subject.eraseToAnyPublisher() }
     private var episodesPager: Pagination<EpisodeRepresentable>?
     private var imageCacheManager: ImageCacheManager?
-    private var isLoading = false
+    private var isLoading = false { didSet { reload() } }
     
     init(frame: CGRect) {
         super.init(frame: frame, collectionViewLayout: .init())
@@ -35,7 +35,6 @@ final class EpisodesCollectionView: UICollectionView {
         self.episodesPager = episodesPager
         self.imageCacheManager = imageCacheManager
         isLoading = false
-        reload()
     }
     
     func scrollToTop() {
@@ -46,7 +45,6 @@ final class EpisodesCollectionView: UICollectionView {
     
     func showLoader() {
         isLoading = true
-        reload()
     }
 }
 
@@ -109,7 +107,7 @@ extension EpisodesCollectionView: UICollectionViewDelegate, UICollectionViewData
         } else {
             guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? EpisodesCollectionViewInfoCell,
                   let episode = episodesPager.getItems()[safe: indexPath.item] else { return UICollectionViewCell() }
-            let representable = DefaultEpisodesCollectionViewInfoCellRepresentable(title: episode.name, episode: episode.episode)
+            let representable = DefaultEpisodesCollectionViewInfoCellRepresentable(title: episode.name, season: episode.season, episode: episode.episode)
             cell.configure(with: representable)
             return cell
         }

@@ -44,19 +44,6 @@ final class HomeDataView: XibView {
 }
 
 private extension HomeDataView {
-    func configureTitleView() {
-        titleView.clipsToBounds = false
-        titleView.layer.masksToBounds = false
-        titleView.layer.shadowRadius = iPadDevice ? 10 : 5
-        titleView.layer.shadowOpacity = 0
-        titleView.layer.shadowColor = UIColor.black.cgColor
-        titleView.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
-        titleView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
-                                                               y: titleView.bounds.maxY - titleView.layer.shadowRadius,
-                                                               width: titleView.bounds.width,
-                                                               height: titleView.layer.shadowRadius)).cgPath
-    }
-    
     func bind() {
         bindCollectionView()
     }
@@ -98,6 +85,19 @@ private extension HomeDataView {
                 self.showCollecionView()
             }
         }
+    }
+    
+    func configureTitleView() {
+        titleView.clipsToBounds = false
+        titleView.layer.masksToBounds = false
+        titleView.layer.shadowRadius = iPadDevice ? 10 : 5
+        titleView.layer.shadowOpacity = 0
+        titleView.layer.shadowColor = UIColor.black.cgColor
+        titleView.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
+        titleView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
+                                                               y: titleView.bounds.maxY - titleView.layer.shadowRadius,
+                                                               width: titleView.bounds.width,
+                                                               height: titleView.layer.shadowRadius)).cgPath
     }
     
     func configureTitleViewImage() {

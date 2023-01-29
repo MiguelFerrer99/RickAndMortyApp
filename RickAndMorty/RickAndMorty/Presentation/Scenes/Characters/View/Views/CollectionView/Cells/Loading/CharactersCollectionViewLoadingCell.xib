@@ -17,23 +17,37 @@
                 <rect key="frame" x="0.0" y="0.0" width="163" height="200"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Hxr-TZ-YiI" customClass="LottieAnimationView" customModule="Lottie">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7W-Z1-r63" userLabel="Container View">
                         <rect key="frame" x="56.666666666666657" y="75" width="50" height="50"/>
+                        <subviews>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Hxr-TZ-YiI" customClass="LottieAnimationView" customModule="Lottie">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Tkx-yV-wJ0"/>
+                                    <constraint firstAttribute="width" secondItem="Hxr-TZ-YiI" secondAttribute="height" multiplier="1:1" id="qOS-5Y-zzQ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="Loader"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="Tkx-yV-wJ0"/>
-                            <constraint firstAttribute="width" secondItem="Hxr-TZ-YiI" secondAttribute="height" multiplier="1:1" id="qOS-5Y-zzQ"/>
+                            <constraint firstAttribute="bottom" secondItem="Hxr-TZ-YiI" secondAttribute="bottom" id="6lm-0K-Kqx"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="leading" secondItem="V7W-Z1-r63" secondAttribute="leading" id="9ug-Hn-D3f"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="centerX" secondItem="V7W-Z1-r63" secondAttribute="centerX" id="CCZ-NG-DwF"/>
+                            <constraint firstAttribute="trailing" secondItem="Hxr-TZ-YiI" secondAttribute="trailing" id="FaC-0R-BLt"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="centerY" secondItem="V7W-Z1-r63" secondAttribute="centerY" id="Rch-s1-2rf"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="top" secondItem="V7W-Z1-r63" secondAttribute="top" id="Zlo-Ep-iNf"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="Loader"/>
-                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Hxr-TZ-YiI" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Ri2-HV-y98"/>
-                <constraint firstItem="Hxr-TZ-YiI" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="ZAw-mT-v96"/>
+                <constraint firstItem="V7W-Z1-r63" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Zll-zm-RTb"/>
+                <constraint firstItem="V7W-Z1-r63" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="gUC-iS-EuK"/>
             </constraints>
             <size key="customSize" width="163" height="200"/>
             <connections>

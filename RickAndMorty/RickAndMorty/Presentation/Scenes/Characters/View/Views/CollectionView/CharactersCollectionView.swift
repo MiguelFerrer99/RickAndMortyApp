@@ -19,7 +19,7 @@ final class CharactersCollectionView: UICollectionView {
     var publisher: AnyPublisher<CharactersCollectionViewState, Never> { subject.eraseToAnyPublisher() }
     private var charactersPager: Pagination<CharacterRepresentable>?
     private var imageCacheManager: ImageCacheManager?
-    private var isLoading = false
+    private var isLoading = false { didSet { reload() } }
     
     init(frame: CGRect) {
         super.init(frame: frame, collectionViewLayout: .init())
@@ -35,7 +35,6 @@ final class CharactersCollectionView: UICollectionView {
         self.charactersPager = charactersPager
         self.imageCacheManager = imageCacheManager
         isLoading = false
-        reload()
     }
     
     func scrollToTop() {
@@ -46,7 +45,6 @@ final class CharactersCollectionView: UICollectionView {
     
     func showLoader() {
         isLoading = true
-        reload()
     }
 }
 

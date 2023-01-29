@@ -17,9 +17,7 @@ final class TryAgainButtonView: XibView {
     @IBOutlet private weak var titleLabel: UILabel!
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<TryAgainButtonViewState, Never>()
-    var publisher: AnyPublisher<TryAgainButtonViewState, Never> {
-        subject.eraseToAnyPublisher()
-    }
+    var publisher: AnyPublisher<TryAgainButtonViewState, Never> { subject.eraseToAnyPublisher() }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,7 +37,7 @@ private extension TryAgainButtonView {
     }
     
     func configureContainerView() {
-        containerView.layer.borderWidth = 3.0
+        containerView.layer.borderWidth = 3
         containerView.layer.cornerRadius = 10
         containerView.layer.borderColor = UIColor.black.cgColor
         containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapContainerView)))

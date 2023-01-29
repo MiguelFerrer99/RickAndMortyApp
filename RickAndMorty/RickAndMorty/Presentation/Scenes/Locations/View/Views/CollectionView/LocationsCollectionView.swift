@@ -19,7 +19,7 @@ final class LocationsCollectionView: UICollectionView {
     var publisher: AnyPublisher<LocationsCollectionViewState, Never> { subject.eraseToAnyPublisher() }
     private var locationsPager: Pagination<LocationRepresentable>?
     private var imageCacheManager: ImageCacheManager?
-    private var isLoading = false
+    private var isLoading = false { didSet { reload() } }
     
     init(frame: CGRect) {
         super.init(frame: frame, collectionViewLayout: .init())
@@ -35,7 +35,6 @@ final class LocationsCollectionView: UICollectionView {
         self.locationsPager = locationsPager
         self.imageCacheManager = imageCacheManager
         isLoading = false
-        reload()
     }
     
     func scrollToTop() {
@@ -46,7 +45,6 @@ final class LocationsCollectionView: UICollectionView {
     
     func showLoader() {
         isLoading = true
-        reload()
     }
 }
 
