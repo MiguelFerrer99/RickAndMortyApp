@@ -17,10 +17,12 @@ final class CharactersCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabelTrailingConstraint: NSLayoutConstraint!
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     private var imageCacheManager: ImageCacheManager?
+    private var gradientLayer = CAGradientLayer()
     
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
+        configureImageView()
     }
     
     override func awakeFromNib() {
@@ -58,14 +60,13 @@ private extension CharactersCollectionViewInfoCell {
     func configureImageView() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            let gradientLayer = CAGradientLayer()
-            gradientLayer.frame = self.bounds
-            gradientLayer.startPoint = CGPoint(x: 0, y: 1)
-            gradientLayer.endPoint = CGPoint(x: 1, y: 0)
-            gradientLayer.colors = [UIColor.black.withAlphaComponent(0.6).cgColor,
+            self.gradientLayer.frame = self.bounds
+            self.gradientLayer.startPoint = CGPoint(x: 0, y: 1)
+            self.gradientLayer.endPoint = CGPoint(x: 1, y: 0)
+            self.gradientLayer.colors = [UIColor.black.withAlphaComponent(0.6).cgColor,
                                     UIColor.black.withAlphaComponent(0.2).cgColor,
                                     UIColor.clear.cgColor]
-            self.imageView.layer.addSublayer(gradientLayer)
+            self.imageView.layer.addSublayer(self.gradientLayer)
             self.imageView.alpha = 0
         }
     }

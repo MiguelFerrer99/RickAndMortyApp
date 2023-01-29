@@ -52,6 +52,10 @@ final class SearchView: XibView {
     func showKeyboard() {
         textfield.becomeFirstResponder()
     }
+    
+    func getText() -> String {
+        textfield.text ?? ""
+    }
 }
 
 private extension SearchView {

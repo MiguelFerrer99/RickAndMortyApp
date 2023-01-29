@@ -19,6 +19,7 @@ final class LocationsCollectionView: UICollectionView {
     var publisher: AnyPublisher<LocationsCollectionViewState, Never> { subject.eraseToAnyPublisher() }
     private var locationsPager: Pagination<LocationRepresentable>?
     private var imageCacheManager: ImageCacheManager?
+    private var isLoading = false
     
     init(frame: CGRect) {
         super.init(frame: frame, collectionViewLayout: .init())
@@ -33,13 +34,19 @@ final class LocationsCollectionView: UICollectionView {
     func configure(with locationsPager: Pagination<LocationRepresentable>, and imageCacheManager: ImageCacheManager) {
         self.locationsPager = locationsPager
         self.imageCacheManager = imageCacheManager
-        reloadData()
+        isLoading = false
+        reload()
     }
     
     func scrollToTop() {
         if numberOfItems(inSection: 0) > 0 {
             scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
         }
+    }
+    
+    func showLoader() {
+        isLoading = true
+        reload()
     }
 }
 
@@ -50,6 +57,10 @@ private extension LocationsCollectionView {
     
     var emptyCellIdentifier: String {
         String(describing: type(of: LocationsCollectionViewEmptyCell()))
+    }
+    
+    var loadingCellIdentifier: String {
+        String(describing: type(of: LocationsCollectionViewLoadingCell()))
     }
     
     func setupView() {
@@ -64,6 +75,8 @@ private extension LocationsCollectionView {
         register(infoCellNib, forCellWithReuseIdentifier: infoCellIdentifier)
         let emptyCellNib = UINib(nibName: emptyCellIdentifier, bundle: .main)
         register(emptyCellNib, forCellWithReuseIdentifier: emptyCellIdentifier)
+        let loadingCellNib = UINib(nibName: loadingCellIdentifier, bundle: .main)
+        register(loadingCellNib, forCellWithReuseIdentifier: loadingCellIdentifier)
     }
     
     func shouldLoadMoreItems(index: Int) -> Bool {
@@ -71,17 +84,26 @@ private extension LocationsCollectionView {
         let itemsLeftToLastItem = 4
         return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!locationsPager.isLastPage)
     }
+    
+    func reload() {
+        UIView.setAnimationsEnabled(false)
+        reloadData()
+        UIView.setAnimationsEnabled(true)
+    }
 }
 
 extension LocationsCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let locationsPager = locationsPager else { return 0 }
-        return locationsPager.getItems().isEmpty ? 1 : locationsPager.getItems().count
+        return isLoading || locationsPager.getItems().isEmpty ? 1 : locationsPager.getItems().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let locationsPager = locationsPager else { return UICollectionViewCell() }
-        if locationsPager.getItems().isEmpty {
+        if isLoading {
+            guard let cell = dequeueReusableCell(withReuseIdentifier: loadingCellIdentifier, for: indexPath) as? LocationsCollectionViewLoadingCell else { return UICollectionViewCell() }
+            return cell
+        } else if locationsPager.getItems().isEmpty {
             guard let cell = dequeueReusableCell(withReuseIdentifier: emptyCellIdentifier, for: indexPath) as? LocationsCollectionViewEmptyCell else { return UICollectionViewCell() }
             return cell
         } else {

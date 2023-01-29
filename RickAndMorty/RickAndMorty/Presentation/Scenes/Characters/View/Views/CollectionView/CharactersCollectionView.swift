@@ -19,6 +19,7 @@ final class CharactersCollectionView: UICollectionView {
     var publisher: AnyPublisher<CharactersCollectionViewState, Never> { subject.eraseToAnyPublisher() }
     private var charactersPager: Pagination<CharacterRepresentable>?
     private var imageCacheManager: ImageCacheManager?
+    private var isLoading = false
     
     init(frame: CGRect) {
         super.init(frame: frame, collectionViewLayout: .init())
@@ -33,13 +34,19 @@ final class CharactersCollectionView: UICollectionView {
     func configure(with charactersPager: Pagination<CharacterRepresentable>, and imageCacheManager: ImageCacheManager) {
         self.charactersPager = charactersPager
         self.imageCacheManager = imageCacheManager
-        reloadData()
+        isLoading = false
+        reload()
     }
     
     func scrollToTop() {
         if numberOfItems(inSection: 0) > 0 {
             scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
         }
+    }
+    
+    func showLoader() {
+        isLoading = true
+        reload()
     }
 }
 
@@ -52,6 +59,10 @@ private extension CharactersCollectionView {
         String(describing: type(of: CharactersCollectionViewEmptyCell()))
     }
     
+    var loadingCellIdentifier: String {
+        String(describing: type(of: CharactersCollectionViewLoadingCell()))
+    }
+        
     func setupView() {
         delegate = self
         dataSource = self
@@ -64,6 +75,8 @@ private extension CharactersCollectionView {
         register(infoCellNib, forCellWithReuseIdentifier: infoCellIdentifier)
         let emptyCellNib = UINib(nibName: emptyCellIdentifier, bundle: .main)
         register(emptyCellNib, forCellWithReuseIdentifier: emptyCellIdentifier)
+        let loadingCellNib = UINib(nibName: loadingCellIdentifier, bundle: .main)
+        register(loadingCellNib, forCellWithReuseIdentifier: loadingCellIdentifier)
     }
     
     func shouldLoadMoreItems(index: Int) -> Bool {
@@ -71,17 +84,26 @@ private extension CharactersCollectionView {
         let itemsLeftToLastItem = 4
         return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!charactersPager.isLastPage)
     }
+    
+    func reload() {
+        UIView.setAnimationsEnabled(false)
+        reloadData()
+        UIView.setAnimationsEnabled(true)
+    }
 }
 
 extension CharactersCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let charactersPager = charactersPager else { return 0 }
-        return charactersPager.getItems().isEmpty ? 1 : charactersPager.getItems().count
+        return isLoading || charactersPager.getItems().isEmpty ? 1 : charactersPager.getItems().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let charactersPager = charactersPager else { return UICollectionViewCell() }
-        if charactersPager.getItems().isEmpty {
+        if isLoading {
+            guard let cell = dequeueReusableCell(withReuseIdentifier: loadingCellIdentifier, for: indexPath) as? CharactersCollectionViewLoadingCell else { return UICollectionViewCell() }
+            return cell
+        } else if charactersPager.getItems().isEmpty {
             guard let cell = dequeueReusableCell(withReuseIdentifier: emptyCellIdentifier, for: indexPath) as? CharactersCollectionViewEmptyCell else { return UICollectionViewCell() }
             return cell
         } else {

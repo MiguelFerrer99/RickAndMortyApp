@@ -72,8 +72,11 @@ private extension LocationsViewController {
                 guard let self = self else { return }
                 switch state {
                 case .locationsReceived(let pager):
-                    self.collectionView.configure(with: pager, and: self.imageCacheManager)
-                    if pager.currentPage == 1 { self.collectionView.scrollToTop() }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+                        guard let self = self else { return }
+                        self.collectionView.configure(with: pager, and: self.imageCacheManager)
+                        if pager.currentPage == 1 { self.collectionView.scrollToTop() }
+                    }
                 case .idle: return
                 }
             }.store(in: &subscriptions)
@@ -85,7 +88,8 @@ private extension LocationsViewController {
                 guard let self = self else { return }
                 switch state {
                 case .searched(let text):
-                    self.viewModel.clearFilteredLocationsPager()
+                    self.collectionView.showLoader()
+                    self.viewModel.clearLocationsPager()
                     self.viewModel.locationNameFiltered = text
                     self.viewModel.loadLocations()
                 }
@@ -147,7 +151,7 @@ private extension LocationsViewController {
             self.searchView.isHidden.toggle()
             self.updateRightNavigationBarButton()
             if self.searchView.isHidden {
-                self.viewModel.clearFilteredLocationsPager()
+                self.viewModel.clearLocationsPager()
                 self.viewModel.loadLocations()
             }
             self.showNavigationBarShadow(self.searchView.isHidden && self.collectionView.contentOffset.y > 0)

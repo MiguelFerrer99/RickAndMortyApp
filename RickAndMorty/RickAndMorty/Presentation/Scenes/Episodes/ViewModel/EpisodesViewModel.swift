@@ -36,10 +36,9 @@ final class EpisodesViewModel {
         coordinator.back()
     }
     
-    func clearFilteredEpisodesPager() {
+    func clearEpisodesPager() {
         episodeNameFiltered = nil
         episodesPager.reset()
-        sendStateSubject(.episodesReceived(episodesPager))
     }
     
     func loadEpisodes() {

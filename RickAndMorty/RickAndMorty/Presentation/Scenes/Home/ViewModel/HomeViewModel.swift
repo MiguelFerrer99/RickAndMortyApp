@@ -83,7 +83,7 @@ private extension HomeViewModel {
                 categoriesLastPages.isLastPageEpisodes = episodesInfo.info.isLast
                 categories.append(.episodes(episodesInfo.results))
             }
-            sendStateSubject(.received(categories))
+            sendStateSubject(categories.isNotEmpty ? .received(categories) : .error)
         }
     }
 }

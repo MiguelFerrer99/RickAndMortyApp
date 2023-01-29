@@ -36,10 +36,9 @@ final class LocationsViewModel {
         coordinator.back()
     }
     
-    func clearFilteredLocationsPager() {
+    func clearLocationsPager() {
         locationNameFiltered = nil
         locationsPager.reset()
-        sendStateSubject(.locationsReceived(locationsPager))
     }
     
     func loadLocations() {

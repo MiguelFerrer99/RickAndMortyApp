@@ -36,10 +36,9 @@ final class CharactersViewModel {
         coordinator.back()
     }
     
-    func clearFilteredCharactersPager() {
+    func clearCharactersPager() {
         characterNameFiltered = nil
         charactersPager.reset()
-        sendStateSubject(.charactersReceived(charactersPager))
     }
     
     func loadCharaters() {
