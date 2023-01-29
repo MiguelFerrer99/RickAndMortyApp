@@ -13,6 +13,7 @@ protocol HomeCoordinator {
     func openCharacters(with representable: CharactersViewModelRepresentable)
     func openLocations(with representable: LocationsViewModelRepresentable)
     func openEpisodes(with representable: EpisodesViewModelRepresentable)
+    func openLocationDetail(with representable: LocationDetailRepresentable)
 }
 
 final class DefaultHomeCoordinator {
@@ -53,6 +54,11 @@ extension DefaultHomeCoordinator: HomeCoordinator {
     
     func openEpisodes(with representable: EpisodesViewModelRepresentable) {
         let coordinator: EpisodesCoordinator = dependencies.external.resolveEpisodesCoordinator()
+        coordinator.start(with: representable)
+    }
+    
+    func openLocationDetail(with representable: LocationDetailRepresentable) {
+        let coordinator: LocationDetailCoordinator = dependencies.external.resolveLocationDetailCoordinator()
         coordinator.start(with: representable)
     }
 }

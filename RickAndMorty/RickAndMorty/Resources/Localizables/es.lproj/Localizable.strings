@@ -32,9 +32,20 @@
 "locations_searchPlaceholder" = "Busca sitios...";
 "locations_empty" = "No hay resultados disponibles";
 
+/* LocationDetail */
+"locationDetail_type" = "Tipo";
+"locationDetail_dimension" = "Dimensión";
+"locationDetail_numberOfResidents" = "Número de residentes";
+
 /* Episodes */
 "episodes_title" = "Episodios";
 "episodes_searchPlaceholder" = "Busca episodios...";
 "episodes_empty" = "No hay resultados disponibles";
 "episodes_season" = "Temporada %i";
 "episodes_episode" = "Episodio %i";
+
+/* EpisodeDetail */
+"episodeDetail_airDate" = "Fecha de lanzamiento";
+"episodeDetail_season" = "Temporada";
+"episodeDetail_episode" = "Episodio";
+"episodeDetail_numberOfCharacters" = "Número de personajes";

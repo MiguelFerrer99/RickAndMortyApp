@@ -32,9 +32,20 @@
 "locations_searchPlaceholder" = "Search locations...";
 "locations_empty" = "There are not available results";
 
+/* LocationDetail */
+"locationDetail_type" = "Type";
+"locationDetail_dimension" = "Dimension";
+"locationDetail_numberOfResidents" = "Number of residents";
+
 /* Episodes */
 "episodes_title" = "Episodes";
 "episodes_searchPlaceholder" = "Search episodes...";
 "episodes_empty" = "There are not available results";
 "episodes_season" = "Season %i";
 "episodes_episode" = "Episode %i";
+
+/* EpisodeDetail */
+"episodeDetail_airDate" = "Air date";
+"episodeDetail_season" = "Season";
+"episodeDetail_episode" = "Episode";
+"episodeDetail_numberOfCharacters" = "Number of characters";

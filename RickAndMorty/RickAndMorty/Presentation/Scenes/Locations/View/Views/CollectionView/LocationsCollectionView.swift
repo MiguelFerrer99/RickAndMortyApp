@@ -11,6 +11,7 @@ import Foundation
 
 enum LocationsCollectionViewState {
     case showNavigationBarShadow(Bool)
+    case openLocationDetail(LocationRepresentable)
     case viewMore
 }
 
@@ -111,6 +112,12 @@ extension LocationsCollectionView: UICollectionViewDelegate, UICollectionViewDat
             cell.configure(with: representable)
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        deselectItem(at: indexPath, animated: true)
+        guard let location = locationsPager?.getItems()[safe: indexPath.item] else { return }
+        subject.send(.openLocationDetail(location))
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

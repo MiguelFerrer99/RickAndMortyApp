@@ -10,6 +10,7 @@ import UIKit
 protocol LocationsCoordinator {
     func start(with representable: LocationsViewModelRepresentable)
     func back()
+    func openLocationDetail(with representable: LocationDetailRepresentable)
 }
 
 final class DefaultLocationsCoordinator {
@@ -33,6 +34,11 @@ extension DefaultLocationsCoordinator: LocationsCoordinator {
     
     func back() {
         navigationController.popViewController(animated: true)
+    }
+    
+    func openLocationDetail(with representable: LocationDetailRepresentable) {
+        let coordinator: LocationDetailCoordinator = dependencies.external.resolveLocationDetailCoordinator()
+        coordinator.start(with: representable)
     }
 }
 

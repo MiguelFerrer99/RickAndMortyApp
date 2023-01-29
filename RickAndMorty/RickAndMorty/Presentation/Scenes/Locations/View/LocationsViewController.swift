@@ -103,6 +103,8 @@ private extension LocationsViewController {
                 switch state {
                 case .showNavigationBarShadow(let show):
                     self.searchView.isHidden ? self.showNavigationBarShadow(show) : self.searchView.showShadow(show)
+                case .openLocationDetail(let location):
+                    self.viewModel.openLocationDetail(location)
                 case .viewMore:
                     self.viewModel.loadLocations()
                 }
@@ -113,7 +115,7 @@ private extension LocationsViewController {
         configureNavigationBar(with: .locations.title.localized)
         setupNavigationBarShadow()
         updateRightNavigationBarButton()
-        navigationItem.leftBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
+        navigationItem.leftBarButtonItem = BarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
     }
     
     func setupNavigationBarShadow() {
@@ -135,9 +137,9 @@ private extension LocationsViewController {
     func updateRightNavigationBarButton() {
         if searchView.isHidden {
             searchView.close()
-            navigationItem.rightBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
+            navigationItem.rightBarButtonItem = BarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
         } else {
-            navigationItem.rightBarButtonItem = BackBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
+            navigationItem.rightBarButtonItem = BarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
         }
     }
     

@@ -113,7 +113,7 @@ private extension EpisodesViewController {
         configureNavigationBar(with: .episodes.title.localized)
         setupNavigationBarShadow()
         updateRightNavigationBarButton()
-        navigationItem.leftBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
+        navigationItem.leftBarButtonItem = BarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
     }
     
     func setupNavigationBarShadow() {
@@ -135,9 +135,9 @@ private extension EpisodesViewController {
     func updateRightNavigationBarButton() {
         if searchView.isHidden {
             searchView.close()
-            navigationItem.rightBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
+            navigationItem.rightBarButtonItem = BarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
         } else {
-            navigationItem.rightBarButtonItem = BackBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
+            navigationItem.rightBarButtonItem = BarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
         }
     }
     

@@ -64,11 +64,24 @@ extension String {
         case empty = "locations_empty"
     }
     
+    enum locationDetail: String, Localizable {
+        case type = "locationDetail_type"
+        case dimension = "locationDetail_dimension"
+        case numberOfResidents = "locationDetail_numberOfResidents"
+    }
+    
     enum episodes: String, Localizable {
         case title = "episodes_title"
         case searchPlaceholder = "episodes_searchPlaceholder"
         case empty = "episodes_empty"
         case season = "episodes_season"
         case episode = "episodes_episode"
+    }
+    
+    enum episodeDetail: String, Localizable {
+        case airDate = "episodeDetail_airDate"
+        case season = "episodeDetail_season"
+        case episode = "episodeDetail_episode"
+        case numberOfCharacters = "episodeDetail_numberOfCharacters"
     }
 }

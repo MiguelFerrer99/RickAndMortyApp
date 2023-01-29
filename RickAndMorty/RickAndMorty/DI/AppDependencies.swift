@@ -42,4 +42,5 @@ extension AppDependencies: HomeExternalDependenciesResolver,
                             AuthorInfoExternalDependenciesResolver,
                             CharactersExternalDependenciesResolver,
                             LocationsExternalDependenciesResolver,
-                            EpisodesExternalDependenciesResolver {}
+                            EpisodesExternalDependenciesResolver,
+                            LocationDetailExternalDependenciesResolver {}

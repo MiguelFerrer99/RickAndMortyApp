@@ -10,6 +10,7 @@ import Combine
 
 enum HomeDataCollectionViewState {
     case showTitleViewShadow(Bool)
+    case openLocation(LocationRepresentable)
     case viewMore(HomeDataCategory)
 }
 
@@ -125,6 +126,17 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
         }
         cell.configure(with: representable, and: imageCacheManager)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        deselectItem(at: indexPath, animated: true)
+        guard let category = categories?[safe: indexPath.section] else { return }
+        switch category {
+        case .locations(let locations):
+            guard let location = locations[safe: indexPath.item] else { return }
+            subject.send(.openLocation(location))
+        default: return
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

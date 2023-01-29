@@ -93,17 +93,17 @@ private extension HomeDataCollectionViewInfoCell {
         episodeLabel.shadowOffset = CGSize(width: 2, height: 3)
     }
     
-    func setDefaultConfiguration() {
-        imageView.image = nil
-        titleLabel.alpha = 0
-        episodeLabel.alpha = 0
-        configureImageView()
-    }
-    
     func showTextAndImage(image: UIImage, isEpisode: Bool = false) {
         imageView.image = image
         imageView.alpha = 1
         titleLabel.alpha = 1
         episodeLabel.alpha = isEpisode ? 1 : 0
+    }
+    
+    func setDefaultConfiguration() {
+        imageView.image = nil
+        titleLabel.alpha = 0
+        episodeLabel.alpha = 0
+        configureImageView()
     }
 }

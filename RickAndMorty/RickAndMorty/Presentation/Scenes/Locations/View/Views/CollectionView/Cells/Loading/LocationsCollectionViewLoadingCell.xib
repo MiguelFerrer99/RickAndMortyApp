@@ -46,12 +46,8 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="nwm-3E-chr" secondAttribute="trailing" id="12a-jw-nyN"/>
-                <constraint firstItem="nwm-3E-chr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="DMp-8R-TRm"/>
-                <constraint firstItem="nwm-3E-chr" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="XKo-M1-d6V"/>
                 <constraint firstItem="nwm-3E-chr" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="lBL-JL-cHx"/>
                 <constraint firstItem="nwm-3E-chr" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="mBt-QD-KLT"/>
-                <constraint firstAttribute="bottom" secondItem="nwm-3E-chr" secondAttribute="bottom" id="yur-1U-Umh"/>
             </constraints>
             <size key="customSize" width="163" height="200"/>
             <connections>

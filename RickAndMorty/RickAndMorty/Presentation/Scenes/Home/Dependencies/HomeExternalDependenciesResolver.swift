@@ -10,13 +10,14 @@ import UIKit
 protocol HomeExternalDependenciesResolver {
     func resolve() -> UINavigationController
     func resolveAppDependencies() -> AppDependencies
+    func resolveAPIService() -> APIService
+    func resolveImageCacheManager() -> ImageCacheManager
     func resolveHomeCoordinator() -> HomeCoordinator
     func resolveAuthorInfoCoordinator() -> AuthorInfoCoordinator
     func resolveCharactersCoordinator() -> CharactersCoordinator
     func resolveLocationsCoordinator() -> LocationsCoordinator
     func resolveEpisodesCoordinator() -> EpisodesCoordinator
-    func resolveAPIService() -> APIService
-    func resolveImageCacheManager() -> ImageCacheManager
+    func resolveLocationDetailCoordinator() -> LocationDetailCoordinator
 }
 
 extension HomeExternalDependenciesResolver {

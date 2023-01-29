@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BackBarButtonItem: UIBarButtonItem {
+final class BarButtonItem: UIBarButtonItem {
     override var menu: UIMenu? {
         set {}
         get { return super.menu }
