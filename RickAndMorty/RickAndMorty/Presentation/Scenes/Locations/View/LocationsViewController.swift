@@ -125,6 +125,7 @@ private extension LocationsViewController {
         sceneNavigationController.navigationBar.layer.shadowOpacity = 0
         sceneNavigationController.navigationBar.layer.shadowColor = UIColor.black.cgColor
         sceneNavigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
+        showNavigationBarShadow(collectionView.contentOffset.y > 0)
     }
     
     func showNavigationBarShadow(_ show: Bool) {
