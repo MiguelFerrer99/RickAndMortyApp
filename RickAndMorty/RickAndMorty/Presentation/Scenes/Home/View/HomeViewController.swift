@@ -112,6 +112,8 @@ private extension HomeViewController {
                     self.viewModel.openAuthorInfo()
                 case .openLocation(let location):
                     self.viewModel.openLocation(location)
+                case .openEpisode(let episode):
+                    self.viewModel.openEpisode(episode)
                 case .viewMore(let category):
                     self.viewModel.openCategoryDetail(category)
                 }

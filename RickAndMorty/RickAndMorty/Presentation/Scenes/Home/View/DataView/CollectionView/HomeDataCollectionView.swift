@@ -11,6 +11,7 @@ import Combine
 enum HomeDataCollectionViewState {
     case showTitleViewShadow(Bool)
     case openLocation(LocationRepresentable)
+    case openEpisode(EpisodeRepresentable)
     case viewMore(HomeDataCategory)
 }
 
@@ -135,6 +136,9 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
         case .locations(let locations):
             guard let location = locations[safe: indexPath.item] else { return }
             subject.send(.openLocation(location))
+        case .episodes(let episodes):
+            guard let episode = episodes[safe: indexPath.item] else { return }
+            subject.send(.openEpisode(episode))
         default: return
         }
     }

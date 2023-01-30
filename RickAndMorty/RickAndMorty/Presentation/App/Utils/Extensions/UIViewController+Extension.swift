@@ -21,5 +21,11 @@ extension UIViewController: UIGestureRecognizerDelegate {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.navigationBar.clipsToBounds = true
+        navigationController?.navigationBar.layer.masksToBounds = true
+        navigationController?.navigationBar.layer.shadowRadius = 0
+        navigationController?.navigationBar.layer.shadowOpacity = 0
+        navigationController?.navigationBar.layer.shadowColor = UIColor.clear.cgColor
+        navigationController?.navigationBar.layer.shadowOffset = CGSize()
     }
 }

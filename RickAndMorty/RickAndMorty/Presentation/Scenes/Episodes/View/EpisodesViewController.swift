@@ -103,6 +103,8 @@ private extension EpisodesViewController {
                 switch state {
                 case .showNavigationBarShadow(let show):
                     self.searchView.isHidden ? self.showNavigationBarShadow(show) : self.searchView.showShadow(show)
+                case .openEpisodeDetail(let episode):
+                    self.viewModel.openEpisodeDetail(episode)
                 case .viewMore:
                     self.viewModel.loadEpisodes()
                 }

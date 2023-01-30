@@ -28,8 +28,8 @@ struct EpisodeRepresented: EpisodeRepresentable {
         self.id = "\(dto.id)"
         self.name = dto.name
         self.airDate = dto.air_date.toDate(dateFormat: "MMMM d, yyyy") ?? Date()
-        self.season = Int(String(dto.episode.prefix(3))) ?? 0
-        self.episode = Int(String(dto.episode.suffix(3))) ?? 0
+        self.season = Int(dto.episode.replacingOccurrences(of: "S", with: "").split(separator: "E").map { String($0) }.first ?? "0") ?? 0
+        self.episode = Int(dto.episode.replacingOccurrences(of: "S", with: "").split(separator: "E").map { String($0) }[safe: 1] ?? "0") ?? 0
         self.numberOfCharacters = dto.characters.count
     }
 }

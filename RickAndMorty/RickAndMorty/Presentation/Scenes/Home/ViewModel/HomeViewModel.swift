@@ -58,6 +58,15 @@ final class HomeViewModel {
                                                                numberOfResidents: location.numberOfResidents)
         coordinator.openLocationDetail(with: representable)
     }
+    
+    func openEpisode(_ episode: EpisodeRepresentable) {
+        let representable = DefaultEpisodeDetailRepresentable(name: episode.name,
+                                                              airDate: episode.airDate,
+                                                              season: episode.season,
+                                                              episode: episode.episode,
+                                                              numberOfCharacters: episode.numberOfCharacters)
+        coordinator.openEpisodeDetail(with: representable)
+    }
 }
 
 private extension HomeViewModel {

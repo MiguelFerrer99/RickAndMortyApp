@@ -88,7 +88,7 @@ private extension HomeDataCollectionViewInfoCell {
     
     func configureEpisodeLabel() {
         episodeLabel.textColor = .white
-        episodeLabel.font = UIFont(name: "GetSchwifty-Regular", size: iPadDevice ? 50 : 20)
+        episodeLabel.font = UIFont(name: "GetSchwifty-Regular", size: iPadDevice ? 50 : 16)
         episodeLabel.shadowColor = .black
         episodeLabel.shadowOffset = CGSize(width: 2, height: 3)
     }

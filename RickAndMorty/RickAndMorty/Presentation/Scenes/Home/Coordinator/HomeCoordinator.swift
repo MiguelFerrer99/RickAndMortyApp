@@ -14,6 +14,7 @@ protocol HomeCoordinator {
     func openLocations(with representable: LocationsViewModelRepresentable)
     func openEpisodes(with representable: EpisodesViewModelRepresentable)
     func openLocationDetail(with representable: LocationDetailRepresentable)
+    func openEpisodeDetail(with representable: EpisodeDetailRepresentable)
 }
 
 final class DefaultHomeCoordinator {
@@ -59,6 +60,11 @@ extension DefaultHomeCoordinator: HomeCoordinator {
     
     func openLocationDetail(with representable: LocationDetailRepresentable) {
         let coordinator: LocationDetailCoordinator = dependencies.external.resolveLocationDetailCoordinator()
+        coordinator.start(with: representable)
+    }
+    
+    func openEpisodeDetail(with representable: EpisodeDetailRepresentable) {
+        let coordinator: EpisodeDetailCoordinator = dependencies.external.resolveEpisodeDetailCoordinator()
         coordinator.start(with: representable)
     }
 }

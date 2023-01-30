@@ -18,6 +18,7 @@ protocol HomeExternalDependenciesResolver {
     func resolveLocationsCoordinator() -> LocationsCoordinator
     func resolveEpisodesCoordinator() -> EpisodesCoordinator
     func resolveLocationDetailCoordinator() -> LocationDetailCoordinator
+    func resolveEpisodeDetailCoordinator() -> EpisodeDetailCoordinator
 }
 
 extension HomeExternalDependenciesResolver {

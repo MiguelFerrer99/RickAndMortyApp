@@ -11,6 +11,7 @@ import Foundation
 
 enum EpisodesCollectionViewState {
     case showNavigationBarShadow(Bool)
+    case openEpisodeDetail(EpisodeRepresentable)
     case viewMore
 }
 
@@ -111,6 +112,12 @@ extension EpisodesCollectionView: UICollectionViewDelegate, UICollectionViewData
             cell.configure(with: representable)
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        deselectItem(at: indexPath, animated: true)
+        guard let episode = episodesPager?.getItems()[safe: indexPath.item] else { return }
+        subject.send(.openEpisodeDetail(episode))
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
