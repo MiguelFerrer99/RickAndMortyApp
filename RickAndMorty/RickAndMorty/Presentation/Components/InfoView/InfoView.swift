@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum InfoViewStyle {
+    case primary
+    case secondary
+}
+
 final class InfoView: XibView {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -23,9 +28,10 @@ final class InfoView: XibView {
         setupView()
     }
     
-    func configure(title: String, description: String) {
+    func configure(title: String, description: String, style: InfoViewStyle = .primary) {
         titleLabel.text = title
         descriptionLabel.text = description
+        setAppearance(with: style)
     }
 }
 
@@ -46,5 +52,13 @@ private extension InfoView {
     
     func configureDescriptionLabel() {
         descriptionLabel.font = .systemFont(ofSize: iPadDevice ? 25 : 14)
+    }
+    
+    func setAppearance(with style: InfoViewStyle) {
+        if style == .secondary {
+            containerView.backgroundColor = .white
+            containerView.layer.borderColor = UIColor.black.cgColor
+            containerView.layer.borderWidth = 3
+        }
     }
 }

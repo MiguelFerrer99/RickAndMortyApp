@@ -27,6 +27,23 @@
 "characters_searchPlaceholder" = "Busca personajes...";
 "characters_empty" = "No hay resultados disponibles";
 
+/* CharacterDetail */
+"characterDetail_status" = "Estado";
+"characterDetail_species" = "Especie";
+"characterDetail_gender" = "Género";
+"characterDetail_origin" = "Origen";
+"characterDetail_location" = "Sitio";
+"characterDetail_numberOfEpisodes" = "Número de episodios";
+
+/* CharacterDetail_Status */
+"characterDetail_statusType_alive" = "Vivo";
+"characterDetail_statusType_dead" = "Muerto";
+"characterDetail_statusType_unknown" = "Desconocido";
+
+/* CharacterDetail_Gender */
+"characterDetail_genderType_male" = "Masculino";
+"characterDetail_genderType_female" = "Femenino";
+
 /* Locations */
 "locations_title" = "Sitios";
 "locations_searchPlaceholder" = "Busca sitios...";

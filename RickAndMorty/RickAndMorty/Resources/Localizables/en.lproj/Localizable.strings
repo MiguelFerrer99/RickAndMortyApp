@@ -27,6 +27,23 @@
 "characters_searchPlaceholder" = "Search characters...";
 "characters_empty" = "There are not available results";
 
+/* CharacterDetail */
+"characterDetail_status" = "Status";
+"characterDetail_species" = "Specie";
+"characterDetail_gender" = "Gender";
+"characterDetail_origin" = "Origin";
+"characterDetail_location" = "Location";
+"characterDetail_numberOfEpisodes" = "Number of episodes";
+
+/* CharacterDetail_Status */
+"characterDetail_statusType_alive" = "Alive";
+"characterDetail_statusType_dead" = "Dead";
+"characterDetail_statusType_unknown" = "Unknown";
+
+/* CharacterDetail_Gender */
+"characterDetail_genderType_male" = "Male";
+"characterDetail_genderType_female" = "Female";
+
 /* Locations */
 "locations_title" = "Locations";
 "locations_searchPlaceholder" = "Search locations...";

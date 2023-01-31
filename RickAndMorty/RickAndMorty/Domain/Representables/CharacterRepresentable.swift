@@ -9,11 +9,26 @@ enum CharacterStatus: String {
     case alive = "Alive"
     case dead = "Dead"
     case unknown = "Unknown"
+    
+    func getText() -> String {
+        switch self {
+        case .alive: return .characterDetail.statusType.alive.localized
+        case .dead: return .characterDetail.statusType.dead.localized
+        case .unknown: return .characterDetail.statusType.unknown.localized
+        }
+    }
 }
 
 enum CharacterGender: String {
     case male = "Male"
     case female = "Female"
+    
+    func getText() -> String {
+        switch self {
+        case .male: return .characterDetail.genderType.male.localized
+        case .female: return .characterDetail.genderType.female.localized
+        }
+    }
 }
 
 protocol CharacterRepresentable {

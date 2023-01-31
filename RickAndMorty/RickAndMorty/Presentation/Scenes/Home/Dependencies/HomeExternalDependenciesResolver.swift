@@ -15,9 +15,10 @@ protocol HomeExternalDependenciesResolver {
     func resolveHomeCoordinator() -> HomeCoordinator
     func resolveAuthorInfoCoordinator() -> AuthorInfoCoordinator
     func resolveCharactersCoordinator() -> CharactersCoordinator
+    func resolveCharacterDetailCoordinator() -> CharacterDetailCoordinator
     func resolveLocationsCoordinator() -> LocationsCoordinator
-    func resolveEpisodesCoordinator() -> EpisodesCoordinator
     func resolveLocationDetailCoordinator() -> LocationDetailCoordinator
+    func resolveEpisodesCoordinator() -> EpisodesCoordinator
     func resolveEpisodeDetailCoordinator() -> EpisodeDetailCoordinator
 }
 

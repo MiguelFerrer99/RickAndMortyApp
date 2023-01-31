@@ -10,6 +10,7 @@ import Combine
 
 enum HomeDataViewState {
     case didTapTitleImage
+    case openCharacter(CharacterRepresentable)
     case openLocation(LocationRepresentable)
     case openEpisode(EpisodeRepresentable)
     case viewMore(HomeDataCategory)
@@ -57,6 +58,8 @@ private extension HomeDataView {
                 switch state {
                 case .showTitleViewShadow(let show):
                     self.showTitleViewShadow(show)
+                case .openCharacter(let character):
+                    self.subject.send(.openCharacter(character))
                 case .openLocation(let location):
                     self.subject.send(.openLocation(location))
                 case .openEpisode(let episode):

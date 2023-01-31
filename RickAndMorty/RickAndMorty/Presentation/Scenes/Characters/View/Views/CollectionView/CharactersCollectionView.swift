@@ -11,6 +11,7 @@ import Foundation
 
 enum CharactersCollectionViewState {
     case showNavigationBarShadow(Bool)
+    case openCharacter(CharacterRepresentable)
     case viewMore
 }
 
@@ -112,6 +113,12 @@ extension CharactersCollectionView: UICollectionViewDelegate, UICollectionViewDa
             cell.configure(with: representable, and: imageCacheManager)
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        deselectItem(at: indexPath, animated: true)
+        guard let character = charactersPager?.getItems()[safe: indexPath.item] else { return }
+        subject.send(.openCharacter(character))
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

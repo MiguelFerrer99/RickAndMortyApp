@@ -51,6 +51,18 @@ final class HomeViewModel {
         }
     }
     
+    func openCharacter(_ character: CharacterRepresentable) {
+        let representable = DefaultCharacterDetailRepresentable(name: character.name,
+                                                                image: character.urlImage,
+                                                                status: character.status,
+                                                                species: character.species,
+                                                                gender: character.gender,
+                                                                origin: character.origin,
+                                                                location: character.location,
+                                                                numberOfEpisodes: character.numberOfEpisodes)
+        coordinator.openCharacterDetail(with: representable)
+    }
+    
     func openLocation(_ location: LocationRepresentable) {
         let representable = DefaultLocationDetailRepresentable(name: location.name,
                                                                type: location.type,

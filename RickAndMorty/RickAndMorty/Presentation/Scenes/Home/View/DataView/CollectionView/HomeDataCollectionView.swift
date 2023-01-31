@@ -10,6 +10,7 @@ import Combine
 
 enum HomeDataCollectionViewState {
     case showTitleViewShadow(Bool)
+    case openCharacter(CharacterRepresentable)
     case openLocation(LocationRepresentable)
     case openEpisode(EpisodeRepresentable)
     case viewMore(HomeDataCategory)
@@ -133,13 +134,15 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
         deselectItem(at: indexPath, animated: true)
         guard let category = categories?[safe: indexPath.section] else { return }
         switch category {
+        case .characters(let characters):
+            guard let character = characters[safe: indexPath.item] else { return }
+            subject.send(.openCharacter(character))
         case .locations(let locations):
             guard let location = locations[safe: indexPath.item] else { return }
             subject.send(.openLocation(location))
         case .episodes(let episodes):
             guard let episode = episodes[safe: indexPath.item] else { return }
             subject.send(.openEpisode(episode))
-        default: return
         }
     }
     

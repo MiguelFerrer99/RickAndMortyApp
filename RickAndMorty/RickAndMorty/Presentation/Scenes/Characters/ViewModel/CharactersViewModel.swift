@@ -44,6 +44,18 @@ final class CharactersViewModel {
     func loadCharaters() {
         loadCharacters(with: characterNameFiltered)
     }
+    
+    func openCharacter(_ character: CharacterRepresentable) {
+        let representable = DefaultCharacterDetailRepresentable(name: character.name,
+                                                                image: character.urlImage,
+                                                                status: character.status,
+                                                                species: character.species,
+                                                                gender: character.gender,
+                                                                origin: character.origin,
+                                                                location: character.location,
+                                                                numberOfEpisodes: character.numberOfEpisodes)
+        coordinator.openCharacter(with: representable)
+    }
 }
 
 private extension CharactersViewModel {

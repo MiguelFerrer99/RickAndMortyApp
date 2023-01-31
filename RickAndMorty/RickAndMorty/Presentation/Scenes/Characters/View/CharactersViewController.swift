@@ -103,6 +103,8 @@ private extension CharactersViewController {
                 switch state {
                 case .showNavigationBarShadow(let show):
                     self.searchView.isHidden ? self.showNavigationBarShadow(show) : self.searchView.showShadow(show)
+                case .openCharacter(let character):
+                    self.viewModel.openCharacter(character)
                 case .viewMore:
                     self.viewModel.loadCharaters()
                 }

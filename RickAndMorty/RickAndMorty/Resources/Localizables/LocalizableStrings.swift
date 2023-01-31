@@ -58,6 +58,26 @@ extension String {
         case empty = "characters_empty"
     }
     
+    enum characterDetail: String, Localizable {
+        case status = "characterDetail_status"
+        case species = "characterDetail_species"
+        case gender = "characterDetail_gender"
+        case origin = "characterDetail_origin"
+        case location = "characterDetail_location"
+        case numberOfEpisodes = "characterDetail_numberOfEpisodes"
+        
+        enum statusType: String, Localizable {
+            case alive = "characterDetail_statusType_alive"
+            case dead = "characterDetail_statusType_dead"
+            case unknown = "characterDetail_statusType_unknown"
+        }
+        
+        enum genderType: String, Localizable {
+            case male = "characterDetail_genderType_male"
+            case female = "characterDetail_genderType_female"
+        }
+    }
+    
     enum locations: String, Localizable {
         case title = "locations_title"
         case searchPlaceholder = "locations_searchPlaceholder"
