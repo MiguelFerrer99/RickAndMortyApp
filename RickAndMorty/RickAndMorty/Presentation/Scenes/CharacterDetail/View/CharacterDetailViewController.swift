@@ -10,22 +10,19 @@ import Combine
 
 final class CharacterDetailViewController: UIViewController {
     @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var characterImageView: UIImageView!
+    @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var infoStackView: UIStackView!
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var dashedLineView1: DashedLineView!
-    @IBOutlet private weak var statusInfoView: InfoView!
-    @IBOutlet private weak var speciesInfoView: InfoView!
-    @IBOutlet private weak var genderInfoView: InfoView!
-    @IBOutlet private weak var dashedLineView2: DashedLineView!
-    @IBOutlet private weak var originInfoView: InfoView!
-    @IBOutlet private weak var locationInfoView: InfoView!
-    @IBOutlet private weak var dashedLineView3: DashedLineView!
-    @IBOutlet private weak var numberOfEpisodesInfoView: InfoView!
     private let viewModel: CharacterDetailViewModel
     private let dependencies: CharacterDetailDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
     private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+    private let statusInfoView = InfoView()
+    private let speciesInfoView = InfoView()
+    private let genderInfoView = InfoView()
+    private let originInfoView = InfoView()
+    private let locationInfoView = InfoView()
+    private let numberOfEpisodesInfoView = InfoView()
 
     init(dependencies: CharacterDetailDependenciesResolver) {
         self.dependencies = dependencies
@@ -62,11 +59,21 @@ private extension CharacterDetailViewController {
     
     func setupViews() {
         configureScrollView()
+        configureInfoStackView()
         configureTitleLabel()
     }
     
     func configureScrollView() {
         scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
+    }
+    
+    func configureInfoStackView() {
+        infoStackView.addArrangedSubview(statusInfoView)
+        infoStackView.addArrangedSubview(speciesInfoView)
+        infoStackView.addArrangedSubview(genderInfoView)
+        infoStackView.addArrangedSubview(originInfoView)
+        infoStackView.addArrangedSubview(locationInfoView)
+        infoStackView.addArrangedSubview(numberOfEpisodesInfoView)
     }
     
     func configureTitleLabel() {
@@ -90,13 +97,11 @@ private extension CharacterDetailViewController {
     }
     
     func configureNavigationBar() {
-        configureNavigationBar(with: "")
-        sceneNavigationController.setNavigationBarHidden(true, animated: true)
+        configureNavigationBar(with: "", transparent: true)
         navigationItem.leftBarButtonItem = BarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
     }
     
     func setInfo(_ info: CharacterDetailRepresentable) {
-        configureNavigationBar(with: info.name)
         fillCharactersImageView(with: info.image)
         titleLabel.text = info.name
         statusInfoView.configure(title: .characterDetail.status.localized, description: info.status.getText())
@@ -109,12 +114,12 @@ private extension CharacterDetailViewController {
     
     func fillCharactersImageView(with image: String) {
         if let uiImage = imageCacheManager.get(name: image) {
-            characterImageView.image = uiImage
+            imageView.image = uiImage
         } else if let url = URL(string: image) {
-            characterImageView.load(url: url) { [weak self] in
+            imageView.load(url: url) { [weak self] in
                 guard let self = self else { return }
                 self.imageCacheManager.add(image: $0, name: image)
-                self.characterImageView.image = $0
+                self.imageView.image = $0
             }
         }
     }

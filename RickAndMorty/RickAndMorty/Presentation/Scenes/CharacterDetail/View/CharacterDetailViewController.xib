@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CharacterDetailViewController" customModule="Rick___Morty" customModuleProvider="target">
             <connections>
-                <outlet property="characterImageView" destination="mZF-dy-b2h" id="mg7-Wn-2KH"/>
-                <outlet property="dashedLineView1" destination="MzR-dm-ygF" id="gmn-Yl-G8k"/>
-                <outlet property="dashedLineView2" destination="tHV-Bb-77e" id="GoG-nq-0XD"/>
-                <outlet property="dashedLineView3" destination="E2u-7a-8Hg" id="EEc-0P-ZEV"/>
-                <outlet property="genderInfoView" destination="0SZ-OM-qCT" id="Auw-O9-7dh"/>
-                <outlet property="infoStackView" destination="kKq-1S-U5i" id="mZy-IK-0p6"/>
-                <outlet property="locationInfoView" destination="ssu-vx-DEO" id="Aug-Ep-N7Z"/>
-                <outlet property="numberOfEpisodesInfoView" destination="E2P-VZ-zMq" id="6xt-Gk-jnt"/>
-                <outlet property="originInfoView" destination="kM1-xh-psd" id="Ljn-NK-gu1"/>
-                <outlet property="scrollView" destination="t3V-CE-ubZ" id="esL-T9-QH3"/>
-                <outlet property="speciesInfoView" destination="LGI-OM-O5b" id="iFg-RR-Zwe"/>
-                <outlet property="statusInfoView" destination="qlq-PD-yGf" id="y5S-UW-ues"/>
-                <outlet property="titleLabel" destination="72C-rA-YQX" id="aa3-2D-1hD"/>
+                <outlet property="imageView" destination="ivw-RW-b2x" id="f5X-30-2hj"/>
+                <outlet property="infoStackView" destination="wj1-ks-oEa" id="o60-cg-EVH"/>
+                <outlet property="scrollView" destination="djy-zD-rv2" id="H8E-c0-oMM"/>
+                <outlet property="titleLabel" destination="y02-dd-ehd" id="hf7-v7-c6b"/>
                 <outlet property="view" destination="iN0-l3-epB" id="XGf-FR-SLG"/>
             </connections>
         </placeholder>
@@ -32,144 +22,70 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="876"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="t3V-CE-ubZ">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DEk-95-Bk4" userLabel="Container View">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="876"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="e6T-G1-E1F" userLabel="Container Stack View">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="2557.3333333333335"/>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="djy-zD-rv2">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="876"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PwP-DH-g6u" userLabel="Container Image View">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="262.66666666666669"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="WZp-MR-utH" userLabel="Container Stack View">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="440.66666666666669"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mZF-dy-b2h" userLabel="Character Image View">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="262.66666666666669"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ivw-RW-b2x">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="350.33333333333331"/>
                                         </imageView>
-                                    </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    <constraints>
-                                        <constraint firstItem="mZF-dy-b2h" firstAttribute="top" secondItem="PwP-DH-g6u" secondAttribute="top" id="5Du-Tk-Rxe"/>
-                                        <constraint firstItem="mZF-dy-b2h" firstAttribute="leading" secondItem="PwP-DH-g6u" secondAttribute="leading" id="OJr-Yp-Ov1"/>
-                                        <constraint firstAttribute="trailing" secondItem="mZF-dy-b2h" secondAttribute="trailing" id="ZHt-ir-SzN"/>
-                                        <constraint firstAttribute="bottom" secondItem="mZF-dy-b2h" secondAttribute="bottom" id="qLx-yz-TYH"/>
-                                    </constraints>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPI-Sw-SQw" userLabel="Info View">
-                                    <rect key="frame" x="0.0" y="282.66666666666674" width="393" height="2274.6666666666661"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="kKq-1S-U5i" userLabel="Info Stack View">
-                                            <rect key="frame" x="20" y="20" width="353" height="2234.6666666666665"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kl1-Hh-T76" userLabel="Container Stack View">
+                                            <rect key="frame" x="0.0" y="380.33333333333331" width="393" height="60.333333333333314"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="72C-rA-YQX" userLabel="Title Label">
-                                                    <rect key="frame" x="0.0" y="0.0" width="353" height="18.333333333333332"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-dm-ygF" customClass="DashedLineView" customModule="Rick___Morty" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="48.333333333333314" width="313" height="2"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="2" id="JMp-tJ-GZm"/>
-                                                    </constraints>
-                                                </view>
-                                                <view contentMode="scaleToFill" id="qlq-PD-yGf" userLabel="Status Info View" customClass="InfoView" customModule="Rick___Morty" customModuleProvider="target">
-                                                    <rect key="frame" x="176.66666666666666" y="80.333333333333329" width="0.0" height="0.0"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                </view>
-                                                <view contentMode="scaleToFill" id="LGI-OM-O5b" userLabel="Species Info View" customClass="InfoView" customModule="Rick___Morty" customModuleProvider="target">
-                                                    <rect key="frame" x="176.66666666666666" y="110.33333333333333" width="0.0" height="0.0"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                </view>
-                                                <view contentMode="scaleToFill" id="0SZ-OM-qCT" userLabel="Gender Info View" customClass="InfoView" customModule="Rick___Morty" customModuleProvider="target">
-                                                    <rect key="frame" x="176.66666666666666" y="140.33333333333334" width="0.0" height="0.0"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tHV-Bb-77e" customClass="DashedLineView" customModule="Rick___Morty" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="170.33333333333331" width="313" height="2"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="2" id="h04-Qw-sIB"/>
-                                                    </constraints>
-                                                </view>
-                                                <view contentMode="scaleToFill" ambiguous="YES" id="kM1-xh-psd" userLabel="Origin Info View" customClass="InfoView" customModule="Rick___Morty" customModuleProvider="target">
-                                                    <rect key="frame" x="176.66666666666666" y="200.33333333333334" width="0.0" height="0.0"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                </view>
-                                                <view contentMode="scaleToFill" ambiguous="YES" id="ssu-vx-DEO" userLabel="Location Info View" customClass="InfoView" customModule="Rick___Morty" customModuleProvider="target">
-                                                    <rect key="frame" x="176.66666666666666" y="230.33333333333334" width="0.0" height="0.0"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2u-7a-8Hg" customClass="DashedLineView" customModule="Rick___Morty" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="2202.666666666667" width="313" height="2"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="2" id="LPZ-HG-hsh"/>
-                                                    </constraints>
-                                                </view>
-                                                <view contentMode="scaleToFill" id="E2P-VZ-zMq" userLabel="NumberOfEpisodes Info View" customClass="InfoView" customModule="Rick___Morty" customModuleProvider="target">
-                                                    <rect key="frame" x="176.66666666666666" y="2234.6666666666665" width="0.0" height="0.0"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                </view>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="wj1-ks-oEa" userLabel="Info Stack View">
+                                                    <rect key="frame" x="20" y="0.0" width="353" height="60.333333333333336"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y02-dd-ehd" userLabel="Title Label">
+                                                            <rect key="frame" x="0.0" y="0.0" width="353" height="60.333333333333336"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
-                                                <constraint firstItem="kM1-xh-psd" firstAttribute="leading" secondItem="kKq-1S-U5i" secondAttribute="leading" id="34R-Cr-gav"/>
-                                                <constraint firstAttribute="trailing" secondItem="LGI-OM-O5b" secondAttribute="trailing" id="5Et-w1-dxN"/>
-                                                <constraint firstAttribute="trailing" secondItem="72C-rA-YQX" secondAttribute="trailing" id="69m-0P-fBn"/>
-                                                <constraint firstAttribute="trailing" secondItem="E2P-VZ-zMq" secondAttribute="trailing" id="6G1-kE-gSC"/>
-                                                <constraint firstAttribute="trailing" secondItem="tHV-Bb-77e" secondAttribute="trailing" constant="20" id="6M5-Jv-Vgb"/>
-                                                <constraint firstAttribute="trailing" secondItem="0SZ-OM-qCT" secondAttribute="trailing" id="7bt-XU-dgH"/>
-                                                <constraint firstItem="E2P-VZ-zMq" firstAttribute="leading" secondItem="kKq-1S-U5i" secondAttribute="leading" id="LCO-d7-nHV"/>
-                                                <constraint firstItem="tHV-Bb-77e" firstAttribute="leading" secondItem="kKq-1S-U5i" secondAttribute="leading" constant="20" id="Llf-Vu-EzQ"/>
-                                                <constraint firstItem="qlq-PD-yGf" firstAttribute="leading" secondItem="kKq-1S-U5i" secondAttribute="leading" id="TEv-pq-yG3"/>
-                                                <constraint firstAttribute="trailing" secondItem="kM1-xh-psd" secondAttribute="trailing" id="Tcg-4B-V9E"/>
-                                                <constraint firstItem="72C-rA-YQX" firstAttribute="leading" secondItem="kKq-1S-U5i" secondAttribute="leading" id="Wma-Oa-Ge4"/>
-                                                <constraint firstAttribute="trailing" secondItem="E2u-7a-8Hg" secondAttribute="trailing" constant="20" id="a2V-er-d9q"/>
-                                                <constraint firstItem="MzR-dm-ygF" firstAttribute="leading" secondItem="kKq-1S-U5i" secondAttribute="leading" constant="20" id="buH-PT-lDo"/>
-                                                <constraint firstItem="E2u-7a-8Hg" firstAttribute="leading" secondItem="kKq-1S-U5i" secondAttribute="leading" constant="20" id="fTt-L3-1FY"/>
-                                                <constraint firstItem="LGI-OM-O5b" firstAttribute="leading" secondItem="kKq-1S-U5i" secondAttribute="leading" id="iKe-hY-4h1"/>
-                                                <constraint firstItem="0SZ-OM-qCT" firstAttribute="leading" secondItem="kKq-1S-U5i" secondAttribute="leading" id="jh5-XG-ww2"/>
-                                                <constraint firstAttribute="trailing" secondItem="ssu-vx-DEO" secondAttribute="trailing" id="lp7-qb-cA5"/>
-                                                <constraint firstItem="ssu-vx-DEO" firstAttribute="leading" secondItem="kKq-1S-U5i" secondAttribute="leading" id="mdB-ew-3eE"/>
-                                                <constraint firstAttribute="trailing" secondItem="qlq-PD-yGf" secondAttribute="trailing" id="t46-lq-lcR"/>
-                                                <constraint firstAttribute="trailing" secondItem="MzR-dm-ygF" secondAttribute="trailing" constant="20" id="vOp-Ri-SOG"/>
+                                                <constraint firstAttribute="trailing" secondItem="wj1-ks-oEa" secondAttribute="trailing" constant="20" id="6p8-8P-r62"/>
+                                                <constraint firstItem="wj1-ks-oEa" firstAttribute="leading" secondItem="kl1-Hh-T76" secondAttribute="leading" constant="20" id="BtY-8E-1LO"/>
+                                                <constraint firstItem="wj1-ks-oEa" firstAttribute="top" secondItem="kl1-Hh-T76" secondAttribute="top" id="HWj-kn-7ro"/>
+                                                <constraint firstAttribute="bottom" secondItem="wj1-ks-oEa" secondAttribute="bottom" id="uPC-ee-p9A"/>
                                             </constraints>
-                                        </stackView>
+                                        </view>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    <constraints>
-                                        <constraint firstItem="kKq-1S-U5i" firstAttribute="leading" secondItem="KPI-Sw-SQw" secondAttribute="leading" constant="20" id="8ZW-Gp-pan"/>
-                                        <constraint firstAttribute="bottom" secondItem="kKq-1S-U5i" secondAttribute="bottom" constant="20" id="jxx-kh-DMt"/>
-                                        <constraint firstAttribute="trailing" secondItem="kKq-1S-U5i" secondAttribute="trailing" constant="20" id="sim-xt-Drn"/>
-                                        <constraint firstItem="kKq-1S-U5i" firstAttribute="top" secondItem="KPI-Sw-SQw" secondAttribute="top" constant="20" id="wa4-zq-boT"/>
-                                    </constraints>
-                                </view>
+                                </stackView>
                             </subviews>
-                        </stackView>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="WZp-MR-utH" secondAttribute="bottom" id="1bq-4Q-oBj"/>
+                                <constraint firstItem="ivw-RW-b2x" firstAttribute="height" secondItem="djy-zD-rv2" secondAttribute="height" multiplier="0.4" id="CgR-iW-Myt"/>
+                                <constraint firstItem="WZp-MR-utH" firstAttribute="top" secondItem="djy-zD-rv2" secondAttribute="top" id="DWS-Qh-29s"/>
+                                <constraint firstAttribute="trailing" secondItem="WZp-MR-utH" secondAttribute="trailing" id="rag-B3-dgY"/>
+                                <constraint firstItem="WZp-MR-utH" firstAttribute="leading" secondItem="djy-zD-rv2" secondAttribute="leading" id="vcO-8M-36x"/>
+                            </constraints>
+                        </scrollView>
                     </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="e6T-G1-E1F" firstAttribute="leading" secondItem="t3V-CE-ubZ" secondAttribute="leading" id="Vqv-Ku-8mi"/>
-                        <constraint firstAttribute="trailing" secondItem="e6T-G1-E1F" secondAttribute="trailing" id="j4Q-o3-up0"/>
-                        <constraint firstItem="e6T-G1-E1F" firstAttribute="top" secondItem="t3V-CE-ubZ" secondAttribute="top" id="oMN-8D-SUD"/>
-                        <constraint firstAttribute="bottom" secondItem="e6T-G1-E1F" secondAttribute="bottom" id="qhx-8N-JPW"/>
+                        <constraint firstAttribute="bottom" secondItem="djy-zD-rv2" secondAttribute="bottom" id="SyM-dL-duT"/>
+                        <constraint firstItem="djy-zD-rv2" firstAttribute="leading" secondItem="DEk-95-Bk4" secondAttribute="leading" id="lP5-ln-5hm"/>
+                        <constraint firstAttribute="trailing" secondItem="djy-zD-rv2" secondAttribute="trailing" id="my2-5Q-sI7"/>
+                        <constraint firstItem="djy-zD-rv2" firstAttribute="top" secondItem="DEk-95-Bk4" secondAttribute="top" id="vnB-aw-5dM"/>
                     </constraints>
-                </scrollView>
+                </view>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="uaR-Er-s7Z"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" systemColor="tintColor"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="t3V-CE-ubZ" secondAttribute="bottom" id="0Fj-Bb-rug"/>
-                <constraint firstItem="t3V-CE-ubZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="KdR-vw-ar9"/>
-                <constraint firstItem="mZF-dy-b2h" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.3" id="OvG-d2-NqN"/>
-                <constraint firstAttribute="trailing" secondItem="t3V-CE-ubZ" secondAttribute="trailing" id="uWb-uk-Prt"/>
-                <constraint firstItem="e6T-G1-E1F" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="www-df-EXz"/>
-                <constraint firstItem="t3V-CE-ubZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zWw-iG-hlZ"/>
+                <constraint firstAttribute="trailing" secondItem="DEk-95-Bk4" secondAttribute="trailing" id="04S-bz-7cs"/>
+                <constraint firstAttribute="bottom" secondItem="DEk-95-Bk4" secondAttribute="bottom" id="plL-O1-qLd"/>
+                <constraint firstItem="DEk-95-Bk4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="u3P-it-wgF"/>
+                <constraint firstItem="DEk-95-Bk4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="um7-7z-GHx"/>
+                <constraint firstItem="WZp-MR-utH" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="wZj-F6-Rva"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="12.977099236641221" y="50"/>
