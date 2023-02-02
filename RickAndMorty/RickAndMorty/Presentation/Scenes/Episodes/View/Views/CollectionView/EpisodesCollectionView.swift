@@ -11,6 +11,7 @@ import Foundation
 
 enum EpisodesCollectionViewState {
     case showNavigationBarShadow(Bool)
+    case openEpisodeDetail(EpisodeRepresentable)
     case viewMore
 }
 
@@ -19,6 +20,7 @@ final class EpisodesCollectionView: UICollectionView {
     var publisher: AnyPublisher<EpisodesCollectionViewState, Never> { subject.eraseToAnyPublisher() }
     private var episodesPager: Pagination<EpisodeRepresentable>?
     private var imageCacheManager: ImageCacheManager?
+    private var isLoading = false { didSet { reload() } }
     
     init(frame: CGRect) {
         super.init(frame: frame, collectionViewLayout: .init())
@@ -33,13 +35,17 @@ final class EpisodesCollectionView: UICollectionView {
     func configure(with episodesPager: Pagination<EpisodeRepresentable>, and imageCacheManager: ImageCacheManager) {
         self.episodesPager = episodesPager
         self.imageCacheManager = imageCacheManager
-        reloadData()
+        isLoading = false
     }
     
     func scrollToTop() {
         if numberOfItems(inSection: 0) > 0 {
             scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
         }
+    }
+    
+    func showLoader() {
+        isLoading = true
     }
 }
 
@@ -50,6 +56,10 @@ private extension EpisodesCollectionView {
     
     var emptyCellIdentifier: String {
         String(describing: type(of: EpisodesCollectionViewEmptyCell()))
+    }
+    
+    var loadingCellIdentifier: String {
+        String(describing: type(of: EpisodesCollectionViewLoadingCell()))
     }
     
     func setupView() {
@@ -64,6 +74,8 @@ private extension EpisodesCollectionView {
         register(infoCellNib, forCellWithReuseIdentifier: infoCellIdentifier)
         let emptyCellNib = UINib(nibName: emptyCellIdentifier, bundle: .main)
         register(emptyCellNib, forCellWithReuseIdentifier: emptyCellIdentifier)
+        let loadingCellNib = UINib(nibName: loadingCellIdentifier, bundle: .main)
+        register(loadingCellNib, forCellWithReuseIdentifier: loadingCellIdentifier)
     }
     
     func shouldLoadMoreItems(index: Int) -> Bool {
@@ -71,26 +83,41 @@ private extension EpisodesCollectionView {
         let itemsLeftToLastItem = 4
         return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!episodesPager.isLastPage)
     }
+    
+    func reload() {
+        UIView.setAnimationsEnabled(false)
+        reloadData()
+        UIView.setAnimationsEnabled(true)
+    }
 }
 
 extension EpisodesCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let episodesPager = episodesPager else { return 0 }
-        return episodesPager.getItems().isEmpty ? 1 : episodesPager.getItems().count
+        return isLoading || episodesPager.getItems().isEmpty ? 1 : episodesPager.getItems().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let episodesPager = episodesPager else { return UICollectionViewCell() }
-        if episodesPager.getItems().isEmpty {
+        if isLoading {
+            guard let cell = dequeueReusableCell(withReuseIdentifier: loadingCellIdentifier, for: indexPath) as? EpisodesCollectionViewLoadingCell else { return UICollectionViewCell() }
+            return cell
+        } else if episodesPager.getItems().isEmpty {
             guard let cell = dequeueReusableCell(withReuseIdentifier: emptyCellIdentifier, for: indexPath) as? EpisodesCollectionViewEmptyCell else { return UICollectionViewCell() }
             return cell
         } else {
             guard let cell = dequeueReusableCell(withReuseIdentifier: infoCellIdentifier, for: indexPath) as? EpisodesCollectionViewInfoCell,
                   let episode = episodesPager.getItems()[safe: indexPath.item] else { return UICollectionViewCell() }
-            let representable = DefaultEpisodesCollectionViewInfoCellRepresentable(title: episode.name, episode: episode.episode)
+            let representable = DefaultEpisodesCollectionViewInfoCellRepresentable(title: episode.name, season: episode.season, episode: episode.episode)
             cell.configure(with: representable)
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        deselectItem(at: indexPath, animated: true)
+        guard let episode = episodesPager?.getItems()[safe: indexPath.item] else { return }
+        subject.send(.openEpisodeDetail(episode))
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

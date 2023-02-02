@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BackBarButtonItem: UIBarButtonItem {
+final class BarButtonItem: UIBarButtonItem {
     override var menu: UIMenu? {
         set {}
         get { return super.menu }
@@ -15,11 +15,19 @@ final class BackBarButtonItem: UIBarButtonItem {
 }
 
 extension UIViewController: UIGestureRecognizerDelegate {
-    func configureNavigationBar(with title: String) {
+    func configureNavigationBar(with title: String, transparent: Bool = false) {
+        let navBarAppearance = UINavigationBarAppearance()
+        transparent ? navBarAppearance.configureWithTransparentBackground() : navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.shadowColor = .clear
+        navBarAppearance.shadowImage = UIImage()
+        UINavigationBar.appearance().standardAppearance = navBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+        UINavigationBar.appearance().compactAppearance = navBarAppearance
         self.title = title
         navigationItem.backBarButtonItem = nil
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.navigationBar.layer.shadowOpacity = 0
     }
 }

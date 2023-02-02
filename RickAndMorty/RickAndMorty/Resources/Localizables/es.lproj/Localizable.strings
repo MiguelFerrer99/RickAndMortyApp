@@ -15,6 +15,8 @@
 "home_locationsSectionTitle" = "Sitios";
 "home_episodesSectionTitle" = "Episodios";
 "home_viewMore" = "Ver más";
+"home_episodeSeason" = "Temporada %i";
+"home_episodeEpisode" = "Episodio %i";
 
 /* AuthorInfo */
 "authorInfo_name" = "Miguel Ferrer Fornali";
@@ -25,12 +27,42 @@
 "characters_searchPlaceholder" = "Busca personajes...";
 "characters_empty" = "No hay resultados disponibles";
 
+/* CharacterDetail */
+"characterDetail_status" = "Estado";
+"characterDetail_species" = "Especie";
+"characterDetail_gender" = "Género";
+"characterDetail_origin" = "Origen";
+"characterDetail_location" = "Sitio";
+"characterDetail_numberOfEpisodes" = "Número de episodios";
+
+/* CharacterDetail_Status */
+"characterDetail_statusType_alive" = "Vivo";
+"characterDetail_statusType_dead" = "Muerto";
+"characterDetail_statusType_unknown" = "Desconocido";
+
+/* CharacterDetail_Gender */
+"characterDetail_genderType_male" = "Masculino";
+"characterDetail_genderType_female" = "Femenino";
+
 /* Locations */
 "locations_title" = "Sitios";
 "locations_searchPlaceholder" = "Busca sitios...";
 "locations_empty" = "No hay resultados disponibles";
 
+/* LocationDetail */
+"locationDetail_type" = "Tipo";
+"locationDetail_dimension" = "Dimensión";
+"locationDetail_numberOfResidents" = "Número de residentes";
+
 /* Episodes */
 "episodes_title" = "Episodios";
 "episodes_searchPlaceholder" = "Busca episodios...";
 "episodes_empty" = "No hay resultados disponibles";
+"episodes_season" = "Temporada %i";
+"episodes_episode" = "Episodio %i";
+
+/* EpisodeDetail */
+"episodeDetail_airDate" = "Fecha de lanzamiento";
+"episodeDetail_season" = "Temporada";
+"episodeDetail_episode" = "Episodio";
+"episodeDetail_numberOfCharacters" = "Número de personajes";

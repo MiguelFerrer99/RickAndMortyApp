@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CharactersCollectionViewLoadingCell" customModule="Rick___Morty" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="163" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="163" height="200"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7W-Z1-r63" userLabel="Container View">
+                        <rect key="frame" x="56.666666666666657" y="75" width="50" height="50"/>
+                        <subviews>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Hxr-TZ-YiI" customClass="LottieAnimationView" customModule="Lottie">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Tkx-yV-wJ0"/>
+                                    <constraint firstAttribute="width" secondItem="Hxr-TZ-YiI" secondAttribute="height" multiplier="1:1" id="qOS-5Y-zzQ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="Loader"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Hxr-TZ-YiI" secondAttribute="bottom" id="6lm-0K-Kqx"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="leading" secondItem="V7W-Z1-r63" secondAttribute="leading" id="9ug-Hn-D3f"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="centerX" secondItem="V7W-Z1-r63" secondAttribute="centerX" id="CCZ-NG-DwF"/>
+                            <constraint firstAttribute="trailing" secondItem="Hxr-TZ-YiI" secondAttribute="trailing" id="FaC-0R-BLt"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="centerY" secondItem="V7W-Z1-r63" secondAttribute="centerY" id="Rch-s1-2rf"/>
+                            <constraint firstItem="Hxr-TZ-YiI" firstAttribute="top" secondItem="V7W-Z1-r63" secondAttribute="top" id="Zlo-Ep-iNf"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="V7W-Z1-r63" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Zll-zm-RTb"/>
+                <constraint firstItem="V7W-Z1-r63" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="gUC-iS-EuK"/>
+            </constraints>
+            <size key="customSize" width="163" height="200"/>
+            <connections>
+                <outlet property="animationView" destination="Hxr-TZ-YiI" id="uWO-z2-bfE"/>
+            </connections>
+            <point key="canvasLocation" x="22.137404580152669" y="71.83098591549296"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

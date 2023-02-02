@@ -17,10 +17,12 @@ struct DefaultEpisodesViewModelRepresentable: EpisodesViewModelRepresentable {
 
 protocol EpisodesCollectionViewInfoCellRepresentable {
     var title: String { get }
-    var episode: String { get }
+    var season: Int { get }
+    var episode: Int { get }
 }
 
 struct DefaultEpisodesCollectionViewInfoCellRepresentable: EpisodesCollectionViewInfoCellRepresentable {
     var title: String
-    var episode: String
+    var season: Int
+    var episode: Int
 }

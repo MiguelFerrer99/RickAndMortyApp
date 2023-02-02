@@ -36,14 +36,25 @@ final class CharactersViewModel {
         coordinator.back()
     }
     
-    func clearFilteredCharactersPager() {
+    func clearCharactersPager() {
         characterNameFiltered = nil
         charactersPager.reset()
-        sendStateSubject(.charactersReceived(charactersPager))
     }
     
     func loadCharaters() {
         loadCharacters(with: characterNameFiltered)
+    }
+    
+    func openCharacter(_ character: CharacterRepresentable) {
+        let representable = DefaultCharacterDetailRepresentable(name: character.name,
+                                                                image: character.urlImage,
+                                                                status: character.status,
+                                                                species: character.species,
+                                                                gender: character.gender,
+                                                                origin: character.origin,
+                                                                location: character.location,
+                                                                numberOfEpisodes: character.numberOfEpisodes)
+        coordinator.openCharacter(with: representable)
     }
 }
 

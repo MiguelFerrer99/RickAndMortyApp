@@ -10,6 +10,9 @@ import Combine
 
 enum HomeDataCollectionViewState {
     case showTitleViewShadow(Bool)
+    case openCharacter(CharacterRepresentable)
+    case openLocation(LocationRepresentable)
+    case openEpisode(EpisodeRepresentable)
     case viewMore(HomeDataCategory)
 }
 
@@ -121,10 +124,26 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
             representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .location(location.name, location.image))
         case .episodes(let items):
             let episode = items[indexPath.item]
-            representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .episode(episode.name, episode.episode, "Episode"))
+            representable = DefaultHomeDataCollectionViewInfoCellRepresentable(style: .episode(episode.name, episode.season, episode.episode))
         }
         cell.configure(with: representable, and: imageCacheManager)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        deselectItem(at: indexPath, animated: true)
+        guard let category = categories?[safe: indexPath.section] else { return }
+        switch category {
+        case .characters(let characters):
+            guard let character = characters[safe: indexPath.item] else { return }
+            subject.send(.openCharacter(character))
+        case .locations(let locations):
+            guard let location = locations[safe: indexPath.item] else { return }
+            subject.send(.openLocation(location))
+        case .episodes(let episodes):
+            guard let episode = episodes[safe: indexPath.item] else { return }
+            subject.send(.openEpisode(episode))
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -134,8 +153,10 @@ extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewData
 
 extension HomeDataCollectionView: HomeDataCollectionViewSectionHeaderViewProtocol {
     func didTapTitle(category: HomeDataCategory) {
-        let indexPath = IndexPath(item: 0, section: category.getIndex())
-        scrollToItem(at: indexPath, at: .left, animated: true)
+        if numberOfItems(inSection: category.getIndex()) > 0 {
+            let indexPath = IndexPath(item: 0, section: category.getIndex())
+            scrollToItem(at: indexPath, at: .left, animated: true)
+        }
     }
     
     func didTapViewMore(category: HomeDataCategory) {

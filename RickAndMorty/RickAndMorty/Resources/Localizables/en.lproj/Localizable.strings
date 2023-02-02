@@ -15,6 +15,8 @@
 "home_locationsSectionTitle" = "Locations";
 "home_episodesSectionTitle" = "Episodes";
 "home_viewMore" = "View more";
+"home_episodeSeason" = "Season %i";
+"home_episodeEpisode" = "Episode %i";
 
 /* AuthorInfo */
 "authorInfo_name" = "Miguel Ferrer Fornali";
@@ -25,12 +27,42 @@
 "characters_searchPlaceholder" = "Search characters...";
 "characters_empty" = "There are not available results";
 
+/* CharacterDetail */
+"characterDetail_status" = "Status";
+"characterDetail_species" = "Specie";
+"characterDetail_gender" = "Gender";
+"characterDetail_origin" = "Origin";
+"characterDetail_location" = "Location";
+"characterDetail_numberOfEpisodes" = "Number of episodes";
+
+/* CharacterDetail_Status */
+"characterDetail_statusType_alive" = "Alive";
+"characterDetail_statusType_dead" = "Dead";
+"characterDetail_statusType_unknown" = "Unknown";
+
+/* CharacterDetail_Gender */
+"characterDetail_genderType_male" = "Male";
+"characterDetail_genderType_female" = "Female";
+
 /* Locations */
 "locations_title" = "Locations";
 "locations_searchPlaceholder" = "Search locations...";
 "locations_empty" = "There are not available results";
 
+/* LocationDetail */
+"locationDetail_type" = "Type";
+"locationDetail_dimension" = "Dimension";
+"locationDetail_numberOfResidents" = "Number of residents";
+
 /* Episodes */
 "episodes_title" = "Episodes";
 "episodes_searchPlaceholder" = "Search episodes...";
 "episodes_empty" = "There are not available results";
+"episodes_season" = "Season %i";
+"episodes_episode" = "Episode %i";
+
+/* EpisodeDetail */
+"episodeDetail_airDate" = "Air date";
+"episodeDetail_season" = "Season";
+"episodeDetail_episode" = "Episode";
+"episodeDetail_numberOfCharacters" = "Number of characters";

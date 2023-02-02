@@ -110,6 +110,12 @@ private extension HomeViewController {
                 switch state {
                 case .didTapTitleImage:
                     self.viewModel.openAuthorInfo()
+                case .openCharacter(let character):
+                    self.viewModel.openCharacter(character)
+                case .openLocation(let location):
+                    self.viewModel.openLocation(location)
+                case .openEpisode(let episode):
+                    self.viewModel.openEpisode(episode)
                 case .viewMore(let category):
                     self.viewModel.openCategoryDetail(category)
                 }

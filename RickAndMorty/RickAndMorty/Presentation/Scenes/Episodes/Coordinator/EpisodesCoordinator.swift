@@ -10,6 +10,7 @@ import UIKit
 protocol EpisodesCoordinator {
     func start(with representable: EpisodesViewModelRepresentable)
     func back()
+    func openEpisode(_ representable: EpisodeDetailRepresentable)
 }
 
 final class DefaultEpisodesCoordinator {
@@ -33,6 +34,11 @@ extension DefaultEpisodesCoordinator: EpisodesCoordinator {
     
     func back() {
         navigationController.popViewController(animated: true)
+    }
+    
+    func openEpisode(_ representable: EpisodeDetailRepresentable) {
+        let coordinator: EpisodeDetailCoordinator = dependencies.external.resolveEpisodeDetailCoordinator()
+        coordinator.start(with: representable)
     }
 }
 

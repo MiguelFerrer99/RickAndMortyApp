@@ -9,6 +9,8 @@ import UIKit
 
 final class AppDependencies {
     private let navigationController = UINavigationController()
+    private let apiService = DefaultAPIService()
+    private let imageCacheManager = ImageCacheManager()
     private var window: UIWindow?
     
     func setWindow(_ window: UIWindow) {
@@ -28,16 +30,19 @@ final class AppDependencies {
     }
     
     func resolveAPIService() -> APIService {
-        DefaultAPIService()
+        apiService
     }
     
     func resolveImageCacheManager() -> ImageCacheManager {
-        ImageCacheManager()
+        imageCacheManager
     }
 }
 
 extension AppDependencies: HomeExternalDependenciesResolver,
                             AuthorInfoExternalDependenciesResolver,
                             CharactersExternalDependenciesResolver,
+                            CharacterDetailExternalDependenciesResolver,
                             LocationsExternalDependenciesResolver,
-                            EpisodesExternalDependenciesResolver {}
+                            LocationDetailExternalDependenciesResolver,
+                            EpisodesExternalDependenciesResolver,
+                            EpisodeDetailExternalDependenciesResolver {}

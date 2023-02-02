@@ -36,14 +36,23 @@ final class EpisodesViewModel {
         coordinator.back()
     }
     
-    func clearFilteredEpisodesPager() {
+    func clearEpisodesPager() {
         episodeNameFiltered = nil
         episodesPager.reset()
-        sendStateSubject(.episodesReceived(episodesPager))
     }
     
     func loadEpisodes() {
         loadEpisodes(with: episodeNameFiltered)
+    }
+    
+    func openEpisodeDetail(_ episode: EpisodeRepresentable) {
+        let representable = DefaultEpisodeDetailRepresentable(name: episode.name,
+                                                              airDate: episode.airDate,
+                                                              season: episode.season,
+                                                              episode: episode.episode,
+                                                              numberOfCharacters: episode.numberOfCharacters)
+        coordinator.openEpisode(representable)
+        
     }
 }
 

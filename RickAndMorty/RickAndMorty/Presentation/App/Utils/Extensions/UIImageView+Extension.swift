@@ -12,7 +12,9 @@ extension UIImageView {
         DispatchQueue.global().async {
             if let data = try? Data(contentsOf: url) {
                 if let image = UIImage(data: data) {
-                    completion(image)
+                    DispatchQueue.main.async {
+                        completion(image)
+                    }
                 }
             }
         }

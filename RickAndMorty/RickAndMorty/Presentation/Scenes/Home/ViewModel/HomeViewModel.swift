@@ -50,6 +50,35 @@ final class HomeViewModel {
             coordinator.openEpisodes(with: representable)
         }
     }
+    
+    func openCharacter(_ character: CharacterRepresentable) {
+        let representable = DefaultCharacterDetailRepresentable(name: character.name,
+                                                                image: character.urlImage,
+                                                                status: character.status,
+                                                                species: character.species,
+                                                                gender: character.gender,
+                                                                origin: character.origin,
+                                                                location: character.location,
+                                                                numberOfEpisodes: character.numberOfEpisodes)
+        coordinator.openCharacterDetail(with: representable)
+    }
+    
+    func openLocation(_ location: LocationRepresentable) {
+        let representable = DefaultLocationDetailRepresentable(name: location.name,
+                                                               type: location.type,
+                                                               dimension: location.dimension,
+                                                               numberOfResidents: location.numberOfResidents)
+        coordinator.openLocationDetail(with: representable)
+    }
+    
+    func openEpisode(_ episode: EpisodeRepresentable) {
+        let representable = DefaultEpisodeDetailRepresentable(name: episode.name,
+                                                              airDate: episode.airDate,
+                                                              season: episode.season,
+                                                              episode: episode.episode,
+                                                              numberOfCharacters: episode.numberOfCharacters)
+        coordinator.openEpisodeDetail(with: representable)
+    }
 }
 
 private extension HomeViewModel {
@@ -83,7 +112,7 @@ private extension HomeViewModel {
                 categoriesLastPages.isLastPageEpisodes = episodesInfo.info.isLast
                 categories.append(.episodes(episodesInfo.results))
             }
-            sendStateSubject(.received(categories))
+            sendStateSubject(categories.isNotEmpty ? .received(categories) : .error)
         }
     }
 }

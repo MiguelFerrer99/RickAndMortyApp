@@ -72,8 +72,11 @@ private extension LocationsViewController {
                 guard let self = self else { return }
                 switch state {
                 case .locationsReceived(let pager):
-                    self.collectionView.configure(with: pager, and: self.imageCacheManager)
-                    if pager.currentPage == 1 { self.collectionView.scrollToTop() }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+                        guard let self = self else { return }
+                        self.collectionView.configure(with: pager, and: self.imageCacheManager)
+                        if pager.currentPage == 1 { self.collectionView.scrollToTop() }
+                    }
                 case .idle: return
                 }
             }.store(in: &subscriptions)
@@ -85,7 +88,8 @@ private extension LocationsViewController {
                 guard let self = self else { return }
                 switch state {
                 case .searched(let text):
-                    self.viewModel.clearFilteredLocationsPager()
+                    self.collectionView.showLoader()
+                    self.viewModel.clearLocationsPager()
                     self.viewModel.locationNameFiltered = text
                     self.viewModel.loadLocations()
                 }
@@ -99,6 +103,8 @@ private extension LocationsViewController {
                 switch state {
                 case .showNavigationBarShadow(let show):
                     self.searchView.isHidden ? self.showNavigationBarShadow(show) : self.searchView.showShadow(show)
+                case .openLocationDetail(let location):
+                    self.viewModel.openLocationDetail(location)
                 case .viewMore:
                     self.viewModel.loadLocations()
                 }
@@ -109,7 +115,7 @@ private extension LocationsViewController {
         configureNavigationBar(with: .locations.title.localized)
         setupNavigationBarShadow()
         updateRightNavigationBarButton()
-        navigationItem.leftBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
+        navigationItem.leftBarButtonItem = BarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
     }
     
     func setupNavigationBarShadow() {
@@ -119,6 +125,7 @@ private extension LocationsViewController {
         sceneNavigationController.navigationBar.layer.shadowOpacity = 0
         sceneNavigationController.navigationBar.layer.shadowColor = UIColor.black.cgColor
         sceneNavigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
+        showNavigationBarShadow(collectionView.contentOffset.y > 0)
     }
     
     func showNavigationBarShadow(_ show: Bool) {
@@ -131,9 +138,9 @@ private extension LocationsViewController {
     func updateRightNavigationBarButton() {
         if searchView.isHidden {
             searchView.close()
-            navigationItem.rightBarButtonItem = BackBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
+            navigationItem.rightBarButtonItem = BarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
         } else {
-            navigationItem.rightBarButtonItem = BackBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
+            navigationItem.rightBarButtonItem = BarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapRightNavigationBarButton))
         }
     }
     
@@ -147,7 +154,7 @@ private extension LocationsViewController {
             self.searchView.isHidden.toggle()
             self.updateRightNavigationBarButton()
             if self.searchView.isHidden {
-                self.viewModel.clearFilteredLocationsPager()
+                self.viewModel.clearLocationsPager()
                 self.viewModel.loadLocations()
             }
             self.showNavigationBarShadow(self.searchView.isHidden && self.collectionView.contentOffset.y > 0)

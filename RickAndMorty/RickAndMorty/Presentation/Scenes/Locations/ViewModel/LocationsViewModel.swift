@@ -36,14 +36,21 @@ final class LocationsViewModel {
         coordinator.back()
     }
     
-    func clearFilteredLocationsPager() {
+    func clearLocationsPager() {
         locationNameFiltered = nil
         locationsPager.reset()
-        sendStateSubject(.locationsReceived(locationsPager))
     }
     
     func loadLocations() {
         loadLocations(with: locationNameFiltered)
+    }
+    
+    func openLocationDetail(_ location: LocationRepresentable) {
+        let representable = DefaultLocationDetailRepresentable(name: location.name,
+                                                               type: location.type,
+                                                               dimension: location.dimension,
+                                                               numberOfResidents: location.numberOfResidents)
+        coordinator.openLocationDetail(with: representable)
     }
 }
 

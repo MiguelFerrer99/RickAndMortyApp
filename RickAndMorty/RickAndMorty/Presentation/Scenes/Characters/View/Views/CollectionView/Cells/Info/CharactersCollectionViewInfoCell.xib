@@ -20,10 +20,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLe-f0-K0U" userLabel="Container View">
                         <rect key="frame" x="0.0" y="0.0" width="146" height="147"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mug-Ns-jpX">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mug-Ns-jpX">
                                 <rect key="frame" x="0.0" y="0.0" width="146" height="147"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w50-Ov-w8t" userLabel="Title Label">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w50-Ov-w8t" userLabel="Title Label">
                                 <rect key="frame" x="10" y="116.66666666666667" width="126" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -55,10 +55,6 @@
                 <outlet property="containerView" destination="nLe-f0-K0U" id="qaA-vL-rVJ"/>
                 <outlet property="imageView" destination="mug-Ns-jpX" id="mFq-to-iJO"/>
                 <outlet property="titleLabel" destination="w50-Ov-w8t" id="YTN-nT-HD0"/>
-                <outlet property="titleLabelBottomConstraint" destination="aVZ-Mh-MAN" id="Jbm-3t-gJh"/>
-                <outlet property="titleLabelLeadingConstraint" destination="CwF-J7-aJx" id="62o-8P-cUj"/>
-                <outlet property="titleLabelTopConstraint" destination="7NB-F6-LEe" id="466-kV-2E5"/>
-                <outlet property="titleLabelTrailingConstraint" destination="oNU-IC-0ZK" id="Qde-me-myv"/>
             </connections>
             <point key="canvasLocation" x="212.21374045801525" y="53.87323943661972"/>
         </collectionViewCell>

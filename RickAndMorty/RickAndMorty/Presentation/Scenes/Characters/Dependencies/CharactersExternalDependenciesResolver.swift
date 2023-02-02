@@ -9,9 +9,10 @@ import UIKit
 
 protocol CharactersExternalDependenciesResolver {
     func resolve() -> UINavigationController
-    func resolveCharactersCoordinator() -> CharactersCoordinator
     func resolveAPIService() -> APIService
     func resolveImageCacheManager() -> ImageCacheManager
+    func resolveCharactersCoordinator() -> CharactersCoordinator
+    func resolveCharacterDetailCoordinator() -> CharacterDetailCoordinator
 }
 
 extension CharactersExternalDependenciesResolver {
