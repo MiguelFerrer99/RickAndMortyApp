@@ -13,4 +13,5 @@ https://www.figma.com/file/IBc3ajaL7Ioc3I9szwuydY/RichAndMorty?t=XTMBVRM495gtA67
 * Async/Await
 * Combine
 * UIKit
+* iPad adaptation
 * Localizables
