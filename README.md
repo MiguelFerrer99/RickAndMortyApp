@@ -6,12 +6,11 @@ RickAndMortyApp is a small project to show characters, locations and episodes of
 https://www.figma.com/file/IBc3ajaL7Ioc3I9szwuydY/RichAndMorty?t=XTMBVRM495gtA67P-1
 
 ## Technical features
+* Hexagonal architecture
 * Dependency injection
-* Repositories
-* API calls with Async/Await
-* UseCases
-* ViewModel with States
-* Combine to communications
+* Demo environment with mocked json
+* Response and images caching
+* Async/Await
+* Combine
 * UIKit
-* Demo, Pre and Pro environments
 * Localizables
