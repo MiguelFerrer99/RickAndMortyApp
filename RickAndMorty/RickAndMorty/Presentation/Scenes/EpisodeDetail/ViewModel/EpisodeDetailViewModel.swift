@@ -18,6 +18,7 @@ final class EpisodeDetailViewModel {
     private let stateSubject = CurrentValueSubject<EpisodeDetailViewModelState, Never>(.idle)
     var state: AnyPublisher<EpisodeDetailViewModelState, Never>
     private let representable: EpisodeDetailRepresentable?
+    private lazy var coordinator: EpisodeDetailCoordinator = dependencies.resolve()
 
     init(dependencies: EpisodeDetailDependenciesResolver, representable: EpisodeDetailRepresentable?) {
         self.dependencies = dependencies
@@ -35,12 +36,8 @@ final class EpisodeDetailViewModel {
 }
 
 private extension EpisodeDetailViewModel {
-    var coordinator: EpisodeDetailCoordinator {
-        dependencies.resolve()
-    }
-    
     func setInfo() {
-        guard let representable = representable else { return }
+        guard let representable else { return }
         stateSubject.send(.episodeReceived(representable))
     }
 }

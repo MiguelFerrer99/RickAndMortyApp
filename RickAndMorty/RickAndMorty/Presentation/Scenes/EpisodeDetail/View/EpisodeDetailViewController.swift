@@ -10,6 +10,7 @@ import Combine
 
 final class EpisodeDetailViewController: UIViewController {
     @IBOutlet private weak var containerStackView: UIStackView!
+    
     private let viewModel: EpisodeDetailViewModel
     private let dependencies: EpisodeDetailDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
@@ -18,11 +19,12 @@ final class EpisodeDetailViewController: UIViewController {
     private let episodeInfoView = InfoView()
     private let numberOfCharactersInfoView = InfoView()
     private let spacerView = UIView()
+    private lazy var sceneNavigationController = dependencies.external.resolve()
 
     init(dependencies: EpisodeDetailDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
-        super.init(nibName: "EpisodeDetailViewController", bundle: .main)
+        super.init(nibName: String(describing: EpisodeDetailViewController.self), bundle: .main)
     }
     
     @available(*, unavailable)
@@ -44,10 +46,6 @@ final class EpisodeDetailViewController: UIViewController {
 }
 
 private extension EpisodeDetailViewController {
-    var sceneNavigationController: UINavigationController {
-        dependencies.external.resolve()
-    }
-    
     func setupViews() {
         configureContainerStackView()
     }
@@ -67,10 +65,9 @@ private extension EpisodeDetailViewController {
     func bindViewModel() {
         viewModel.state
             .sink { [weak self] state in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch state {
-                case .episodeReceived(let info):
-                    self.setInfo(info)
+                case .episodeReceived(let info): setInfo(info)
                 case .idle: return
                 }
             }.store(in: &subscriptions)

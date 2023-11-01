@@ -68,15 +68,15 @@ private extension CharactersViewModel {
     }
     
     func setCharacters() {
-        guard let representable = representable else { return }
+        guard let representable else { return }
         charactersPager.setItems(representable.characters, and: representable.isLastPage)
         stateSubject.send(.charactersReceived(charactersPager))
     }
     
-    func sendStateSubject(_ stateSubject: CharactersViewModelState) {
+    func sendStateSubject(_ state: CharactersViewModelState) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.stateSubject.send(stateSubject)
+            guard let self else { return }
+            stateSubject.send(state)
         }
     }
     

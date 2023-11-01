@@ -20,6 +20,8 @@ final class LocationsViewModel {
     var state: AnyPublisher<LocationsViewModelState, Never>
     private let representable: LocationsViewModelRepresentable?
     private let locationsPager = Pagination<LocationRepresentable>()
+    private lazy var coordinator: LocationsCoordinator = dependencies.resolve()
+    private lazy var locationsUseCase: LocationsUseCase = dependencies.resolve()
     var locationNameFiltered: String?
 
     init(dependencies: LocationsDependenciesResolver, representable: LocationsViewModelRepresentable?) {
@@ -55,24 +57,16 @@ final class LocationsViewModel {
 }
 
 private extension LocationsViewModel {
-    var coordinator: LocationsCoordinator {
-        dependencies.resolve()
-    }
-    
-    var locationsUseCase: LocationsUseCase {
-        dependencies.resolve()
-    }
-    
     func setLocations() {
-        guard let representable = representable else { return }
+        guard let representable else { return }
         locationsPager.setItems(representable.locations, and: representable.isLastPage)
         stateSubject.send(.locationsReceived(locationsPager))
     }
     
-    func sendStateSubject(_ stateSubject: LocationsViewModelState) {
+    func sendStateSubject(_ state: LocationsViewModelState) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.stateSubject.send(stateSubject)
+            guard let self else { return }
+            stateSubject.send(state)
         }
     }
     

@@ -9,7 +9,6 @@ import UIKit
 
 final class LocationsCollectionViewEmptyCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
-    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,7 +22,7 @@ private extension LocationsCollectionViewEmptyCell {
     }
     
     func configureTitleLabel() {
-        titleLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 18)
+        titleLabel.font = .boldSystemFont(ofSize: UIDevice.isIpad ? 28 : 18)
         titleLabel.text = .characters.empty.localized
     }
 }

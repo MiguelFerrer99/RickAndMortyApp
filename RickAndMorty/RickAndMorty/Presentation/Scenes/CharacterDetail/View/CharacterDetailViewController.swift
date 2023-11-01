@@ -13,21 +13,23 @@ final class CharacterDetailViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var infoStackView: UIStackView!
     @IBOutlet private weak var titleLabel: UILabel!
+    
     private let viewModel: CharacterDetailViewModel
     private let dependencies: CharacterDetailDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
-    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     private let statusInfoView = InfoView()
     private let speciesInfoView = InfoView()
     private let genderInfoView = InfoView()
     private let originInfoView = InfoView()
     private let locationInfoView = InfoView()
     private let numberOfEpisodesInfoView = InfoView()
+    private lazy var sceneNavigationController = dependencies.external.resolve()
+    private lazy var imageCacheManager = dependencies.external.resolveImageCacheManager()
 
     init(dependencies: CharacterDetailDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
-        super.init(nibName: "CharacterDetailViewController", bundle: .main)
+        super.init(nibName: String(describing: CharacterDetailViewController.self), bundle: .main)
     }
     
     @available(*, unavailable)
@@ -49,14 +51,6 @@ final class CharacterDetailViewController: UIViewController {
 }
 
 private extension CharacterDetailViewController {
-    var sceneNavigationController: UINavigationController {
-        dependencies.external.resolve()
-    }
-    
-    var imageCacheManager: ImageCacheManager {
-        dependencies.external.resolveImageCacheManager()
-    }
-    
     func setupViews() {
         configureScrollView()
         configureInfoStackView()
@@ -77,7 +71,7 @@ private extension CharacterDetailViewController {
     }
     
     func configureTitleLabel() {
-        titleLabel.font = .systemFont(ofSize: iPadDevice ? 50 : 30, weight: .bold)
+        titleLabel.font = .systemFont(ofSize: UIDevice.isIpad ? 50 : 30, weight: .bold)
     }
     
     func bind() {
@@ -87,10 +81,9 @@ private extension CharacterDetailViewController {
     func bindViewModel() {
         viewModel.state
             .sink { [weak self] state in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch state {
-                case .characterReceived(let info):
-                    self.setInfo(info)
+                case .characterReceived(let info): setInfo(info)
                 case .idle: return
                 }
             }.store(in: &subscriptions)
@@ -117,9 +110,9 @@ private extension CharacterDetailViewController {
             imageView.image = uiImage
         } else if let url = URL(string: image) {
             imageView.load(url: url) { [weak self] in
-                guard let self = self else { return }
-                self.imageCacheManager.add(image: $0, name: image)
-                self.imageView.image = $0
+                guard let self else { return }
+                imageCacheManager.add(image: $0, name: image)
+                imageView.image = $0
             }
         }
     }

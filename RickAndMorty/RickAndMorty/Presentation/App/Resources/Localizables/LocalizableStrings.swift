@@ -13,21 +13,12 @@ protocol Localizable: CustomStringConvertible {
 }
 
 extension Localizable {
-    var localized: String {
-        return NSLocalizedString(self.rawValue, comment: "")
-    }
-
-    var uppercased: String {
-        return self.localized.uppercased()
-    }
-
-    var description: String {
-        return self.localized
-    }
+    var localized: String { NSLocalizedString(rawValue, comment: "") }
+    var uppercased: String { localized.uppercased() }
+    var description: String { localized }
 
     func localized(with: CVarArg...) -> String {
-        let text = String(format: self.localized, arguments: with)
-        return text
+        String(format: localized, arguments: with)
     }
 }
 

@@ -12,7 +12,6 @@ actor APIRefreshActor {
         self.service = service
     }
     
-    // MARK: - refresh - Call API for refreshToken
     func refresh(with refreshToken: String) async throws -> String {
         do {
             let parameters: [String: String] = [
@@ -32,7 +31,6 @@ actor APIRefreshActor {
         }
     }
     
-    // MARK: - getClientId - Call Back Client ID
     private func getClientId() -> String {
         #if Demo
             return ""
@@ -45,7 +43,6 @@ actor APIRefreshActor {
         #endif
     }
     
-    // MARK: - getClientSecret - Call Back Client Secret
     private func getClientSecret() -> String {
         #if Demo
             return ""

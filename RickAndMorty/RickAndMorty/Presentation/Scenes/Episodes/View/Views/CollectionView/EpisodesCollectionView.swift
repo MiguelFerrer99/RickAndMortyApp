@@ -79,7 +79,7 @@ private extension EpisodesCollectionView {
     }
     
     func shouldLoadMoreItems(index: Int) -> Bool {
-        guard let episodesPager = episodesPager else { return false }
+        guard let episodesPager else { return false }
         let itemsLeftToLastItem = 4
         return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!episodesPager.isLastPage)
     }
@@ -93,12 +93,12 @@ private extension EpisodesCollectionView {
 
 extension EpisodesCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let episodesPager = episodesPager else { return 0 }
+        guard let episodesPager else { return 0 }
         return isLoading || episodesPager.getItems().isEmpty ? 1 : episodesPager.getItems().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let episodesPager = episodesPager else { return UICollectionViewCell() }
+        guard let episodesPager else { return UICollectionViewCell() }
         if isLoading {
             guard let cell = dequeueReusableCell(withReuseIdentifier: loadingCellIdentifier, for: indexPath) as? EpisodesCollectionViewLoadingCell else { return UICollectionViewCell() }
             return cell
@@ -128,7 +128,7 @@ extension EpisodesCollectionView: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: frame.width - 40, height: frame.height - 100)
-        guard let episodesPager = episodesPager else { return size }
+        guard let episodesPager else { return size }
         if episodesPager.getItems().isNotEmpty {
             let leftContentInset: CGFloat = 20
             let minSpacingColumns: CGFloat = 10

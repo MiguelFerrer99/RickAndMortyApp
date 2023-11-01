@@ -10,6 +10,7 @@ import Combine
 
 final class HomeViewController: UIViewController {
     @IBOutlet private weak var containerView: UIView!
+    
     private let viewModel: HomeViewModel
     private let dependencies: HomeDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
@@ -23,7 +24,7 @@ final class HomeViewController: UIViewController {
     init(dependencies: HomeDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
-        super.init(nibName: "HomeViewController", bundle: .main)
+        super.init(nibName: String(describing: HomeViewController.self), bundle: .main)
     }
     
     @available(*, unavailable)
@@ -79,14 +80,11 @@ private extension HomeViewController {
     func bindViewModel() {
         viewModel.state
             .sink { [weak self] state in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch state {
-                case .loading:
-                    self.loadingView.loadingData()
-                case .error:
-                    self.loadingView.receivedError()
-                case .received(let categories):
-                    self.showDataView(with: categories)
+                case .loading: loadingView.loadingData()
+                case .error: loadingView.receivedError()
+                case .received(let categories): showDataView(with: categories)
                 case .idle: return
                 }
             }.store(in: &subscriptions)
@@ -95,10 +93,9 @@ private extension HomeViewController {
     func bindLoadingView() {
         loadingView.publisher
             .sink { [weak self] state in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch state {
-                case .tryAgain:
-                    self.viewModel.viewDidLoad()
+                case .tryAgain: viewModel.viewDidLoad()
                 }
             }.store(in: &subscriptions)
     }
@@ -106,18 +103,13 @@ private extension HomeViewController {
     func bindDataView() {
         dataView.publisher
             .sink { [weak self] state in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch state {
-                case .didTapTitleImage:
-                    self.viewModel.openAuthorInfo()
-                case .openCharacter(let character):
-                    self.viewModel.openCharacter(character)
-                case .openLocation(let location):
-                    self.viewModel.openLocation(location)
-                case .openEpisode(let episode):
-                    self.viewModel.openEpisode(episode)
-                case .viewMore(let category):
-                    self.viewModel.openCategoryDetail(category)
+                case .didTapTitleImage: viewModel.openAuthorInfo()
+                case .openCharacter(let character): viewModel.openCharacter(character)
+                case .openLocation(let location): viewModel.openLocation(location)
+                case .openEpisode(let episode): viewModel.openEpisode(episode)
+                case .viewMore(let category): viewModel.openCategoryDetail(category)
                 }
             }.store(in: &subscriptions)
     }
@@ -129,10 +121,10 @@ private extension HomeViewController {
     func showDataView(with categories: [HomeDataCategory]) {
         loadingView.receivedData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let self = self else { return }
-            self.loadingView.isHidden = true
-            self.dataView.isHidden = false
-            self.dataView.receivedData(categories, with: self.imageCacheManager)
+            guard let self else { return }
+            loadingView.isHidden = true
+            dataView.isHidden = false
+            dataView.receivedData(categories, with: imageCacheManager)
         }
     }
 }

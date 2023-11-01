@@ -56,8 +56,8 @@ private extension HomeLoadingErrorView {
         tryAgainButtonView.publisher
             .filter { $0 == .didTapButton }
             .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.subject.send(.didTapTryAgain)
+                guard let self else { return }
+                subject.send(.didTapTryAgain)
             }.store(in: &subscriptions)
     }
 }

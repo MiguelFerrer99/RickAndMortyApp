@@ -39,10 +39,10 @@ final class AppDependencies {
 }
 
 extension AppDependencies: HomeExternalDependenciesResolver,
-                            AuthorInfoExternalDependenciesResolver,
-                            CharactersExternalDependenciesResolver,
-                            CharacterDetailExternalDependenciesResolver,
-                            LocationsExternalDependenciesResolver,
-                            LocationDetailExternalDependenciesResolver,
-                            EpisodesExternalDependenciesResolver,
-                            EpisodeDetailExternalDependenciesResolver {}
+                           AuthorInfoExternalDependenciesResolver,
+                           CharactersExternalDependenciesResolver,
+                           CharacterDetailExternalDependenciesResolver,
+                           LocationsExternalDependenciesResolver,
+                           LocationDetailExternalDependenciesResolver,
+                           EpisodesExternalDependenciesResolver,
+                           EpisodeDetailExternalDependenciesResolver {}

@@ -5,10 +5,10 @@
 //  Created by Miguel Ferrer Fornali on 2/12/22.
 //
 
-/* TryAgainButtonView */
+// TryAgainButtonView
 "tryAgainButtonView_title" = "Try again";
 
-/* Home */
+// Home
 "home_title" = "Home";
 "home_loadingErrorTitle" = "An unexpected error has occurred. Please try again later";
 "home_charactersSectionTitle" = "Characters";
@@ -18,16 +18,16 @@
 "home_episodeSeason" = "Season %i";
 "home_episodeEpisode" = "Episode %i";
 
-/* AuthorInfo */
+// AuthorInfo
 "authorInfo_name" = "Miguel Ferrer Fornali";
 "authorInfo_openingMediaError" = "An unexpected error has occurred. Please try again later";
 
-/* Characters */
+// Characters
 "characters_title" = "Characters";
 "characters_searchPlaceholder" = "Search characters...";
 "characters_empty" = "There are not available results";
 
-/* CharacterDetail */
+// CharacterDetail
 "characterDetail_status" = "Status";
 "characterDetail_species" = "Specie";
 "characterDetail_gender" = "Gender";
@@ -35,33 +35,33 @@
 "characterDetail_location" = "Location";
 "characterDetail_numberOfEpisodes" = "Number of episodes";
 
-/* CharacterDetail_Status */
+// CharacterDetail_Status
 "characterDetail_statusType_alive" = "Alive";
 "characterDetail_statusType_dead" = "Dead";
 "characterDetail_statusType_unknown" = "Unknown";
 
-/* CharacterDetail_Gender */
+// CharacterDetail_Gender
 "characterDetail_genderType_male" = "Male";
 "characterDetail_genderType_female" = "Female";
 
-/* Locations */
+// Locations
 "locations_title" = "Locations";
 "locations_searchPlaceholder" = "Search locations...";
 "locations_empty" = "There are not available results";
 
-/* LocationDetail */
+// LocationDetail
 "locationDetail_type" = "Type";
 "locationDetail_dimension" = "Dimension";
 "locationDetail_numberOfResidents" = "Number of residents";
 
-/* Episodes */
+// Episodes
 "episodes_title" = "Episodes";
 "episodes_searchPlaceholder" = "Search episodes...";
 "episodes_empty" = "There are not available results";
 "episodes_season" = "Season %i";
 "episodes_episode" = "Episode %i";
 
-/* EpisodeDetail */
+// EpisodeDetail
 "episodeDetail_airDate" = "Air date";
 "episodeDetail_season" = "Season";
 "episodeDetail_episode" = "Episode";

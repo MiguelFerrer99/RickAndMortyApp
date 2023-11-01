@@ -10,6 +10,7 @@ import Combine
 
 final class LocationDetailViewController: UIViewController {
     @IBOutlet private weak var containerStackView: UIStackView!
+    
     private let viewModel: LocationDetailViewModel
     private let dependencies: LocationDetailDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
@@ -17,11 +18,12 @@ final class LocationDetailViewController: UIViewController {
     private let dimensionInfoView = InfoView()
     private let numberOfResidentsInfoView = InfoView()
     private let spacerView = UIView()
+    private lazy var sceneNavigationController = dependencies.external.resolve()
 
     init(dependencies: LocationDetailDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
-        super.init(nibName: "LocationDetailViewController", bundle: .main)
+        super.init(nibName: String(describing: LocationDetailViewController.self), bundle: .main)
     }
     
     @available(*, unavailable)
@@ -43,10 +45,6 @@ final class LocationDetailViewController: UIViewController {
 }
 
 private extension LocationDetailViewController {
-    var sceneNavigationController: UINavigationController {
-        dependencies.external.resolve()
-    }
-    
     func setupViews() {
         configureContainerStackView()
     }
@@ -65,10 +63,9 @@ private extension LocationDetailViewController {
     func bindViewModel() {
         viewModel.state
             .sink { [weak self] state in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch state {
-                case .locationReceived(let info):
-                    self.setInfo(info)
+                case .locationReceived(let info): setInfo(info)
                 case .idle: return
                 }
             }.store(in: &subscriptions)

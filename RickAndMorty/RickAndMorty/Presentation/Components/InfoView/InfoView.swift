@@ -16,7 +16,6 @@ final class InfoView: XibView {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
-    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,11 +46,11 @@ private extension InfoView {
     }
     
     func configureTitleLabel() {
-        titleLabel.font = .boldSystemFont(ofSize: iPadDevice ? 25 : 14)
+        titleLabel.font = .boldSystemFont(ofSize: UIDevice.isIpad ? 25 : 14)
     }
     
     func configureDescriptionLabel() {
-        descriptionLabel.font = .systemFont(ofSize: iPadDevice ? 25 : 14)
+        descriptionLabel.font = .systemFont(ofSize: UIDevice.isIpad ? 25 : 14)
     }
     
     func setAppearance(with style: InfoViewStyle) {

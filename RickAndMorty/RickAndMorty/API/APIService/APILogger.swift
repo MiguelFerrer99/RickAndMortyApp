@@ -36,7 +36,7 @@ final class APILogger {
         case .verbose: icon = "💜 VERBOSE"
         }
         
-        print("\(self.time()) \(icon) \(file?.first ?? "").\(function):\(line) - \n\n\t\(message)\n")
+        print("\(time()) \(icon) \(file?.first ?? "").\(function):\(line) - \n\n\t\(message)\n")
     }
     
     static func thisCall(_ call: URLRequest) {
@@ -79,7 +79,7 @@ final class APILogger {
 }
 
 extension Data {
-    var prettyPrintedJSONString: NSString? { /// NSString gives us a nice sanitized debugDescription
+    var prettyPrintedJSONString: NSString? {
         guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
               let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .withoutEscapingSlashes]),
               let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else { return nil }

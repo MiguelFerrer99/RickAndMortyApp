@@ -14,15 +14,17 @@ final class CharactersViewController: UIViewController {
     @IBOutlet private weak var collectionView: CharactersCollectionView!
     @IBOutlet private weak var collectionViewToContainerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var collectionViewToSearchViewTopConstraint: NSLayoutConstraint!
+    
     private let viewModel: CharactersViewModel
     private let dependencies: CharactersDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
-    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+    private lazy var sceneNavigationController = dependencies.external.resolve()
+    private lazy var imageCacheManager = dependencies.external.resolveImageCacheManager()
 
     init(dependencies: CharactersDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
-        super.init(nibName: "CharactersViewController", bundle: .main)
+        super.init(nibName: String(describing: CharactersViewController.self), bundle: .main)
     }
     
     @available(*, unavailable)
@@ -44,14 +46,6 @@ final class CharactersViewController: UIViewController {
 }
 
 private extension CharactersViewController {
-    var sceneNavigationController: UINavigationController {
-        dependencies.external.resolve()
-    }
-    
-    var imageCacheManager: ImageCacheManager {
-        dependencies.external.resolveImageCacheManager()
-    }
-    
     func setupView() {
         configureSearchView()
     }
@@ -68,14 +62,13 @@ private extension CharactersViewController {
     
     func bindViewModel() {
         viewModel.state
-            .sink { [weak self] state in
-                guard let self = self else { return }
+            .sink { state in
                 switch state {
                 case .charactersReceived(let pager):
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
-                        guard let self = self else { return }
-                        self.collectionView.configure(with: pager, and: self.imageCacheManager)
-                        if pager.currentPage == 1 { self.collectionView.scrollToTop() }
+                        guard let self else { return }
+                        collectionView.configure(with: pager, and: imageCacheManager)
+                        if pager.currentPage == 1 { collectionView.scrollToTop() }
                     }
                 case .idle: return
                 }
@@ -85,13 +78,13 @@ private extension CharactersViewController {
     func bindSearchView() {
         searchView.publisher
             .sink { [weak self] state in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch state {
                 case .searched(let text):
-                    self.collectionView.showLoader()
-                    self.viewModel.clearCharactersPager()
-                    self.viewModel.characterNameFiltered = text
-                    self.viewModel.loadCharaters()
+                    collectionView.showLoader()
+                    viewModel.clearCharactersPager()
+                    viewModel.characterNameFiltered = text
+                    viewModel.loadCharaters()
                 }
             }.store(in: &subscriptions)
     }
@@ -99,14 +92,14 @@ private extension CharactersViewController {
     func bindCollectionView() {
         collectionView.publisher
             .sink { [weak self] state in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch state {
                 case .showNavigationBarShadow(let show):
-                    self.searchView.isHidden ? self.showNavigationBarShadow(show) : self.searchView.showShadow(show)
+                    searchView.isHidden ? showNavigationBarShadow(show) : searchView.showShadow(show)
                 case .openCharacter(let character):
-                    self.viewModel.openCharacter(character)
+                    viewModel.openCharacter(character)
                 case .viewMore:
-                    self.viewModel.loadCharaters()
+                    viewModel.loadCharaters()
                 }
             }.store(in: &subscriptions)
     }
@@ -121,17 +114,17 @@ private extension CharactersViewController {
     func setupNavigationBarShadow() {
         sceneNavigationController.navigationBar.clipsToBounds = false
         sceneNavigationController.navigationBar.layer.masksToBounds = false
-        sceneNavigationController.navigationBar.layer.shadowRadius = iPadDevice ? 10 : 5
+        sceneNavigationController.navigationBar.layer.shadowRadius = UIDevice.isIpad ? 10 : 5
         sceneNavigationController.navigationBar.layer.shadowOpacity = 0
         sceneNavigationController.navigationBar.layer.shadowColor = UIColor.black.cgColor
-        sceneNavigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
+        sceneNavigationController.navigationBar.layer.shadowOffset = CGSize(width: 0, height: UIDevice.isIpad ? 5 : 3)
         showNavigationBarShadow(collectionView.contentOffset.y > 0)
     }
     
     func showNavigationBarShadow(_ show: Bool) {
         UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
-            guard let self = self else { return }
-            self.sceneNavigationController.navigationBar.layer.shadowOpacity = show ? 1 : 0
+            guard let self else { return }
+            sceneNavigationController.navigationBar.layer.shadowOpacity = show ? 1 : 0
         }
     }
     
@@ -150,21 +143,21 @@ private extension CharactersViewController {
     
     @objc func didTapRightNavigationBarButton() {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: { [weak self] in
-            guard let self = self else { return }
-            self.searchView.isHidden.toggle()
-            self.updateRightNavigationBarButton()
-            if self.searchView.isHidden {
-                self.viewModel.clearCharactersPager()
-                self.viewModel.loadCharaters()
+            guard let self else { return }
+            searchView.isHidden.toggle()
+            updateRightNavigationBarButton()
+            if searchView.isHidden {
+                viewModel.clearCharactersPager()
+                viewModel.loadCharaters()
             }
-            self.showNavigationBarShadow(self.searchView.isHidden && self.collectionView.contentOffset.y > 0)
-            self.searchView.showShadow(!self.searchView.isHidden && self.collectionView.contentOffset.y > 0)
-            self.collectionViewToContainerViewTopConstraint.priority = UILayoutPriority(self.searchView.isHidden ? 1000 : 999)
-            self.collectionViewToSearchViewTopConstraint.priority = UILayoutPriority(self.searchView.isHidden ? 999 : 1000)
-            self.view.layoutIfNeeded()
+            showNavigationBarShadow(searchView.isHidden && collectionView.contentOffset.y > 0)
+            searchView.showShadow(!searchView.isHidden && collectionView.contentOffset.y > 0)
+            collectionViewToContainerViewTopConstraint.priority = UILayoutPriority(searchView.isHidden ? 1000 : 999)
+            collectionViewToSearchViewTopConstraint.priority = UILayoutPriority(searchView.isHidden ? 999 : 1000)
+            view.layoutIfNeeded()
         }, completion: { [weak self] finished in
-            guard let self = self else { return }
-            if finished, !self.searchView.isHidden { self.searchView.showKeyboard() }
+            guard let self else { return }
+            if finished, !searchView.isHidden { searchView.showKeyboard() }
         })
     }
 }

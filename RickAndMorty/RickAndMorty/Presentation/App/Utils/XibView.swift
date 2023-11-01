@@ -12,19 +12,19 @@ class XibView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.xibSetup()
+        xibSetup()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.xibSetup()
+        xibSetup()
     }
     
     private func xibSetup() {
-        self.view = self.loadViewFromNib()
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.view ?? UIView())
-        self.view?.fullFit()
+        view = loadViewFromNib()
+        translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view ?? UIView())
+        view?.fullFit()
     }
     
     private func loadViewFromNib() -> UIView {

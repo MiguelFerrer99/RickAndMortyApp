@@ -21,9 +21,7 @@ protocol HomeCoordinator {
 final class DefaultHomeCoordinator {
     private let navigationController: UINavigationController
     private let externalDependencies: HomeExternalDependenciesResolver
-    private lazy var dependencies: DefaultHomeDependenciesResolver = {
-        DefaultHomeDependenciesResolver(externalDependencies: externalDependencies, coordinator: self)
-    }()
+    private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
     init(externalDependencies: HomeExternalDependenciesResolver, navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -76,7 +74,7 @@ extension DefaultHomeCoordinator: HomeCoordinator {
 }
 
 private extension DefaultHomeCoordinator {
-    struct DefaultHomeDependenciesResolver: HomeDependenciesResolver {
+    struct Dependencies: HomeDependenciesResolver {
         let externalDependencies: HomeExternalDependenciesResolver
         let coordinator: HomeCoordinator
         

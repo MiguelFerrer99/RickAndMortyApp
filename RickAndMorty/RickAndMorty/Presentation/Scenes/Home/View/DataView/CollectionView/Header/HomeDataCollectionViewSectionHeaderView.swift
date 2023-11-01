@@ -16,6 +16,7 @@ final class HomeDataCollectionViewSectionHeaderView: UICollectionReusableView {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var viewMoreLabel: UILabel!
     @IBOutlet private weak var stackButtonView: UIStackView!
+    
     private var category: HomeDataCategory? = nil
     private weak var delegate: HomeDataCollectionViewSectionHeaderViewProtocol?
     
@@ -39,16 +40,14 @@ private extension HomeDataCollectionViewSectionHeaderView {
     }
     
     func configureTitleLabel() {
-        let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-        titleLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 18)
+        titleLabel.font = .boldSystemFont(ofSize: UIDevice.isIpad ? 28 : 18)
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTitleLabel))
         titleLabel.addGestureRecognizer(gestureRecognizer)
         titleLabel.isUserInteractionEnabled = true
     }
     
     func configureViewMoreLabel() {
-        let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
-        viewMoreLabel.font = .boldSystemFont(ofSize: iPadDevice ? 28 : 18)
+        viewMoreLabel.font = .boldSystemFont(ofSize: UIDevice.isIpad ? 28 : 18)
         viewMoreLabel.text = .home.viewMore.localized
     }
     
@@ -59,12 +58,12 @@ private extension HomeDataCollectionViewSectionHeaderView {
     }
     
     @objc func didTapStackButtonView() {
-        guard let category = category else { return }
+        guard let category else { return }
         delegate?.didTapViewMore(category: category)
     }
     
     @objc func didTapTitleLabel() {
-        guard let category = category else { return }
+        guard let category else { return }
         delegate?.didTapTitle(category: category)
     }
 }

@@ -18,14 +18,15 @@ final class AuthorInfoViewController: UIViewController {
     @IBOutlet private weak var linkedinImageView: UIImageView!
     @IBOutlet private weak var topSpacerView: UIView!
     @IBOutlet private weak var bottomSpacerView: UIView!
+    
     private let viewModel: AuthorInfoViewModel
     private let dependencies: AuthorInfoDependenciesResolver
-    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+    private lazy var sceneNavigationController = dependencies.external.resolve()
     
     init(dependencies: AuthorInfoDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
-        super.init(nibName: "AuthorInfoViewController", bundle: .main)
+        super.init(nibName: String(describing: AuthorInfoViewController.self), bundle: .main)
     }
     
     @available(*, unavailable)
@@ -46,10 +47,6 @@ final class AuthorInfoViewController: UIViewController {
 }
 
 private extension AuthorInfoViewController {
-    var sceneNavigationController: UINavigationController {
-        dependencies.external.resolve()
-    }
-    
     func setupView() {
         configureBackgroundView()
         configureBottomSheetView()
@@ -60,16 +57,16 @@ private extension AuthorInfoViewController {
     func configureBackgroundView() {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView))
         backgroundView.addGestureRecognizer(gestureRecognizer)
-        backgroundView.isHidden = iPadDevice
+        backgroundView.isHidden = UIDevice.isIpad
     }
     
     func configureBottomSheetView() {
-        topSpacerView.isHidden = !iPadDevice
-        bottomSpacerView.isHidden = !iPadDevice
-        bottomSheetView.layer.cornerRadius = iPadDevice ? 0 : 50
-        bottomSheetView.layer.maskedCorners = iPadDevice ? [] : [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        topSpacerView.isHidden = !UIDevice.isIpad
+        bottomSpacerView.isHidden = !UIDevice.isIpad
+        bottomSheetView.layer.cornerRadius = UIDevice.isIpad ? 0 : 50
+        bottomSheetView.layer.maskedCorners = UIDevice.isIpad ? [] : [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         bottomSheetBarView.layer.cornerRadius = bottomSheetBarView.frame.height / 2.0
-        if !iPadDevice {
+        if !UIDevice.isIpad {
             let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didMoveBottomSheetView))
             bottomSheetView.addGestureRecognizer(gestureRecognizer)
             bottomSheetView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor).isActive = true
@@ -80,7 +77,7 @@ private extension AuthorInfoViewController {
     }
     
     func configureAvatarTitleLabel() {
-        avatarTitleLabel.font = .systemFont(ofSize: iPadDevice ? 32 : 18, weight: .bold)
+        avatarTitleLabel.font = .systemFont(ofSize: UIDevice.isIpad ? 32 : 18, weight: .bold)
         avatarTitleLabel.text = .authorInfo.name.localized
     }
     
@@ -107,16 +104,16 @@ private extension AuthorInfoViewController {
     
     func configureBackgroundViewForAppear() {
         UIView.animate(withDuration: 0.25) { [weak self] in
-            guard let self = self else { return }
-            self.backgroundView.alpha = 0.4
+            guard let self else { return }
+            backgroundView.alpha = 0.4
         }
     }
     
     func configureBackgroundViewForDisappear() {
         UIView.animate(withDuration: 0.25) { [weak self] in
-            guard let self = self else { return }
-            self.backgroundView.alpha = 0
-            self.viewModel.dismiss()
+            guard let self else { return }
+            backgroundView.alpha = 0
+            viewModel.dismiss()
         }
     }
     
@@ -127,7 +124,7 @@ private extension AuthorInfoViewController {
         case .changed:
             if translation.y > 0 {
                 bottomSheetView.transform = .init(translationX: 0, y: translation.y)
-                if !iPadDevice {
+                if !UIDevice.isIpad {
                     let conversionFactor = (bottomSheetView.frame.height - translation.y) / bottomSheetView.frame.height
                     backgroundView.alpha = 0.4 * conversionFactor
                 }
@@ -137,9 +134,9 @@ private extension AuthorInfoViewController {
                 configureBackgroundViewForDisappear()
             } else {
                 UIView.animate(withDuration: 0.25) { [weak self] in
-                    guard let self = self else { return }
-                    self.backgroundView.alpha = 0.4
-                    self.bottomSheetView.transform = .init(translationX: 0, y: 0)
+                    guard let self else { return }
+                    backgroundView.alpha = 0.4
+                    bottomSheetView.transform = .init(translationX: 0, y: 0)
                 }
             }
         default: break

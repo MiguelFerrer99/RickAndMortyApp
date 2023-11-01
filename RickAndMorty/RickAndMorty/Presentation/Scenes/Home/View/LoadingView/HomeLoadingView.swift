@@ -75,44 +75,44 @@ private extension HomeLoadingView {
         errorView.publisher
             .filter { $0 == .didTapTryAgain }
             .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.subject.send(.tryAgain)
+                guard let self else { return }
+                subject.send(.tryAgain)
             }.store(in: &subscriptions)
     }
     
     func setReceivedDataAppearance() {
         UIView.animate(withDuration: 0.2) { [weak self] in
-            guard let self = self else { return }
-            self.loaderView.alpha = 0
-            self.errorView.alpha = 0
+            guard let self else { return }
+            loaderView.alpha = 0
+            errorView.alpha = 0
         } completion: { [weak self] ended in
-            guard let self = self else { return }
-            self.loaderView.isHidden = true
-            self.errorView.isHidden = true
+            guard let self else { return }
+            loaderView.isHidden = true
+            errorView.isHidden = true
         }
     }
     
     func setLoadingAppearance() {
         UIView.animate(withDuration: 0.2) { [weak self] in
-            guard let self = self else { return }
-            self.loaderView.alpha = 1
-            self.errorView.alpha = 0
+            guard let self else { return }
+            loaderView.alpha = 1
+            errorView.alpha = 0
         } completion: { [weak self] ended in
-            guard let self = self else { return }
-            self.loaderView.isHidden = false
-            self.errorView.isHidden = true
+            guard let self else { return }
+            loaderView.isHidden = false
+            errorView.isHidden = true
         }
     }
     
     func setErrorAppearance() {
         UIView.animate(withDuration: 0.2) { [weak self] in
-            guard let self = self else { return }
-            self.loaderView.alpha = 0
-            self.errorView.alpha = 1
+            guard let self else { return }
+            loaderView.alpha = 0
+            errorView.alpha = 1
         } completion: { [weak self] ended in
-            guard let self = self else { return }
-            self.loaderView.isHidden = true
-            self.errorView.isHidden = false
+            guard let self else { return }
+            loaderView.isHidden = true
+            errorView.isHidden = false
         }
     }
 }

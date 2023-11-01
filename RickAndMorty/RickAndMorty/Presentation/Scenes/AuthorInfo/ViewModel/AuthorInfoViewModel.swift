@@ -7,6 +7,7 @@
 
 final class AuthorInfoViewModel {
     private let dependencies: AuthorInfoDependenciesResolver
+    private lazy var coordinator: AuthorInfoCoordinator = dependencies.resolve()
     
     init(dependencies: AuthorInfoDependenciesResolver) {
         self.dependencies = dependencies
@@ -22,11 +23,5 @@ final class AuthorInfoViewModel {
     
     func openLinkedIn() {
         coordinator.openLinkedIn()
-    }
-}
-
-private extension AuthorInfoViewModel {
-    var coordinator: AuthorInfoCoordinator {
-        dependencies.resolve()
     }
 }

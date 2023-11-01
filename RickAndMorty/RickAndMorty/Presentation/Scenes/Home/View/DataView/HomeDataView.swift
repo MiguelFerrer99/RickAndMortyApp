@@ -25,10 +25,10 @@ final class HomeDataView: XibView {
     @IBOutlet private weak var topImageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var topImageViewWidthPadConstraint: NSLayoutConstraint!
     @IBOutlet private weak var collectionView: HomeDataCollectionView!
+    
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeDataViewState, Never>()
     var publisher: AnyPublisher<HomeDataViewState, Never> { subject.eraseToAnyPublisher() }
-    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,44 +54,39 @@ private extension HomeDataView {
     func bindCollectionView() {
         collectionView.publisher
             .sink { [weak self] state in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch state {
-                case .showTitleViewShadow(let show):
-                    self.showTitleViewShadow(show)
-                case .openCharacter(let character):
-                    self.subject.send(.openCharacter(character))
-                case .openLocation(let location):
-                    self.subject.send(.openLocation(location))
-                case .openEpisode(let episode):
-                    self.subject.send(.openEpisode(episode))
-                case .viewMore(let category):
-                    self.subject.send(.viewMore(category))
+                case .showTitleViewShadow(let show): showTitleViewShadow(show)
+                case .openCharacter(let character): subject.send(.openCharacter(character))
+                case .openLocation(let location): subject.send(.openLocation(location))
+                case .openEpisode(let episode): subject.send(.openEpisode(episode))
+                case .viewMore(let category): subject.send(.viewMore(category))
                 }
             }.store(in: &subscriptions)
     }
     
     func showTitleViewShadow(_ show: Bool) {
         UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
-            guard let self = self else { return }
-            self.titleView.layer.shadowOpacity = show ? 1 : 0
+            guard let self else { return }
+            titleView.layer.shadowOpacity = show ? 1 : 0
         }
     }
     
     func moveImageToTop() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 20, initialSpringVelocity: 5) { [weak self] in
-            guard let self = self else { return }
-            self.titleViewDefaultBottomConstraint.priority = UILayoutPriority(999)
-            self.titleViewHeightConstraint.priority = UILayoutPriority(1000)
-            self.topImageViewDefaultWidthConstraint.priority = UILayoutPriority(999)
-            self.topImageViewWidthConstraint.priority = UILayoutPriority(self.iPadDevice ? 999 : 1000)
-            self.topImageViewWidthConstraint.priority = UILayoutPriority(self.iPadDevice ? 1000 : 999)
-            self.layoutIfNeeded()
+            guard let self else { return }
+            titleViewDefaultBottomConstraint.priority = UILayoutPriority(999)
+            titleViewHeightConstraint.priority = UILayoutPriority(1000)
+            topImageViewDefaultWidthConstraint.priority = UILayoutPriority(999)
+            topImageViewWidthConstraint.priority = UILayoutPriority(UIDevice.isIpad ? 999 : 1000)
+            topImageViewWidthConstraint.priority = UILayoutPriority(UIDevice.isIpad ? 1000 : 999)
+            layoutIfNeeded()
         } completion: { [weak self] finished in
-            guard let self = self else { return }
+            guard let self else { return }
             if finished {
-                self.configureTitleView()
-                self.configureTitleViewImage()
-                self.showCollecionView()
+                configureTitleView()
+                configureTitleViewImage()
+                showCollecionView()
             }
         }
     }
@@ -99,10 +94,10 @@ private extension HomeDataView {
     func configureTitleView() {
         titleView.clipsToBounds = false
         titleView.layer.masksToBounds = false
-        titleView.layer.shadowRadius = iPadDevice ? 10 : 5
+        titleView.layer.shadowRadius = UIDevice.isIpad ? 10 : 5
         titleView.layer.shadowOpacity = 0
         titleView.layer.shadowColor = UIColor.black.cgColor
-        titleView.layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
+        titleView.layer.shadowOffset = CGSize(width: 0, height: UIDevice.isIpad ? 5 : 3)
         titleView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
                                                                y: titleView.bounds.maxY - titleView.layer.shadowRadius,
                                                                width: titleView.bounds.width,
@@ -117,11 +112,11 @@ private extension HomeDataView {
     
     func showCollecionView() {
         UIView.animate(withDuration: 0.3, delay: 0) { [weak self] in
-            guard let self = self else { return }
-            self.collectionView.alpha = 1
+            guard let self else { return }
+            collectionView.alpha = 1
         } completion: { [weak self] finished in
-            guard let self = self else { return }
-            self.collectionView.isUserInteractionEnabled = true
+            guard let self else { return }
+            collectionView.isUserInteractionEnabled = true
         }
     }
     

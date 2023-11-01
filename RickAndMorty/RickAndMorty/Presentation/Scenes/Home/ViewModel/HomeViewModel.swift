@@ -22,6 +22,8 @@ final class HomeViewModel {
     var state: AnyPublisher<HomeViewModelState, Never>
     private var categories: [HomeDataCategory] = []
     private var categoriesLastPages: CategoriesLastPages = (true, true, true)
+    private lazy var coordinator: HomeCoordinator = dependencies.resolve()
+    private lazy var homeUseCase: HomeUseCase = dependencies.resolve()
 
     init(dependencies: HomeDependenciesResolver) {
         self.dependencies = dependencies
@@ -82,18 +84,10 @@ final class HomeViewModel {
 }
 
 private extension HomeViewModel {
-    var coordinator: HomeCoordinator {
-        dependencies.resolve()
-    }
-    
-    var homeUseCase: HomeUseCase {
-        dependencies.resolve()
-    }
-    
-    func sendStateSubject(_ stateSubject: HomeViewModelState) {
+    func sendStateSubject(_ state: HomeViewModelState) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.stateSubject.send(stateSubject)
+            guard let self else { return }
+            stateSubject.send(state)
         }
     }
     

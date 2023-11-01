@@ -17,9 +17,7 @@ protocol AuthorInfoCoordinator {
 final class DefaultAuthorInfoCoordinator {
     private let navigationController: UINavigationController
     private let externalDependencies: AuthorInfoExternalDependenciesResolver
-    private lazy var dependencies: DefaultAuthorInfoDependenciesResolver = {
-        DefaultAuthorInfoDependenciesResolver(externalDependencies: externalDependencies, coordinator: self)
-    }()
+    private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
     init(externalDependencies: AuthorInfoExternalDependenciesResolver, navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -52,7 +50,7 @@ extension DefaultAuthorInfoCoordinator: AuthorInfoCoordinator {
 }
 
 private extension DefaultAuthorInfoCoordinator {
-    final class DefaultAuthorInfoDependenciesResolver: AuthorInfoDependenciesResolver {
+    final class Dependencies: AuthorInfoDependenciesResolver {
         private let externalDependencies: AuthorInfoExternalDependenciesResolver
         private let coordinator: AuthorInfoCoordinator
         

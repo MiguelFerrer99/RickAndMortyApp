@@ -46,11 +46,11 @@ final class APIEndpoint {
     var mock: String
     var request: URLRequest {
         get {
-            let url = APIEndpoint.getURL(path: self.path)
+            let url = APIEndpoint.getURL(path: path)
             var request = URLRequest(url: url)
-            request.httpMethod = self.httpMethod.rawValue
+            request.httpMethod = httpMethod.rawValue
             
-            switch self.httpMethod {
+            switch httpMethod {
             case .get:
                 if !parameters.isEmpty { request = setURLEncoding(for: url) }
             case .post, .patch:
@@ -87,7 +87,6 @@ final class APIEndpoint {
         self.mock = mock
     }
     
-    // MARK: Get URL with BASE_URL
     static func getURL(path: String) -> URL {
         guard let url = URL(string: getBaseUrl())?.appendingPathComponent(path) else {
             APILogger.this(path, type: .error)
@@ -96,21 +95,15 @@ final class APIEndpoint {
         return url
     }
     
-    // MARK: Set Encoding depending on all variables
     func getEncoding() -> Encoding {
         switch httpMethod {
         case .post, .patch:
-            var newEncoding = encoding == .none ? .json : encoding
-            if !videos.isEmpty || !images.isEmpty{
-                newEncoding = .multipart
-            }
-            return newEncoding
+            return videos.isNotEmpty || images.isNotEmpty ? .multipart : .json
         default:
             return .json
         }
     }
     
-    // MARK: Set JSON encoding parameters
     func setJSONEncoding(for request: URLRequest) -> URLRequest {
         var request = request
         guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
@@ -120,17 +113,15 @@ final class APIEndpoint {
         return request
     }
     
-    // MARK: Set URL encoding parameters
     func setURLEncoding(for url: URL) -> URLRequest {
         var components = URLComponents(string: url.absoluteString)!
-        components.queryItems = self.parameters.map { (key, value) in
+        components.queryItems = parameters.map { (key, value) in
             URLQueryItem(name: key, value: value)
         }
         components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         return URLRequest(url: components.url!)
     }
     
-    // MARK: Set JSON encoding parameters
     func setMultiPartEncoding(for request: URLRequest) -> URLRequest {
         var request = request
         guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {

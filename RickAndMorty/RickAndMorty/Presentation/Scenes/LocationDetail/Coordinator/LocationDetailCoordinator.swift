@@ -15,9 +15,7 @@ protocol LocationDetailCoordinator {
 final class DefaultLocationDetailCoordinator {
     private let navigationController: UINavigationController
     private let externalDependencies: LocationDetailExternalDependenciesResolver
-    private lazy var dependencies: DefaultLocationDetailDependenciesResolver = {
-        DefaultLocationDetailDependenciesResolver(externalDependencies: externalDependencies, coordinator: self)
-    }()
+    private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
     init(externalDependencies: LocationDetailExternalDependenciesResolver, navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -37,7 +35,7 @@ extension DefaultLocationDetailCoordinator: LocationDetailCoordinator {
 }
 
 private extension DefaultLocationDetailCoordinator {
-    struct DefaultLocationDetailDependenciesResolver: LocationDetailDependenciesResolver {
+    struct Dependencies: LocationDetailDependenciesResolver {
         let externalDependencies: LocationDetailExternalDependenciesResolver
         let coordinator: LocationDetailCoordinator
         var representable: LocationDetailRepresentable?

@@ -18,6 +18,7 @@ final class CharacterDetailViewModel {
     private let stateSubject = CurrentValueSubject<CharacterDetailViewModelState, Never>(.idle)
     var state: AnyPublisher<CharacterDetailViewModelState, Never>
     private let representable: CharacterDetailRepresentable?
+    private lazy var coordinator: CharacterDetailCoordinator = dependencies.resolve()
 
     init(dependencies: CharacterDetailDependenciesResolver, representable: CharacterDetailRepresentable?) {
         self.dependencies = dependencies
@@ -35,12 +36,8 @@ final class CharacterDetailViewModel {
 }
 
 private extension CharacterDetailViewModel {
-    var coordinator: CharacterDetailCoordinator {
-        dependencies.resolve()
-    }
-    
     func setInfo() {
-        guard let representable = representable else { return }
+        guard let representable else { return }
         stateSubject.send(.characterReceived(representable))
     }
 }

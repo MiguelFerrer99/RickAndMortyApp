@@ -16,9 +16,7 @@ protocol EpisodesCoordinator {
 final class DefaultEpisodesCoordinator {
     private let navigationController: UINavigationController
     private let externalDependencies: EpisodesExternalDependenciesResolver
-    private lazy var dependencies: DefaultEpisodesDependenciesResolver = {
-        DefaultEpisodesDependenciesResolver(externalDependencies: externalDependencies, coordinator: self)
-    }()
+    private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
     init(externalDependencies: EpisodesExternalDependenciesResolver, navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -43,7 +41,7 @@ extension DefaultEpisodesCoordinator: EpisodesCoordinator {
 }
 
 private extension DefaultEpisodesCoordinator {
-    struct DefaultEpisodesDependenciesResolver: EpisodesDependenciesResolver {
+    struct Dependencies: EpisodesDependenciesResolver {
         let externalDependencies: EpisodesExternalDependenciesResolver
         let coordinator: EpisodesCoordinator
         var representable: EpisodesViewModelRepresentable?

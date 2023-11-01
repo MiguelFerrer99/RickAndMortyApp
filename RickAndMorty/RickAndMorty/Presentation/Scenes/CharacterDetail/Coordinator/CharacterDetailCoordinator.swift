@@ -15,9 +15,7 @@ protocol CharacterDetailCoordinator {
 final class DefaultCharacterDetailCoordinator {
     private let navigationController: UINavigationController
     private let externalDependencies: CharacterDetailExternalDependenciesResolver
-    private lazy var dependencies: DefaultCharacterDetailDependenciesResolver = {
-        DefaultCharacterDetailDependenciesResolver(externalDependencies: externalDependencies, coordinator: self)
-    }()
+    private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
     init(externalDependencies: CharacterDetailExternalDependenciesResolver, navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -37,7 +35,7 @@ extension DefaultCharacterDetailCoordinator: CharacterDetailCoordinator {
 }
 
 private extension DefaultCharacterDetailCoordinator {
-    struct DefaultCharacterDetailDependenciesResolver: CharacterDetailDependenciesResolver {
+    struct Dependencies: CharacterDetailDependenciesResolver {
         let externalDependencies: CharacterDetailExternalDependenciesResolver
         let coordinator: CharacterDetailCoordinator
         var representable: CharacterDetailRepresentable?

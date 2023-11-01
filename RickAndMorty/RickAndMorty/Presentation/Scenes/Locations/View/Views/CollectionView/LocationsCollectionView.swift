@@ -79,7 +79,7 @@ private extension LocationsCollectionView {
     }
     
     func shouldLoadMoreItems(index: Int) -> Bool {
-        guard let locationsPager = locationsPager else { return false }
+        guard let locationsPager else { return false }
         let itemsLeftToLastItem = 4
         return (((numberOfItems(inSection: 0) - 1) - itemsLeftToLastItem) == index) && (!locationsPager.isLastPage)
     }
@@ -93,12 +93,12 @@ private extension LocationsCollectionView {
 
 extension LocationsCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let locationsPager = locationsPager else { return 0 }
+        guard let locationsPager else { return 0 }
         return isLoading || locationsPager.getItems().isEmpty ? 1 : locationsPager.getItems().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let locationsPager = locationsPager else { return UICollectionViewCell() }
+        guard let locationsPager else { return UICollectionViewCell() }
         if isLoading {
             guard let cell = dequeueReusableCell(withReuseIdentifier: loadingCellIdentifier, for: indexPath) as? LocationsCollectionViewLoadingCell else { return UICollectionViewCell() }
             return cell
@@ -128,7 +128,7 @@ extension LocationsCollectionView: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: frame.width - 40, height: frame.height - 100)
-        guard let locationsPager = locationsPager else { return size }
+        guard let locationsPager else { return size }
         if locationsPager.getItems().isNotEmpty {
             let leftContentInset: CGFloat = 20
             let minSpacingColumns: CGFloat = 10

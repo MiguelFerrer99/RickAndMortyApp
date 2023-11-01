@@ -18,6 +18,7 @@ final class LocationDetailViewModel {
     private let stateSubject = CurrentValueSubject<LocationDetailViewModelState, Never>(.idle)
     var state: AnyPublisher<LocationDetailViewModelState, Never>
     private let representable: LocationDetailRepresentable?
+    private lazy var coordinator: LocationDetailCoordinator = dependencies.resolve()
 
     init(dependencies: LocationDetailDependenciesResolver, representable: LocationDetailRepresentable?) {
         self.dependencies = dependencies
@@ -35,12 +36,8 @@ final class LocationDetailViewModel {
 }
 
 private extension LocationDetailViewModel {
-    var coordinator: LocationDetailCoordinator {
-        dependencies.resolve()
-    }
-    
     func setInfo() {
-        guard let representable = representable else { return }
+        guard let representable else { return }
         stateSubject.send(.locationReceived(representable))
     }
 }

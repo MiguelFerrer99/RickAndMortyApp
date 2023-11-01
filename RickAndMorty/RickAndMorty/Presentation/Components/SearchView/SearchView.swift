@@ -16,10 +16,10 @@ final class SearchView: XibView {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var textfield: UITextField!
     @IBOutlet private weak var deleteTextButtonView: UIView!
+    
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<CharactersSearchViewState, Never>()
     var publisher: AnyPublisher<CharactersSearchViewState, Never> { subject.eraseToAnyPublisher() }
-    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,8 +37,8 @@ final class SearchView: XibView {
     
     func showShadow(_ show: Bool) {
         UIView.animate(withDuration: 0.2, delay: 0) { [weak self] in
-            guard let self = self else { return }
-            self.layer.shadowOpacity = show ? 1 : 0
+            guard let self else { return }
+            layer.shadowOpacity = show ? 1 : 0
         }
     }
     
@@ -64,10 +64,10 @@ private extension SearchView {
     func configureShadow() {
         clipsToBounds = false
         layer.masksToBounds = false
-        layer.shadowRadius = iPadDevice ? 10 : 5
+        layer.shadowRadius = UIDevice.isIpad ? 10 : 5
         layer.shadowOpacity = 0
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: iPadDevice ? 5 : 3)
+        layer.shadowOffset = CGSize(width: 0, height: UIDevice.isIpad ? 5 : 3)
     }
     
     func configureContainerView() {

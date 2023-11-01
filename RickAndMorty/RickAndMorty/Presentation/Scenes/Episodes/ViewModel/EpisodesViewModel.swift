@@ -20,6 +20,8 @@ final class EpisodesViewModel {
     var state: AnyPublisher<EpisodesViewModelState, Never>
     private let representable: EpisodesViewModelRepresentable?
     private let episodesPager = Pagination<EpisodeRepresentable>()
+    private lazy var coordinator: EpisodesCoordinator = dependencies.resolve()
+    private lazy var episodesUseCase: EpisodesUseCase = dependencies.resolve()
     var episodeNameFiltered: String?
 
     init(dependencies: EpisodesDependenciesResolver, representable: EpisodesViewModelRepresentable?) {
@@ -57,25 +59,16 @@ final class EpisodesViewModel {
 }
 
 private extension EpisodesViewModel {
-    var coordinator: EpisodesCoordinator {
-        dependencies.resolve()
-    }
-    
-    
-    var episodesUseCase: EpisodesUseCase {
-        dependencies.resolve()
-    }
-    
     func setEpisodes() {
-        guard let representable = representable else { return }
+        guard let representable else { return }
         episodesPager.setItems(representable.episodes, and: representable.isLastPage)
         stateSubject.send(.episodesReceived(episodesPager))
     }
     
-    func sendStateSubject(_ stateSubject: EpisodesViewModelState) {
+    func sendStateSubject(_ state: EpisodesViewModelState) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.stateSubject.send(stateSubject)
+            guard let self else { return }
+            stateSubject.send(state)
         }
     }
     

@@ -12,7 +12,7 @@ final class EpisodesCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var episodeLabel: UILabel!
-    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+    
     private let gradientLayer = CAGradientLayer()
     
     override func prepareForReuse() {
@@ -47,27 +47,27 @@ private extension EpisodesCollectionViewInfoCell {
     
     func configureImageView() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.gradientLayer.frame = self.bounds
-            self.gradientLayer.startPoint = CGPoint(x: 0, y: 1)
-            self.gradientLayer.endPoint = CGPoint(x: 1, y: 0)
-            self.gradientLayer.colors = [UIColor.black.withAlphaComponent(0.6).cgColor,
+            guard let self else { return }
+            gradientLayer.frame = bounds
+            gradientLayer.startPoint = CGPoint(x: 0, y: 1)
+            gradientLayer.endPoint = CGPoint(x: 1, y: 0)
+            gradientLayer.colors = [UIColor.black.withAlphaComponent(0.6).cgColor,
                                     UIColor.black.withAlphaComponent(0.2).cgColor,
                                     UIColor.clear.cgColor]
-            self.imageView.layer.addSublayer(self.gradientLayer)
+            imageView.layer.addSublayer(gradientLayer)
         }
     }
     
     func configureTitleLabel() {
         titleLabel.alpha = 0
         titleLabel.textColor = .white
-        titleLabel.font = .systemFont(ofSize: iPadDevice ? 30 : 15, weight: .semibold)
+        titleLabel.font = .systemFont(ofSize: UIDevice.isIpad ? 30 : 15, weight: .semibold)
     }
     
     func configureEpisodeLabel() {
         episodeLabel.alpha = 0
         episodeLabel.textColor = .white
-        episodeLabel.font = UIFont(name: "GetSchwifty-Regular", size: iPadDevice ? 70 : 20)
+        episodeLabel.font = UIFont(name: "GetSchwifty-Regular", size: UIDevice.isIpad ? 70 : 20)
         episodeLabel.shadowColor = .black
         episodeLabel.shadowOffset = CGSize(width: 2, height: 3)
     }

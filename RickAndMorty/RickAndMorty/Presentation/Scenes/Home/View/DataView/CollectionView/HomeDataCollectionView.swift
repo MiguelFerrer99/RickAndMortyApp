@@ -19,7 +19,6 @@ enum HomeDataCollectionViewState {
 final class HomeDataCollectionView: UICollectionView {
     private var subject = PassthroughSubject<HomeDataCollectionViewState, Never>()
     var publisher: AnyPublisher<HomeDataCollectionViewState, Never> { subject.eraseToAnyPublisher() }
-    private let iPadDevice = UIDevice.current.userInterfaceIdiom == .pad
     private var categories: [HomeDataCategory]?
     private var imageCacheManager: ImageCacheManager?
     
@@ -73,8 +72,8 @@ private extension HomeDataCollectionView {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 0, leading: iPadDevice ? 40 : 20, bottom: iPadDevice ? 40 : 20, trailing: iPadDevice ? 40 : 20)
-        section.interGroupSpacing = iPadDevice ? 40 : 10
+        section.contentInsets = .init(top: 0, leading: UIDevice.isIpad ? 40 : 20, bottom: UIDevice.isIpad ? 40 : 20, trailing: UIDevice.isIpad ? 40 : 20)
+        section.interGroupSpacing = UIDevice.isIpad ? 40 : 10
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(60))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         section.boundarySupplementaryItems = [header]
@@ -86,7 +85,7 @@ private extension HomeDataCollectionView {
 
 extension HomeDataCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard let categories = categories else { return 0 }
+        guard let categories else { return 0 }
         return categories.count
     }
     

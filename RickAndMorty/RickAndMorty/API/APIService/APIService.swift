@@ -40,7 +40,6 @@ protocol APIService {
 final class DefaultAPIService {
     private lazy var refreshActor: APIRefreshActor = { APIRefreshActor(service: self) }()
     
-    // MARK: - loadDemo - Call mocked responses
     private func loadDemo<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T {
         guard let url = Bundle.main.url(forResource: endpoint.mock, withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
@@ -64,7 +63,6 @@ final class DefaultAPIService {
 }
 
 extension DefaultAPIService: APIService {
-    // MARK: - loadAuthorized - Call secured API
     func loadAuthorized<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T {
         var request = endpoint.request
         endpoint.headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
@@ -102,7 +100,6 @@ extension DefaultAPIService: APIService {
         #endif
     }
     
-    // MARK: - load - Call unprotected API
     func load<T: Decodable>(endpoint: APIEndpoint, of type: T.Type) async throws -> T {
         var request = endpoint.request
         endpoint.headers.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
