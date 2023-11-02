@@ -61,7 +61,7 @@ private extension CharactersCollectionView {
     var loadingCellIdentifier: String {
         String(describing: type(of: CharactersCollectionViewLoadingCell()))
     }
-        
+    
     func setupView() {
         delegate = self
         dataSource = self

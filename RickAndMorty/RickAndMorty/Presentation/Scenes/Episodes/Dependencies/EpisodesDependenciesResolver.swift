@@ -10,15 +10,19 @@ import UIKit
 protocol EpisodesDependenciesResolver {
     var external: EpisodesExternalDependenciesResolver { get }
     func resolve() -> EpisodesCoordinator
-    func resolve() -> EpisodesViewController
-    func resolve() -> EpisodesViewModel
+    func resolve(with info: EpisodesViewModelRepresentable) -> EpisodesViewController
+    func resolve(with info: EpisodesViewModelRepresentable) -> EpisodesViewModel
     func resolve() -> EpisodesUseCase
     func resolve() -> EpisodesRepository
 }
 
 extension EpisodesDependenciesResolver {
-    func resolve() -> EpisodesViewController {
-        EpisodesViewController(dependencies: self)
+    func resolve(with info: EpisodesViewModelRepresentable) -> EpisodesViewController {
+        EpisodesViewController(dependencies: self, info: info)
+    }
+    
+    func resolve(with info: EpisodesViewModelRepresentable) -> EpisodesViewModel {
+        EpisodesViewModel(dependencies: self, info: info)
     }
     
     func resolve() -> EpisodesUseCase {

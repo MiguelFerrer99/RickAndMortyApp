@@ -20,10 +20,10 @@ final class EpisodeDetailViewController: UIViewController {
     private lazy var episodeInfoView = InfoView()
     private lazy var numberOfCharactersInfoView = InfoView()
     private lazy var spacerView = UIView()
-
-    init(dependencies: EpisodeDetailDependenciesResolver) {
+    
+    init(dependencies: EpisodeDetailDependenciesResolver, info: EpisodeDetailRepresentable) {
         self.dependencies = dependencies
-        self.viewModel = dependencies.resolve()
+        self.viewModel = dependencies.resolve(with: info)
         self.sceneNavigationController = dependencies.external.resolve()
         super.init(nibName: String(describing: EpisodeDetailViewController.self), bundle: .main)
     }
@@ -43,6 +43,11 @@ final class EpisodeDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isMovingFromParent { viewModel.dismiss(with: .gesture) }
     }
 }
 
@@ -88,6 +93,6 @@ private extension EpisodeDetailViewController {
     }
     
     @objc func didTapBackButton() {
-        viewModel.goBack()
+        viewModel.dismiss(with: .button)
     }
 }

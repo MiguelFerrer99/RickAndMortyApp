@@ -9,13 +9,11 @@ protocol CharactersRepository {
     func getCharacters(withName name: String?, ofPage page: Int) async throws -> CharactersInfoRepresentable
 }
 
-final class DefaultCharactersRepository {
-    private let dependencies: CharactersDependenciesResolver
+struct DefaultCharactersRepository {
     private let apiService: APIService
     
     init(dependencies: CharactersDependenciesResolver) {
-        self.dependencies = dependencies
-        self.apiService = dependencies.external.resolveAPIService()
+        apiService = dependencies.external.resolve()
     }
 }
 

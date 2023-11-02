@@ -7,14 +7,16 @@
 
 import UIKit
 
-protocol LocationsCoordinator {
-    func start(with representable: LocationsViewModelRepresentable)
-    func back()
-    func openLocationDetail(with representable: LocationDetailRepresentable)
+protocol LocationsCoordinator: Coordinator {
+    func setInfo(_ info: LocationsViewModelRepresentable)
+    func openLocationDetail(with info: LocationDetailRepresentable)
 }
 
 final class DefaultLocationsCoordinator {
-    private let navigationController: UINavigationController
+    var onFinish: (() -> Void)?
+    var childCoordinators: [Coordinator] = []
+    var navigationController: UINavigationController
+    private var info: LocationsViewModelRepresentable?
     private let externalDependencies: LocationsExternalDependenciesResolver
     private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
@@ -25,26 +27,28 @@ final class DefaultLocationsCoordinator {
 }
 
 extension DefaultLocationsCoordinator: LocationsCoordinator {
-    func start(with representable: LocationsViewModelRepresentable) {
-        dependencies.representable = representable
-        navigationController.pushViewController(dependencies.resolve(), animated: true)
+    func start() {
+        guard let info else { return }
+        let viewController: LocationsViewController = dependencies.resolve(with: info)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
-    func back() {
-        navigationController.popViewController(animated: true)
+    func setInfo(_ info: LocationsViewModelRepresentable) {
+        self.info = info
     }
     
-    func openLocationDetail(with representable: LocationDetailRepresentable) {
-        let coordinator: LocationDetailCoordinator = dependencies.external.resolveLocationDetailCoordinator()
-        coordinator.start(with: representable)
+    func openLocationDetail(with info: LocationDetailRepresentable) {
+        let coordinator: LocationDetailCoordinator = dependencies.external.resolve()
+        coordinator.setInfo(info)
+        coordinator.start()
+        append(child: coordinator)
     }
 }
 
 private extension DefaultLocationsCoordinator {
     struct Dependencies: LocationsDependenciesResolver {
         let externalDependencies: LocationsExternalDependenciesResolver
-        let coordinator: LocationsCoordinator
-        var representable: LocationsViewModelRepresentable?
+        unowned let coordinator: LocationsCoordinator
         
         var external: LocationsExternalDependenciesResolver {
             externalDependencies
@@ -52,10 +56,6 @@ private extension DefaultLocationsCoordinator {
         
         func resolve() -> LocationsCoordinator {
             coordinator
-        }
-        
-        func resolve() -> LocationsViewModel {
-            LocationsViewModel(dependencies: self, representable: representable)
         }
     }
 }

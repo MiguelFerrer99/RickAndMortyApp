@@ -9,13 +9,11 @@ protocol LocationRepository {
     func getLocations(withName name: String?, ofPage page: Int) async throws -> LocationsInfoRepresentable
 }
 
-final class DefaultLocationRepository {
-    private let dependencies: LocationsDependenciesResolver
+struct DefaultLocationRepository {
     private let apiService: APIService
     
     init(dependencies: LocationsDependenciesResolver) {
-        self.dependencies = dependencies
-        self.apiService = dependencies.external.resolveAPIService()
+        apiService = dependencies.external.resolve()
     }
 }
 

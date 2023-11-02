@@ -19,15 +19,14 @@ final class HomeViewModel {
     private let dependencies: HomeDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<HomeViewModelState, Never>(.idle)
-    var state: AnyPublisher<HomeViewModelState, Never>
+    var state: AnyPublisher<HomeViewModelState, Never> { stateSubject.eraseToAnyPublisher() }
     private var categories: [HomeDataCategory] = []
     private var categoriesLastPages: CategoriesLastPages = (true, true, true)
     private lazy var coordinator: HomeCoordinator = dependencies.resolve()
     private lazy var homeUseCase: HomeUseCase = dependencies.resolve()
-
+    
     init(dependencies: HomeDependenciesResolver) {
         self.dependencies = dependencies
-        state = stateSubject.eraseToAnyPublisher()
     }
     
     func viewDidLoad() {
@@ -54,43 +53,36 @@ final class HomeViewModel {
     }
     
     func openCharacter(_ character: CharacterRepresentable) {
-        let representable = DefaultCharacterDetailRepresentable(name: character.name,
-                                                                image: character.urlImage,
-                                                                status: character.status,
-                                                                species: character.species,
-                                                                gender: character.gender,
-                                                                origin: character.origin,
-                                                                location: character.location,
-                                                                numberOfEpisodes: character.numberOfEpisodes)
-        coordinator.openCharacterDetail(with: representable)
+        let info = DefaultCharacterDetailRepresentable(name: character.name,
+                                                       image: character.urlImage,
+                                                       status: character.status,
+                                                       species: character.species,
+                                                       gender: character.gender,
+                                                       origin: character.origin,
+                                                       location: character.location,
+                                                       numberOfEpisodes: character.numberOfEpisodes)
+        coordinator.openCharacterDetail(with: info)
     }
     
     func openLocation(_ location: LocationRepresentable) {
-        let representable = DefaultLocationDetailRepresentable(name: location.name,
-                                                               type: location.type,
-                                                               dimension: location.dimension,
-                                                               numberOfResidents: location.numberOfResidents)
-        coordinator.openLocationDetail(with: representable)
+        let info = DefaultLocationDetailRepresentable(name: location.name,
+                                                      type: location.type,
+                                                      dimension: location.dimension,
+                                                      numberOfResidents: location.numberOfResidents)
+        coordinator.openLocationDetail(with: info)
     }
     
     func openEpisode(_ episode: EpisodeRepresentable) {
-        let representable = DefaultEpisodeDetailRepresentable(name: episode.name,
-                                                              airDate: episode.airDate,
-                                                              season: episode.season,
-                                                              episode: episode.episode,
-                                                              numberOfCharacters: episode.numberOfCharacters)
-        coordinator.openEpisodeDetail(with: representable)
+        let info = DefaultEpisodeDetailRepresentable(name: episode.name,
+                                                     airDate: episode.airDate,
+                                                     season: episode.season,
+                                                     episode: episode.episode,
+                                                     numberOfCharacters: episode.numberOfCharacters)
+        coordinator.openEpisodeDetail(with: info)
     }
 }
 
 private extension HomeViewModel {
-    func sendStateSubject(_ state: HomeViewModelState) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            stateSubject.send(state)
-        }
-    }
-    
     func getInfo() {
         Task {
             let homeInfo = await homeUseCase.getInfo()
@@ -107,6 +99,13 @@ private extension HomeViewModel {
                 categories.append(.episodes(episodesInfo.results))
             }
             sendStateSubject(categories.isNotEmpty ? .received(categories) : .error)
+        }
+    }
+    
+    func sendStateSubject(_ state: HomeViewModelState) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            stateSubject.send(state)
         }
     }
 }

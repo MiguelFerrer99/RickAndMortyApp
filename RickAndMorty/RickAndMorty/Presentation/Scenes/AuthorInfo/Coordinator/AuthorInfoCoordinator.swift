@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol AuthorInfoCoordinator {
-    func start()
-    func dismiss()
+protocol AuthorInfoCoordinator: Coordinator {
     func openGitHub()
     func openLinkedIn()
 }
 
 final class DefaultAuthorInfoCoordinator {
-    private let navigationController: UINavigationController
+    var onFinish: (() -> Void)?
+    var childCoordinators: [Coordinator] = []
+    var navigationController: UINavigationController
     private let externalDependencies: AuthorInfoExternalDependenciesResolver
     private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
@@ -28,12 +28,8 @@ final class DefaultAuthorInfoCoordinator {
 extension DefaultAuthorInfoCoordinator: AuthorInfoCoordinator {
     func start() {
         let viewController: AuthorInfoViewController = dependencies.resolve()
-        viewController.modalPresentationStyle = UIDevice.current.userInterfaceIdiom == .pad ? .formSheet : .overFullScreen
+        viewController.modalPresentationStyle = UIDevice.isIpad ? .formSheet : .overFullScreen
         navigationController.present(viewController, animated: true)
-    }
-    
-    func dismiss() {
-        navigationController.dismiss(animated: true)
     }
     
     func openGitHub() {
@@ -50,14 +46,9 @@ extension DefaultAuthorInfoCoordinator: AuthorInfoCoordinator {
 }
 
 private extension DefaultAuthorInfoCoordinator {
-    final class Dependencies: AuthorInfoDependenciesResolver {
-        private let externalDependencies: AuthorInfoExternalDependenciesResolver
-        private let coordinator: AuthorInfoCoordinator
-        
-        init(externalDependencies: AuthorInfoExternalDependenciesResolver, coordinator: AuthorInfoCoordinator) {
-            self.externalDependencies = externalDependencies
-            self.coordinator = coordinator
-        }
+    struct Dependencies: AuthorInfoDependenciesResolver {
+        let externalDependencies: AuthorInfoExternalDependenciesResolver
+        unowned let coordinator: AuthorInfoCoordinator
         
         var external: AuthorInfoExternalDependenciesResolver {
             externalDependencies

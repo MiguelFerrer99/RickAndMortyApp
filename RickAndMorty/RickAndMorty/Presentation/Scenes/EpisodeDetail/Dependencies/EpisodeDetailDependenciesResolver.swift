@@ -10,12 +10,16 @@ import UIKit
 protocol EpisodeDetailDependenciesResolver {
     var external: EpisodeDetailExternalDependenciesResolver { get }
     func resolve() -> EpisodeDetailCoordinator
-    func resolve() -> EpisodeDetailViewController
-    func resolve() -> EpisodeDetailViewModel
+    func resolve(with info: EpisodeDetailRepresentable) -> EpisodeDetailViewController
+    func resolve(with info: EpisodeDetailRepresentable) -> EpisodeDetailViewModel
 }
 
 extension EpisodeDetailDependenciesResolver {
-    func resolve() -> EpisodeDetailViewController {
-        EpisodeDetailViewController(dependencies: self)
+    func resolve(with info: EpisodeDetailRepresentable) -> EpisodeDetailViewController {
+        EpisodeDetailViewController(dependencies: self, info: info)
+    }
+    
+    func resolve(with info: EpisodeDetailRepresentable) -> EpisodeDetailViewModel {
+        EpisodeDetailViewModel(dependencies: self, info: info)
     }
 }

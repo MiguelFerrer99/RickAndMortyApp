@@ -12,16 +12,16 @@ final class AuthorInfoViewModel {
     init(dependencies: AuthorInfoDependenciesResolver) {
         self.dependencies = dependencies
     }
-    
-    func dismiss() {
-        coordinator.dismiss()
-    }
-    
+        
     func openGitHub() {
         coordinator.openGitHub()
     }
     
     func openLinkedIn() {
         coordinator.openLinkedIn()
+    }
+    
+    func dismiss() {
+        coordinator.dismiss(with: .button)
     }
 }

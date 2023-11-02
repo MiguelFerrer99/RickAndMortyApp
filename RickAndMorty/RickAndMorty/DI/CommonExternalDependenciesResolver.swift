@@ -9,6 +9,6 @@ import UIKit
 
 protocol CommonExternalDependenciesResolver {
     func resolve() -> UINavigationController
-    func resolveAPIService() -> APIService
-    func resolveImageCacheManager() -> ImageCacheManager
+    func resolve() -> APIService
+    func resolve() -> ImageCacheManager
 }

@@ -16,28 +16,27 @@ final class CharacterDetailViewModel {
     private let dependencies: CharacterDetailDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<CharacterDetailViewModelState, Never>(.idle)
-    var state: AnyPublisher<CharacterDetailViewModelState, Never>
-    private let representable: CharacterDetailRepresentable?
+    var state: AnyPublisher<CharacterDetailViewModelState, Never> { stateSubject.eraseToAnyPublisher() }
+    private let info: CharacterDetailRepresentable?
     private lazy var coordinator: CharacterDetailCoordinator = dependencies.resolve()
-
-    init(dependencies: CharacterDetailDependenciesResolver, representable: CharacterDetailRepresentable?) {
+    
+    init(dependencies: CharacterDetailDependenciesResolver, info: CharacterDetailRepresentable) {
         self.dependencies = dependencies
-        self.representable = representable
-        state = stateSubject.eraseToAnyPublisher()
+        self.info = info
     }
     
     func viewDidLoad() {
         setInfo()
     }
     
-    func goBack() {
-        coordinator.back()
+    func dismiss(with type: PopType) {
+        coordinator.dismiss(with: type)
     }
 }
 
 private extension CharacterDetailViewModel {
     func setInfo() {
-        guard let representable else { return }
-        stateSubject.send(.characterReceived(representable))
+        guard let info else { return }
+        stateSubject.send(.characterReceived(info))
     }
 }

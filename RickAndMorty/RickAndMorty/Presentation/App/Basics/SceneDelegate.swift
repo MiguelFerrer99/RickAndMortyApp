@@ -20,7 +20,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 private extension SceneDelegate {
     func setRootScene() {
-        let homeCoordinator = appDependencies.resolveHomeCoordinator()
+        let homeCoordinator: HomeCoordinator = appDependencies.resolve()
         homeCoordinator.start()
     }
 }

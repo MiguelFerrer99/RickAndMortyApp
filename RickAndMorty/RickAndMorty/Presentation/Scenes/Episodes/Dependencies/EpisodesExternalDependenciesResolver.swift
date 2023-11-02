@@ -8,12 +8,12 @@
 import UIKit
 
 protocol EpisodesExternalDependenciesResolver: CommonExternalDependenciesResolver {
-    func resolveEpisodesCoordinator() -> EpisodesCoordinator
-    func resolveEpisodeDetailCoordinator() -> EpisodeDetailCoordinator
+    func resolve() -> EpisodesCoordinator
+    func resolve() -> EpisodeDetailCoordinator
 }
 
 extension EpisodesExternalDependenciesResolver {
-    func resolveEpisodesCoordinator() -> EpisodesCoordinator {
+    func resolve() -> EpisodesCoordinator {
         DefaultEpisodesCoordinator(externalDependencies: self, navigationController: resolve())
     }
 }

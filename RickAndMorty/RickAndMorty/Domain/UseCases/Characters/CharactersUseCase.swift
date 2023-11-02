@@ -9,11 +9,11 @@ protocol CharactersUseCase {
     func getCharacters(withName name: String?, ofPage page: Int) async -> CharactersInfoRepresentable
 }
 
-final class DefaultCharactersUseCase {
+struct DefaultCharactersUseCase {
     private let repository: CharactersRepository
-
+    
     init(dependencies: CharactersDependenciesResolver) {
-        self.repository = dependencies.resolve()
+        repository = dependencies.resolve()
     }
 }
 

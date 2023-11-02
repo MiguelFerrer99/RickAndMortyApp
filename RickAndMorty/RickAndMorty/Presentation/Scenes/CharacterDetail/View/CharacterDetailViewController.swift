@@ -27,11 +27,11 @@ final class CharacterDetailViewController: UIViewController {
     private lazy var locationInfoView = InfoView()
     private lazy var numberOfEpisodesInfoView = InfoView()
     
-    init(dependencies: CharacterDetailDependenciesResolver) {
+    init(dependencies: CharacterDetailDependenciesResolver, info: CharacterDetailRepresentable) {
         self.dependencies = dependencies
-        self.viewModel = dependencies.resolve()
+        self.viewModel = dependencies.resolve(with: info)
         self.sceneNavigationController = dependencies.external.resolve()
-        self.imageCacheManager = dependencies.external.resolveImageCacheManager()
+        self.imageCacheManager = dependencies.external.resolve()
         super.init(nibName: String(describing: CharacterDetailViewController.self), bundle: .main)
     }
     
@@ -50,6 +50,11 @@ final class CharacterDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isMovingFromParent { viewModel.dismiss(with: .gesture) }
     }
 }
 
@@ -127,6 +132,6 @@ private extension CharacterDetailViewController {
     }
     
     @objc func didTapCloseImageView() {
-        viewModel.goBack()
+        viewModel.dismiss(with: .button)
     }
 }

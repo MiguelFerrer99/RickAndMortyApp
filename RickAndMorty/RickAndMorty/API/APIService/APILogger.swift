@@ -15,7 +15,7 @@ enum APILoggerType {
     case verbose
 }
 
-final class APILogger {
+struct APILogger {
     static func time() -> String {
         let date = Date()
         let formatter = DateFormatter()

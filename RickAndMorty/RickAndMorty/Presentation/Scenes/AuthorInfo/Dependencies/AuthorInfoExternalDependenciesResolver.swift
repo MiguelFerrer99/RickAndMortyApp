@@ -8,11 +8,11 @@
 import UIKit
 
 protocol AuthorInfoExternalDependenciesResolver: CommonExternalDependenciesResolver {
-    func resolveAuthorInfoCoordinator() -> AuthorInfoCoordinator
+    func resolve() -> AuthorInfoCoordinator
 }
 
 extension AuthorInfoExternalDependenciesResolver {
-    func resolveAuthorInfoCoordinator() -> AuthorInfoCoordinator {
+    func resolve() -> AuthorInfoCoordinator {
         DefaultAuthorInfoCoordinator(externalDependencies: self, navigationController: resolve())
     }
 }

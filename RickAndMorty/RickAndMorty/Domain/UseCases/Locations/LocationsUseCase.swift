@@ -9,11 +9,11 @@ protocol LocationsUseCase {
     func getLocations(withName name: String?, ofPage page: Int) async -> LocationsInfoRepresentable
 }
 
-final class DefaultLocationsUseCase {
+struct DefaultLocationsUseCase {
     private let repository: LocationRepository
-
+    
     init(dependencies: LocationsDependenciesResolver) {
-        self.repository = dependencies.resolve()
+        repository = dependencies.resolve()
     }
 }
 

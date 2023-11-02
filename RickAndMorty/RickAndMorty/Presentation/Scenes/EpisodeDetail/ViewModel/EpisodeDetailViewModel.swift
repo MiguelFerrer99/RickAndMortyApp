@@ -16,28 +16,27 @@ final class EpisodeDetailViewModel {
     private let dependencies: EpisodeDetailDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<EpisodeDetailViewModelState, Never>(.idle)
-    var state: AnyPublisher<EpisodeDetailViewModelState, Never>
-    private let representable: EpisodeDetailRepresentable?
+    var state: AnyPublisher<EpisodeDetailViewModelState, Never> { stateSubject.eraseToAnyPublisher() }
+    private let info: EpisodeDetailRepresentable?
     private lazy var coordinator: EpisodeDetailCoordinator = dependencies.resolve()
-
-    init(dependencies: EpisodeDetailDependenciesResolver, representable: EpisodeDetailRepresentable?) {
+    
+    init(dependencies: EpisodeDetailDependenciesResolver, info: EpisodeDetailRepresentable?) {
         self.dependencies = dependencies
-        self.representable = representable
-        state = stateSubject.eraseToAnyPublisher()
+        self.info = info
     }
     
     func viewDidLoad() {
         setInfo()
     }
     
-    func goBack() {
-        coordinator.back()
+    func dismiss(with type: PopType) {
+        coordinator.dismiss(with: type)
     }
 }
 
 private extension EpisodeDetailViewModel {
     func setInfo() {
-        guard let representable else { return }
-        stateSubject.send(.episodeReceived(representable))
+        guard let info else { return }
+        stateSubject.send(.episodeReceived(info))
     }
 }

@@ -27,7 +27,7 @@ final class HomeViewController: UIViewController {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
         self.sceneNavigationController = dependencies.external.resolve()
-        self.imageCacheManager = dependencies.external.resolveImageCacheManager()
+        self.imageCacheManager = dependencies.external.resolve()
         super.init(nibName: String(describing: HomeViewController.self), bundle: .main)
     }
     

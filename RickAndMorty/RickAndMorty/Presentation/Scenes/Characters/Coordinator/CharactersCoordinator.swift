@@ -7,14 +7,16 @@
 
 import UIKit
 
-protocol CharactersCoordinator {
-    func start(with representable: CharactersViewModelRepresentable)
-    func back()
-    func openCharacter(with representable: CharacterDetailRepresentable)
+protocol CharactersCoordinator: Coordinator {
+    func setInfo(_ info: CharactersViewModelRepresentable)
+    func openCharacter(with info: CharacterDetailRepresentable)
 }
 
 final class DefaultCharactersCoordinator {
-    private let navigationController: UINavigationController
+    var onFinish: (() -> Void)?
+    var childCoordinators: [Coordinator] = []
+    var navigationController: UINavigationController
+    private var info: CharactersViewModelRepresentable?
     private let externalDependencies: CharactersExternalDependenciesResolver
     private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
@@ -25,26 +27,28 @@ final class DefaultCharactersCoordinator {
 }
 
 extension DefaultCharactersCoordinator: CharactersCoordinator {
-    func start(with representable: CharactersViewModelRepresentable) {
-        dependencies.representable = representable
-        navigationController.pushViewController(dependencies.resolve(), animated: true)
+    func start() {
+        guard let info else { return }
+        let viewController: CharactersViewController = dependencies.resolve(with: info)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
-    func back() {
-        navigationController.popViewController(animated: true)
+    func setInfo(_ info: CharactersViewModelRepresentable) {
+        self.info = info
     }
     
-    func openCharacter(with representable: CharacterDetailRepresentable) {
-        let coordinator: CharacterDetailCoordinator = dependencies.external.resolveCharacterDetailCoordinator()
-        coordinator.start(with: representable)
+    func openCharacter(with info: CharacterDetailRepresentable) {
+        let coordinator: CharacterDetailCoordinator = dependencies.external.resolve()
+        coordinator.setInfo(info)
+        coordinator.start()
+        append(child: coordinator)
     }
 }
 
 private extension DefaultCharactersCoordinator {
     struct Dependencies: CharactersDependenciesResolver {
         let externalDependencies: CharactersExternalDependenciesResolver
-        let coordinator: CharactersCoordinator
-        var representable: CharactersViewModelRepresentable?
+        unowned let coordinator: CharactersCoordinator
         
         var external: CharactersExternalDependenciesResolver {
             externalDependencies
@@ -52,10 +56,6 @@ private extension DefaultCharactersCoordinator {
         
         func resolve() -> CharactersCoordinator {
             coordinator
-        }
-        
-        func resolve() -> CharactersViewModel {
-            CharactersViewModel(dependencies: self, representable: representable)
         }
     }
 }

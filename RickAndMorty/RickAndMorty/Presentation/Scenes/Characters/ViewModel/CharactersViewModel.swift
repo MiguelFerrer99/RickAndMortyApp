@@ -17,23 +17,20 @@ final class CharactersViewModel {
     private let dependencies: CharactersDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<CharactersViewModelState, Never>(.idle)
-    var state: AnyPublisher<CharactersViewModelState, Never>
-    private let representable: CharactersViewModelRepresentable?
+    var state: AnyPublisher<CharactersViewModelState, Never> { stateSubject.eraseToAnyPublisher() }
+    private let info: CharactersViewModelRepresentable?
     private let charactersPager = Pagination<CharacterRepresentable>()
+    private lazy var coordinator: CharactersCoordinator = dependencies.resolve()
+    private lazy var charactersUseCase: CharactersUseCase = dependencies.resolve()
     var characterNameFiltered: String?
     
-    init(dependencies: CharactersDependenciesResolver, representable: CharactersViewModelRepresentable?) {
+    init(dependencies: CharactersDependenciesResolver, info: CharactersViewModelRepresentable) {
         self.dependencies = dependencies
-        self.representable = representable
-        state = stateSubject.eraseToAnyPublisher()
+        self.info = info
     }
     
     func viewDidLoad() {
         setCharacters()
-    }
-    
-    func goBack() {
-        coordinator.back()
     }
     
     func clearCharactersPager() {
@@ -46,38 +43,27 @@ final class CharactersViewModel {
     }
     
     func openCharacter(_ character: CharacterRepresentable) {
-        let representable = DefaultCharacterDetailRepresentable(name: character.name,
-                                                                image: character.urlImage,
-                                                                status: character.status,
-                                                                species: character.species,
-                                                                gender: character.gender,
-                                                                origin: character.origin,
-                                                                location: character.location,
-                                                                numberOfEpisodes: character.numberOfEpisodes)
-        coordinator.openCharacter(with: representable)
+        let info = DefaultCharacterDetailRepresentable(name: character.name,
+                                                       image: character.urlImage,
+                                                       status: character.status,
+                                                       species: character.species,
+                                                       gender: character.gender,
+                                                       origin: character.origin,
+                                                       location: character.location,
+                                                       numberOfEpisodes: character.numberOfEpisodes)
+        coordinator.openCharacter(with: info)
+    }
+    
+    func dismiss(with type: PopType) {
+        coordinator.dismiss(with: type)
     }
 }
 
 private extension CharactersViewModel {
-    var coordinator: CharactersCoordinator {
-        dependencies.resolve()
-    }
-    
-    var charactersUseCase: CharactersUseCase {
-        dependencies.resolve()
-    }
-    
     func setCharacters() {
-        guard let representable else { return }
-        charactersPager.setItems(representable.characters, and: representable.isLastPage)
+        guard let info else { return }
+        charactersPager.setItems(info.characters, and: info.isLastPage)
         stateSubject.send(.charactersReceived(charactersPager))
-    }
-    
-    func sendStateSubject(_ state: CharactersViewModelState) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            stateSubject.send(state)
-        }
     }
     
     func loadCharacters(with name: String?) {
@@ -85,6 +71,13 @@ private extension CharactersViewModel {
             let charactersInfo = await charactersUseCase.getCharacters(withName: name, ofPage: charactersPager.currentPage)
             charactersPager.setItems(charactersInfo.results, and: charactersInfo.info.isLast)
             sendStateSubject(.charactersReceived(charactersPager))
+        }
+    }
+    
+    func sendStateSubject(_ state: CharactersViewModelState) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            stateSubject.send(state)
         }
     }
 }

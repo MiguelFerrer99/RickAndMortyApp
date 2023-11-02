@@ -7,13 +7,15 @@
 
 import UIKit
 
-protocol LocationDetailCoordinator {
-    func start(with representable: LocationDetailRepresentable)
-    func back()
+protocol LocationDetailCoordinator: Coordinator {
+    func setInfo(_ info: LocationDetailRepresentable)
 }
 
 final class DefaultLocationDetailCoordinator {
-    private let navigationController: UINavigationController
+    var onFinish: (() -> Void)?
+    var childCoordinators: [Coordinator] = []
+    var navigationController: UINavigationController
+    private var info: LocationDetailRepresentable?
     private let externalDependencies: LocationDetailExternalDependenciesResolver
     private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
@@ -24,21 +26,21 @@ final class DefaultLocationDetailCoordinator {
 }
 
 extension DefaultLocationDetailCoordinator: LocationDetailCoordinator {
-    func start(with representable: LocationDetailRepresentable) {
-        dependencies.representable = representable
-        navigationController.pushViewController(dependencies.resolve(), animated: true)
+    func start() {
+        guard let info else { return }
+        let viewController: LocationDetailViewController = dependencies.resolve(with: info)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
-    func back() {
-        navigationController.popViewController(animated: true)
+    func setInfo(_ info: LocationDetailRepresentable) {
+        self.info = info
     }
 }
 
 private extension DefaultLocationDetailCoordinator {
     struct Dependencies: LocationDetailDependenciesResolver {
         let externalDependencies: LocationDetailExternalDependenciesResolver
-        let coordinator: LocationDetailCoordinator
-        var representable: LocationDetailRepresentable?
+        unowned let coordinator: LocationDetailCoordinator
         
         var external: LocationDetailExternalDependenciesResolver {
             externalDependencies
@@ -46,10 +48,6 @@ private extension DefaultLocationDetailCoordinator {
         
         func resolve() -> LocationDetailCoordinator {
             coordinator
-        }
-        
-        func resolve() -> LocationDetailViewModel {
-            LocationDetailViewModel(dependencies: self, representable: representable)
         }
     }
 }

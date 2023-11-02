@@ -9,11 +9,11 @@ protocol HomeUseCase {
     func getInfo() async -> HomeInfoRepresentable
 }
 
-final class DefaultHomeUseCase {
+struct DefaultHomeUseCase {
     private let repository: HomeRepository
-
+    
     init(dependencies: HomeDependenciesResolver) {
-        self.repository = dependencies.resolve()
+        repository = dependencies.resolve()
     }
 }
 

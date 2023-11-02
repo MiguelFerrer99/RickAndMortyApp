@@ -15,6 +15,13 @@ final class BarButtonItem: UIBarButtonItem {
 }
 
 extension UIViewController: UIGestureRecognizerDelegate {
+    var isModal: Bool {
+        let presentingIsModal = presentingViewController != nil
+        let presentingIsNavigation = navigationController?.presentingViewController?.presentedViewController == navigationController
+        let presentingIsTabBar = tabBarController?.presentingViewController is UITabBarController
+        return presentingIsModal || presentingIsNavigation || presentingIsTabBar
+    }
+    
     func configureNavigationBar(with title: String, hidden: Bool = false) {
         self.title = title
         navigationItem.backBarButtonItem = nil

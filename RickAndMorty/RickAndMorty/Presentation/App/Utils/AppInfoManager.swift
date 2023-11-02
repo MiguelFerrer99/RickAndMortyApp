@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class AppInfoManager {
+struct AppInfoManager {
     enum Key: String {
         case refresh_token,
              access_token,

@@ -11,13 +11,11 @@ protocol HomeRepository {
     func getEpisodes() async throws -> EpisodesInfoRepresentable
 }
 
-final class DefaultHomeRepository {
-    private let dependencies: HomeDependenciesResolver
+struct DefaultHomeRepository {
     private let apiService: APIService
     
     init(dependencies: HomeDependenciesResolver) {
-        self.dependencies = dependencies
-        self.apiService = dependencies.external.resolveAPIService()
+        apiService = dependencies.external.resolve()
     }
 }
 

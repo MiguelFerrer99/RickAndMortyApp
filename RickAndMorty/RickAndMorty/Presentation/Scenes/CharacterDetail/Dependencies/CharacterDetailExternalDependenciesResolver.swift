@@ -8,11 +8,11 @@
 import UIKit
 
 protocol CharacterDetailExternalDependenciesResolver: CommonExternalDependenciesResolver {
-    func resolveCharacterDetailCoordinator() -> CharacterDetailCoordinator
+    func resolve() -> CharacterDetailCoordinator
 }
 
 extension CharacterDetailExternalDependenciesResolver {
-    func resolveCharacterDetailCoordinator() -> CharacterDetailCoordinator {
+    func resolve() -> CharacterDetailCoordinator {
         DefaultCharacterDetailCoordinator(externalDependencies: self, navigationController: resolve())
     }
 }

@@ -19,10 +19,10 @@ final class LocationDetailViewController: UIViewController {
     private lazy var dimensionInfoView = InfoView()
     private lazy var numberOfResidentsInfoView = InfoView()
     private lazy var spacerView = UIView()
-
-    init(dependencies: LocationDetailDependenciesResolver) {
+    
+    init(dependencies: LocationDetailDependenciesResolver, info: LocationDetailRepresentable) {
         self.dependencies = dependencies
-        self.viewModel = dependencies.resolve()
+        self.viewModel = dependencies.resolve(with: info)
         self.sceneNavigationController = dependencies.external.resolve()
         super.init(nibName: String(describing: LocationDetailViewController.self), bundle: .main)
     }
@@ -42,6 +42,11 @@ final class LocationDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isMovingFromParent { viewModel.dismiss(with: .gesture) }
     }
 }
 
@@ -84,6 +89,6 @@ private extension LocationDetailViewController {
     }
     
     @objc func didTapBackButton() {
-        viewModel.goBack()
+        viewModel.dismiss(with: .button)
     }
 }

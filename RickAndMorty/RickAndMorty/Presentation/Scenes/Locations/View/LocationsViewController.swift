@@ -21,11 +21,11 @@ final class LocationsViewController: UIViewController {
     private let imageCacheManager: ImageCacheManager
     private var subscriptions: Set<AnyCancellable> = []
     
-    init(dependencies: LocationsDependenciesResolver) {
+    init(dependencies: LocationsDependenciesResolver, info: LocationsViewModelRepresentable) {
         self.dependencies = dependencies
-        self.viewModel = dependencies.resolve()
+        self.viewModel = dependencies.resolve(with: info)
         self.sceneNavigationController = dependencies.external.resolve()
-        self.imageCacheManager = dependencies.external.resolveImageCacheManager()
+        self.imageCacheManager = dependencies.external.resolve()
         super.init(nibName: String(describing: LocationsViewController.self), bundle: .main)
     }
     
@@ -44,6 +44,11 @@ final class LocationsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureNavigationBar()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isMovingFromParent { viewModel.dismiss(with: .gesture) }
     }
 }
 
@@ -140,7 +145,7 @@ private extension LocationsViewController {
     }
     
     @objc func didTapBackButton() {
-        viewModel.goBack()
+        viewModel.dismiss(with: .button)
     }
     
     @objc func didTapRightNavigationBarButton() {

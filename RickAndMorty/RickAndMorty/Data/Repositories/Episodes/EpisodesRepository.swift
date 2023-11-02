@@ -9,13 +9,11 @@ protocol EpisodesRepository {
     func getEpisodes(withName name: String?, ofPage page: Int) async throws -> EpisodesInfoRepresentable
 }
 
-final class DefaultEpisodesRepository {
-    private let dependencies: EpisodesDependenciesResolver
+struct DefaultEpisodesRepository {
     private let apiService: APIService
     
     init(dependencies: EpisodesDependenciesResolver) {
-        self.dependencies = dependencies
-        self.apiService = dependencies.external.resolveAPIService()
+        apiService = dependencies.external.resolve()
     }
 }
 

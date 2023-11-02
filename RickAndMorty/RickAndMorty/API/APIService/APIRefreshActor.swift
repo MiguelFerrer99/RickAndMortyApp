@@ -34,8 +34,6 @@ actor APIRefreshActor {
     private func getClientId() -> String {
         #if Demo
             return ""
-        #elseif Develop
-            return ""
         #elseif Production
             return ""
         #else
@@ -45,8 +43,6 @@ actor APIRefreshActor {
     
     private func getClientSecret() -> String {
         #if Demo
-            return ""
-        #elseif Develop
             return ""
         #elseif Production
             return ""

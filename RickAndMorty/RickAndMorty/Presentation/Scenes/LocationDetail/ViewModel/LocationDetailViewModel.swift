@@ -16,28 +16,27 @@ final class LocationDetailViewModel {
     private let dependencies: LocationDetailDependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
     private let stateSubject = CurrentValueSubject<LocationDetailViewModelState, Never>(.idle)
-    var state: AnyPublisher<LocationDetailViewModelState, Never>
-    private let representable: LocationDetailRepresentable?
+    var state: AnyPublisher<LocationDetailViewModelState, Never> { stateSubject.eraseToAnyPublisher() }
+    private let info: LocationDetailRepresentable?
     private lazy var coordinator: LocationDetailCoordinator = dependencies.resolve()
-
-    init(dependencies: LocationDetailDependenciesResolver, representable: LocationDetailRepresentable?) {
+    
+    init(dependencies: LocationDetailDependenciesResolver, info: LocationDetailRepresentable) {
         self.dependencies = dependencies
-        self.representable = representable
-        state = stateSubject.eraseToAnyPublisher()
+        self.info = info
     }
     
     func viewDidLoad() {
         setInfo()
     }
     
-    func goBack() {
-        coordinator.back()
+    func dismiss(with type: PopType) {
+        coordinator.dismiss(with: type)
     }
 }
 
 private extension LocationDetailViewModel {
     func setInfo() {
-        guard let representable else { return }
-        stateSubject.send(.locationReceived(representable))
+        guard let info else { return }
+        stateSubject.send(.locationReceived(info))
     }
 }

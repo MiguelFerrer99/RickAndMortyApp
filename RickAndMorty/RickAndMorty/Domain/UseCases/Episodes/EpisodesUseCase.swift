@@ -9,11 +9,11 @@ protocol EpisodesUseCase {
     func getEpisodes(withName name: String?, ofPage page: Int) async -> EpisodesInfoRepresentable
 }
 
-final class DefaultEpisodesUseCase {
+struct DefaultEpisodesUseCase {
     private let repository: EpisodesRepository
-
+    
     init(dependencies: EpisodesDependenciesResolver) {
-        self.repository = dependencies.resolve()
+        repository = dependencies.resolve()
     }
 }
 

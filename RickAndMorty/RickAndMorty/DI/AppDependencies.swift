@@ -17,25 +17,11 @@ final class AppDependencies {
         self.window = window
     }
     
-    func getWindow() -> UIWindow? {
-        window
-    }
-    
-    func resolve() -> UINavigationController {
-        navigationController
-    }
-    
-    func resolveAppDependencies() -> AppDependencies {
-        self
-    }
-    
-    func resolveAPIService() -> APIService {
-        apiService
-    }
-    
-    func resolveImageCacheManager() -> ImageCacheManager {
-        imageCacheManager
-    }
+    func getWindow() -> UIWindow? { window }
+    func resolve() -> AppDependencies { self }
+    func resolve() -> APIService { apiService }
+    func resolve() -> ImageCacheManager { imageCacheManager }
+    func resolve() -> UINavigationController { navigationController }
 }
 
 extension AppDependencies: HomeExternalDependenciesResolver,

@@ -8,12 +8,12 @@
 import UIKit
 
 protocol LocationsExternalDependenciesResolver: CommonExternalDependenciesResolver {
-    func resolveLocationsCoordinator() -> LocationsCoordinator
-    func resolveLocationDetailCoordinator() -> LocationDetailCoordinator
+    func resolve() -> LocationsCoordinator
+    func resolve() -> LocationDetailCoordinator
 }
 
 extension LocationsExternalDependenciesResolver {
-    func resolveLocationsCoordinator() -> LocationsCoordinator {
+    func resolve() -> LocationsCoordinator {
         DefaultLocationsCoordinator(externalDependencies: self, navigationController: resolve())
     }
 }

@@ -10,12 +10,16 @@ import UIKit
 protocol LocationDetailDependenciesResolver {
     var external: LocationDetailExternalDependenciesResolver { get }
     func resolve() -> LocationDetailCoordinator
-    func resolve() -> LocationDetailViewController
-    func resolve() -> LocationDetailViewModel
+    func resolve(with info: LocationDetailRepresentable) -> LocationDetailViewController
+    func resolve(with info: LocationDetailRepresentable) -> LocationDetailViewModel
 }
 
 extension LocationDetailDependenciesResolver {
-    func resolve() -> LocationDetailViewController {
-        LocationDetailViewController(dependencies: self)
+    func resolve(with info: LocationDetailRepresentable) -> LocationDetailViewController {
+        LocationDetailViewController(dependencies: self, info: info)
+    }
+    
+    func resolve(with info: LocationDetailRepresentable) -> LocationDetailViewModel {
+        LocationDetailViewModel(dependencies: self, info: info)
     }
 }

@@ -7,13 +7,15 @@
 
 import UIKit
 
-protocol CharacterDetailCoordinator {
-    func start(with representable: CharacterDetailRepresentable)
-    func back()
+protocol CharacterDetailCoordinator: Coordinator {
+    func setInfo(_ info: CharacterDetailRepresentable)
 }
 
 final class DefaultCharacterDetailCoordinator {
-    private let navigationController: UINavigationController
+    var onFinish: (() -> Void)?
+    var childCoordinators: [Coordinator] = []
+    var navigationController: UINavigationController
+    private var info: CharacterDetailRepresentable?
     private let externalDependencies: CharacterDetailExternalDependenciesResolver
     private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
@@ -24,21 +26,21 @@ final class DefaultCharacterDetailCoordinator {
 }
 
 extension DefaultCharacterDetailCoordinator: CharacterDetailCoordinator {
-    func start(with representable: CharacterDetailRepresentable) {
-        dependencies.representable = representable
-        navigationController.pushViewController(dependencies.resolve(), animated: true)
+    func start() {
+        guard let info else { return }
+        let viewController: CharacterDetailViewController = dependencies.resolve(with: info)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
-    func back() {
-        navigationController.popViewController(animated: true)
+    func setInfo(_ info: CharacterDetailRepresentable) {
+        self.info = info
     }
 }
 
 private extension DefaultCharacterDetailCoordinator {
     struct Dependencies: CharacterDetailDependenciesResolver {
         let externalDependencies: CharacterDetailExternalDependenciesResolver
-        let coordinator: CharacterDetailCoordinator
-        var representable: CharacterDetailRepresentable?
+        unowned let coordinator: CharacterDetailCoordinator
         
         var external: CharacterDetailExternalDependenciesResolver {
             externalDependencies
@@ -46,10 +48,6 @@ private extension DefaultCharacterDetailCoordinator {
         
         func resolve() -> CharacterDetailCoordinator {
             coordinator
-        }
-        
-        func resolve() -> CharacterDetailViewModel {
-            CharacterDetailViewModel(dependencies: self, representable: representable)
         }
     }
 }

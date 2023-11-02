@@ -16,7 +16,7 @@ extension Localizable {
     var localized: String { NSLocalizedString(rawValue, comment: "") }
     var uppercased: String { localized.uppercased() }
     var description: String { localized }
-
+    
     func localized(with: CVarArg...) -> String {
         String(format: localized, arguments: with)
     }

@@ -7,14 +7,16 @@
 
 import UIKit
 
-protocol EpisodesCoordinator {
-    func start(with representable: EpisodesViewModelRepresentable)
-    func back()
-    func openEpisode(_ representable: EpisodeDetailRepresentable)
+protocol EpisodesCoordinator: Coordinator {
+    func setInfo(_ info: EpisodesViewModelRepresentable)
+    func openEpisode(with info: EpisodeDetailRepresentable)
 }
 
 final class DefaultEpisodesCoordinator {
-    private let navigationController: UINavigationController
+    var onFinish: (() -> Void)?
+    var childCoordinators: [Coordinator] = []
+    var navigationController: UINavigationController
+    private var info: EpisodesViewModelRepresentable?
     private let externalDependencies: EpisodesExternalDependenciesResolver
     private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
     
@@ -25,26 +27,28 @@ final class DefaultEpisodesCoordinator {
 }
 
 extension DefaultEpisodesCoordinator: EpisodesCoordinator {
-    func start(with representable: EpisodesViewModelRepresentable) {
-        dependencies.representable = representable
-        navigationController.pushViewController(dependencies.resolve(), animated: true)
+    func start() {
+        guard let info else { return }
+        let viewController: EpisodesViewController = dependencies.resolve(with: info)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
-    func back() {
-        navigationController.popViewController(animated: true)
+    func setInfo(_ info: EpisodesViewModelRepresentable) {
+        self.info = info
     }
     
-    func openEpisode(_ representable: EpisodeDetailRepresentable) {
-        let coordinator: EpisodeDetailCoordinator = dependencies.external.resolveEpisodeDetailCoordinator()
-        coordinator.start(with: representable)
+    func openEpisode(with info: EpisodeDetailRepresentable) {
+        let coordinator: EpisodeDetailCoordinator = dependencies.external.resolve()
+        coordinator.setInfo(info)
+        coordinator.start()
+        append(child: coordinator)
     }
 }
 
 private extension DefaultEpisodesCoordinator {
     struct Dependencies: EpisodesDependenciesResolver {
         let externalDependencies: EpisodesExternalDependenciesResolver
-        let coordinator: EpisodesCoordinator
-        var representable: EpisodesViewModelRepresentable?
+        unowned let coordinator: EpisodesCoordinator
         
         var external: EpisodesExternalDependenciesResolver {
             externalDependencies
@@ -52,10 +56,6 @@ private extension DefaultEpisodesCoordinator {
         
         func resolve() -> EpisodesCoordinator {
             coordinator
-        }
-        
-        func resolve() -> EpisodesViewModel {
-            EpisodesViewModel(dependencies: self, representable: representable)
         }
     }
 }

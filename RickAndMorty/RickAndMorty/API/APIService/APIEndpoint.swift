@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class APIEndpoint {
+struct APIEndpoint {
     enum HTTPMethod {
         case get
         case post
@@ -133,8 +133,6 @@ final class APIEndpoint {
     
     private static func getBaseUrl() -> String {
         #if Demo
-            return "https://rickandmortyapi.com/api"
-        #elseif Develop
             return "https://rickandmortyapi.com/api"
         #elseif Production
             return "https://rickandmortyapi.com/api"
