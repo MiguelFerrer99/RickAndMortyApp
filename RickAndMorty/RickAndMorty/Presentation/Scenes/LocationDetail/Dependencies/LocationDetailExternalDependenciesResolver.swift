@@ -7,8 +7,7 @@
 
 import UIKit
 
-protocol LocationDetailExternalDependenciesResolver {
-    func resolve() -> UINavigationController
+protocol LocationDetailExternalDependenciesResolver: CommonExternalDependenciesResolver {
     func resolveLocationDetailCoordinator() -> LocationDetailCoordinator
 }
 

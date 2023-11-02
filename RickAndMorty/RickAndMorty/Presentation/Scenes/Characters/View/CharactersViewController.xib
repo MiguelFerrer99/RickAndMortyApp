@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -46,7 +46,7 @@
                     <constraints>
                         <constraint firstItem="Dp6-yS-QvU" firstAttribute="top" secondItem="mlc-wE-MjI" secondAttribute="top" id="1SD-tT-2Yk"/>
                         <constraint firstItem="DDe-MP-RTc" firstAttribute="leading" secondItem="mlc-wE-MjI" secondAttribute="leading" id="9es-7i-IlD"/>
-                        <constraint firstItem="DDe-MP-RTc" firstAttribute="top" secondItem="Dp6-yS-QvU" secondAttribute="bottom" priority="999" id="CEJ-Zn-Gww"/>
+                        <constraint firstItem="DDe-MP-RTc" firstAttribute="top" secondItem="Dp6-yS-QvU" secondAttribute="bottom" priority="750" id="CEJ-Zn-Gww"/>
                         <constraint firstAttribute="trailing" secondItem="DDe-MP-RTc" secondAttribute="trailing" id="TWQ-2U-hdZ"/>
                         <constraint firstItem="Dp6-yS-QvU" firstAttribute="leading" secondItem="mlc-wE-MjI" secondAttribute="leading" id="TuB-Lh-ZrO"/>
                         <constraint firstAttribute="bottom" secondItem="DDe-MP-RTc" secondAttribute="bottom" id="gNb-b8-iHU"/>

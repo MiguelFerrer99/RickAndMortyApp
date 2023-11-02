@@ -13,17 +13,18 @@ final class EpisodeDetailViewController: UIViewController {
     
     private let viewModel: EpisodeDetailViewModel
     private let dependencies: EpisodeDetailDependenciesResolver
+    private let sceneNavigationController: UINavigationController
     private var subscriptions: Set<AnyCancellable> = []
-    private let airDateInfoView = InfoView()
-    private let seasonInfoView = InfoView()
-    private let episodeInfoView = InfoView()
-    private let numberOfCharactersInfoView = InfoView()
-    private let spacerView = UIView()
-    private lazy var sceneNavigationController = dependencies.external.resolve()
+    private lazy var airDateInfoView = InfoView()
+    private lazy var seasonInfoView = InfoView()
+    private lazy var episodeInfoView = InfoView()
+    private lazy var numberOfCharactersInfoView = InfoView()
+    private lazy var spacerView = UIView()
 
     init(dependencies: EpisodeDetailDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
+        self.sceneNavigationController = dependencies.external.resolve()
         super.init(nibName: String(describing: EpisodeDetailViewController.self), bundle: .main)
     }
     

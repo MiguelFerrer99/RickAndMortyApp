@@ -49,7 +49,7 @@ final class APIEndpoint {
             let url = APIEndpoint.getURL(path: path)
             var request = URLRequest(url: url)
             request.httpMethod = httpMethod.rawValue
-            
+            request.cachePolicy = .returnCacheDataDontLoad
             switch httpMethod {
             case .get:
                 if !parameters.isEmpty { request = setURLEncoding(for: url) }

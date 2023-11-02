@@ -23,7 +23,6 @@ final class HomeDataView: XibView {
     @IBOutlet private weak var titleViewDefaultBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var topImageViewDefaultWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var topImageViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var topImageViewWidthPadConstraint: NSLayoutConstraint!
     @IBOutlet private weak var collectionView: HomeDataCollectionView!
     
     private var subscriptions = Set<AnyCancellable>()
@@ -75,11 +74,11 @@ private extension HomeDataView {
     func moveImageToTop() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 20, initialSpringVelocity: 5) { [weak self] in
             guard let self else { return }
-            titleViewDefaultBottomConstraint.priority = UILayoutPriority(999)
-            titleViewHeightConstraint.priority = UILayoutPriority(1000)
-            topImageViewDefaultWidthConstraint.priority = UILayoutPriority(999)
-            topImageViewWidthConstraint.priority = UILayoutPriority(UIDevice.isIpad ? 999 : 1000)
-            topImageViewWidthConstraint.priority = UILayoutPriority(UIDevice.isIpad ? 1000 : 999)
+            titleViewDefaultBottomConstraint.priority = .defaultHigh
+            titleViewHeightConstraint.priority = .required
+            topImageViewDefaultWidthConstraint.priority = .defaultHigh
+            topImageViewWidthConstraint.priority = UIDevice.isIpad ? .defaultHigh : .required
+            topImageViewWidthConstraint.priority = UIDevice.isIpad ? .required : .defaultHigh
             layoutIfNeeded()
         } completion: { [weak self] finished in
             guard let self else { return }

@@ -17,13 +17,15 @@ final class CharactersViewController: UIViewController {
     
     private let viewModel: CharactersViewModel
     private let dependencies: CharactersDependenciesResolver
+    private let sceneNavigationController: UINavigationController
+    private let imageCacheManager: ImageCacheManager
     private var subscriptions: Set<AnyCancellable> = []
-    private lazy var sceneNavigationController = dependencies.external.resolve()
-    private lazy var imageCacheManager = dependencies.external.resolveImageCacheManager()
-
+    
     init(dependencies: CharactersDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
+        self.sceneNavigationController = dependencies.external.resolve()
+        self.imageCacheManager = dependencies.external.resolveImageCacheManager()
         super.init(nibName: String(describing: CharactersViewController.self), bundle: .main)
     }
     
@@ -152,8 +154,8 @@ private extension CharactersViewController {
             }
             showNavigationBarShadow(searchView.isHidden && collectionView.contentOffset.y > 0)
             searchView.showShadow(!searchView.isHidden && collectionView.contentOffset.y > 0)
-            collectionViewToContainerViewTopConstraint.priority = UILayoutPriority(searchView.isHidden ? 1000 : 999)
-            collectionViewToSearchViewTopConstraint.priority = UILayoutPriority(searchView.isHidden ? 999 : 1000)
+            collectionViewToContainerViewTopConstraint.priority = searchView.isHidden ? .required : .defaultHigh
+            collectionViewToSearchViewTopConstraint.priority = searchView.isHidden ? .defaultHigh : .required
             view.layoutIfNeeded()
         }, completion: { [weak self] finished in
             guard let self else { return }

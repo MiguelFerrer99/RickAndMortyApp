@@ -7,8 +7,7 @@
 
 import UIKit
 
-protocol AuthorInfoExternalDependenciesResolver {
-    func resolve() -> UINavigationController
+protocol AuthorInfoExternalDependenciesResolver: CommonExternalDependenciesResolver {
     func resolveAuthorInfoCoordinator() -> AuthorInfoCoordinator
 }
 

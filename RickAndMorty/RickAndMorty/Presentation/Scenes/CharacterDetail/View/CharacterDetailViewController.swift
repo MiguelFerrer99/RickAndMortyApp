@@ -13,22 +13,25 @@ final class CharacterDetailViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var infoStackView: UIStackView!
     @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var closeImageView: UIImageView!
     
     private let viewModel: CharacterDetailViewModel
     private let dependencies: CharacterDetailDependenciesResolver
+    private let sceneNavigationController: UINavigationController
+    private let imageCacheManager: ImageCacheManager
     private var subscriptions: Set<AnyCancellable> = []
-    private let statusInfoView = InfoView()
-    private let speciesInfoView = InfoView()
-    private let genderInfoView = InfoView()
-    private let originInfoView = InfoView()
-    private let locationInfoView = InfoView()
-    private let numberOfEpisodesInfoView = InfoView()
-    private lazy var sceneNavigationController = dependencies.external.resolve()
-    private lazy var imageCacheManager = dependencies.external.resolveImageCacheManager()
-
+    private lazy var statusInfoView = InfoView()
+    private lazy var speciesInfoView = InfoView()
+    private lazy var genderInfoView = InfoView()
+    private lazy var originInfoView = InfoView()
+    private lazy var locationInfoView = InfoView()
+    private lazy var numberOfEpisodesInfoView = InfoView()
+    
     init(dependencies: CharacterDetailDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
+        self.sceneNavigationController = dependencies.external.resolve()
+        self.imageCacheManager = dependencies.external.resolveImageCacheManager()
         super.init(nibName: String(describing: CharacterDetailViewController.self), bundle: .main)
     }
     
@@ -52,9 +55,16 @@ final class CharacterDetailViewController: UIViewController {
 
 private extension CharacterDetailViewController {
     func setupViews() {
+        configureCloseImageView()
         configureScrollView()
         configureInfoStackView()
         configureTitleLabel()
+    }
+    
+    func configureCloseImageView() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapCloseImageView))
+        closeImageView.addGestureRecognizer(gestureRecognizer)
+        closeImageView.isUserInteractionEnabled = true
     }
     
     func configureScrollView() {
@@ -90,8 +100,7 @@ private extension CharacterDetailViewController {
     }
     
     func configureNavigationBar() {
-        configureNavigationBar(with: "", transparent: true)
-        navigationItem.leftBarButtonItem = BarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(didTapBackButton))
+        configureNavigationBar(with: "", hidden: true)
     }
     
     func setInfo(_ info: CharacterDetailRepresentable) {
@@ -117,7 +126,7 @@ private extension CharacterDetailViewController {
         }
     }
     
-    @objc func didTapBackButton() {
+    @objc func didTapCloseImageView() {
         viewModel.goBack()
     }
 }

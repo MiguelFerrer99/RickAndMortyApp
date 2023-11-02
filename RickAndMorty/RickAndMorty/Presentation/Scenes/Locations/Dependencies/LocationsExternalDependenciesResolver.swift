@@ -7,10 +7,7 @@
 
 import UIKit
 
-protocol LocationsExternalDependenciesResolver {
-    func resolve() -> UINavigationController
-    func resolveAPIService() -> APIService
-    func resolveImageCacheManager() -> ImageCacheManager
+protocol LocationsExternalDependenciesResolver: CommonExternalDependenciesResolver {
     func resolveLocationsCoordinator() -> LocationsCoordinator
     func resolveLocationDetailCoordinator() -> LocationDetailCoordinator
 }

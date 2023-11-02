@@ -21,11 +21,12 @@ final class AuthorInfoViewController: UIViewController {
     
     private let viewModel: AuthorInfoViewModel
     private let dependencies: AuthorInfoDependenciesResolver
-    private lazy var sceneNavigationController = dependencies.external.resolve()
+    private let sceneNavigationController: UINavigationController
     
     init(dependencies: AuthorInfoDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
+        self.sceneNavigationController = dependencies.external.resolve()
         super.init(nibName: String(describing: AuthorInfoViewController.self), bundle: .main)
     }
     

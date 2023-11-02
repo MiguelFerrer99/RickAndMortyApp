@@ -15,17 +15,10 @@ final class BarButtonItem: UIBarButtonItem {
 }
 
 extension UIViewController: UIGestureRecognizerDelegate {
-    func configureNavigationBar(with title: String, transparent: Bool = false) {
-        let navBarAppearance = UINavigationBarAppearance()
-        transparent ? navBarAppearance.configureWithTransparentBackground() : navBarAppearance.configureWithOpaqueBackground()
-        navBarAppearance.shadowColor = .clear
-        navBarAppearance.shadowImage = UIImage()
-        UINavigationBar.appearance().standardAppearance = navBarAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
-        UINavigationBar.appearance().compactAppearance = navBarAppearance
+    func configureNavigationBar(with title: String, hidden: Bool = false) {
         self.title = title
         navigationItem.backBarButtonItem = nil
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setNavigationBarHidden(hidden, animated: true)
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.navigationBar.layer.shadowOpacity = 0

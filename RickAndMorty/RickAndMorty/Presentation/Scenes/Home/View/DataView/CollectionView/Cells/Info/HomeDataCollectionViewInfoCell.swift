@@ -13,7 +13,7 @@ final class HomeDataCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var episodeLabel: UILabel!
     
-    private let gradientLayer = CAGradientLayer()
+    private lazy var gradientLayer = CAGradientLayer()
     
     override func prepareForReuse() {
         super.prepareForReuse()

@@ -7,10 +7,7 @@
 
 import UIKit
 
-protocol CharactersExternalDependenciesResolver {
-    func resolve() -> UINavigationController
-    func resolveAPIService() -> APIService
-    func resolveImageCacheManager() -> ImageCacheManager
+protocol CharactersExternalDependenciesResolver: CommonExternalDependenciesResolver {
     func resolveCharactersCoordinator() -> CharactersCoordinator
     func resolveCharacterDetailCoordinator() -> CharacterDetailCoordinator
 }

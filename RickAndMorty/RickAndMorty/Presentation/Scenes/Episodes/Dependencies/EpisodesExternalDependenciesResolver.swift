@@ -7,10 +7,7 @@
 
 import UIKit
 
-protocol EpisodesExternalDependenciesResolver {
-    func resolve() -> UINavigationController
-    func resolveAPIService() -> APIService
-    func resolveImageCacheManager() -> ImageCacheManager
+protocol EpisodesExternalDependenciesResolver: CommonExternalDependenciesResolver {
     func resolveEpisodesCoordinator() -> EpisodesCoordinator
     func resolveEpisodeDetailCoordinator() -> EpisodeDetailCoordinator
 }

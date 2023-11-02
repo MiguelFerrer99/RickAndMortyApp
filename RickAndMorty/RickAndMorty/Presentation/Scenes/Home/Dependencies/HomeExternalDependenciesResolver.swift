@@ -7,11 +7,8 @@
 
 import UIKit
 
-protocol HomeExternalDependenciesResolver {
-    func resolve() -> UINavigationController
+protocol HomeExternalDependenciesResolver: CommonExternalDependenciesResolver {
     func resolveAppDependencies() -> AppDependencies
-    func resolveAPIService() -> APIService
-    func resolveImageCacheManager() -> ImageCacheManager
     func resolveHomeCoordinator() -> HomeCoordinator
     func resolveAuthorInfoCoordinator() -> AuthorInfoCoordinator
     func resolveCharactersCoordinator() -> CharactersCoordinator

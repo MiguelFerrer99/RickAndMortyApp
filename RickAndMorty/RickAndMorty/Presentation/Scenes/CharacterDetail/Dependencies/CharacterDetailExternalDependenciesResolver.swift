@@ -7,9 +7,7 @@
 
 import UIKit
 
-protocol CharacterDetailExternalDependenciesResolver {
-    func resolve() -> UINavigationController
-    func resolveImageCacheManager() -> ImageCacheManager
+protocol CharacterDetailExternalDependenciesResolver: CommonExternalDependenciesResolver {
     func resolveCharacterDetailCoordinator() -> CharacterDetailCoordinator
 }
 

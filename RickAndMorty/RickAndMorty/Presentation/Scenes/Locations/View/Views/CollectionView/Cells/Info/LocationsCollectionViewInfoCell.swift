@@ -12,7 +12,7 @@ final class LocationsCollectionViewInfoCell: UICollectionViewCell {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     
-    private let gradientLayer = CAGradientLayer()
+    private lazy var gradientLayer = CAGradientLayer()
     
     override func prepareForReuse() {
         super.prepareForReuse()

@@ -18,7 +18,7 @@ final class HomeLoadingErrorView: XibView {
     private var subscriptions = Set<AnyCancellable>()
     private var subject = PassthroughSubject<HomeLoadingErrorViewState, Never>()
     var publisher: AnyPublisher<HomeLoadingErrorViewState, Never> { subject.eraseToAnyPublisher() }
-    private let tryAgainButtonView = TryAgainButtonView()
+    private lazy var tryAgainButtonView = TryAgainButtonView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

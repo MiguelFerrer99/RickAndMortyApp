@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeDataView" customModule="RickAndMorty" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeDataView" customModule="Rick___Morty" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="xj3-UL-ajh" id="x2H-4i-1wK"/>
                 <outlet property="titleView" destination="IcF-QE-Tdx" id="2KP-mT-NSJ"/>
@@ -27,7 +27,7 @@
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucl-sG-mgL" userLabel="Collection Container View">
                     <rect key="frame" x="0.0" y="896" width="414" height="0.0"/>
                     <subviews>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xj3-UL-ajh" customClass="HomeDataCollectionView" customModule="RickAndMorty" customModuleProvider="target">
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xj3-UL-ajh" customClass="HomeDataCollectionView" customModule="Rick___Morty" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="oUM-us-xN2">
@@ -66,8 +66,8 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Ucl-sG-mgL" secondAttribute="trailing" id="2dV-Jt-NX7"/>
-                <constraint firstItem="IcF-QE-Tdx" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.075" priority="999" id="8mM-rx-HoF"/>
-                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.25" priority="999" id="JC2-bh-B1i"/>
+                <constraint firstItem="IcF-QE-Tdx" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.075" priority="750" id="8mM-rx-HoF"/>
+                <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.25" priority="750" id="JC2-bh-B1i"/>
                 <constraint firstItem="t5U-FC-v5l" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.35" priority="999" id="OYh-LY-Cy6"/>
                 <constraint firstAttribute="bottom" secondItem="IcF-QE-Tdx" secondAttribute="bottom" id="P6a-mL-Hqn"/>
                 <constraint firstItem="IcF-QE-Tdx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Pwa-9i-U1n"/>

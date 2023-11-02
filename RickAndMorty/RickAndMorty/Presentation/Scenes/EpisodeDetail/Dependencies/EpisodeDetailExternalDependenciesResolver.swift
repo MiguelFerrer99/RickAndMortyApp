@@ -7,8 +7,7 @@
 
 import UIKit
 
-protocol EpisodeDetailExternalDependenciesResolver {
-    func resolve() -> UINavigationController
+protocol EpisodeDetailExternalDependenciesResolver: CommonExternalDependenciesResolver {
     func resolveEpisodeDetailCoordinator() -> EpisodeDetailCoordinator
 }
 

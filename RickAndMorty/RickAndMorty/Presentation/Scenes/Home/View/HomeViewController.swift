@@ -13,8 +13,10 @@ final class HomeViewController: UIViewController {
     
     private let viewModel: HomeViewModel
     private let dependencies: HomeDependenciesResolver
+    private let sceneNavigationController: UINavigationController
+    private let imageCacheManager: ImageCacheManager
     private var subscriptions: Set<AnyCancellable> = []
-    private let loadingView = HomeLoadingView()
+    private lazy var loadingView = HomeLoadingView()
     private lazy var dataView: HomeDataView = {
         let dataView = HomeDataView()
         dataView.isHidden = true
@@ -24,6 +26,8 @@ final class HomeViewController: UIViewController {
     init(dependencies: HomeDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
+        self.sceneNavigationController = dependencies.external.resolve()
+        self.imageCacheManager = dependencies.external.resolveImageCacheManager()
         super.init(nibName: String(describing: HomeViewController.self), bundle: .main)
     }
     
@@ -46,14 +50,6 @@ final class HomeViewController: UIViewController {
 }
 
 private extension HomeViewController {
-    var sceneNavigationController: UINavigationController {
-        dependencies.external.resolve()
-    }
-    
-    var imageCacheManager: ImageCacheManager {
-        dependencies.external.resolveImageCacheManager()
-    }
-    
     func setupViews() {
         configureLoadingView()
         configureDataView()

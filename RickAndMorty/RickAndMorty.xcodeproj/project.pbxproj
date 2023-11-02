@@ -10,6 +10,7 @@
 		25770A5B2AF2781E000414B8 /* EpisodesCollectionViewLoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25770A592AF2781E000414B8 /* EpisodesCollectionViewLoadingCell.xib */; };
 		25770A5C2AF2781E000414B8 /* EpisodesCollectionViewLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25770A5A2AF2781E000414B8 /* EpisodesCollectionViewLoadingCell.swift */; };
 		25770A5E2AF27DC7000414B8 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25770A5D2AF27DC7000414B8 /* UIDevice+Extension.swift */; };
+		25FC91B62AF3EB3100F15562 /* CommonExternalDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FC91B52AF3EB3100F15562 /* CommonExternalDependenciesResolver.swift */; };
 		4106092D2928602600E44A77 /* TokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4106092C2928602600E44A77 /* TokenDTO.swift */; };
 		410DB72929281A3B00176DE9 /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410DB72829281A3B00176DE9 /* AppDependencies.swift */; };
 		410DB72B29282AD300176DE9 /* HomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410DB72A29282AD300176DE9 /* HomeRepository.swift */; };
@@ -112,7 +113,6 @@
 		41BB8C10296C2572007AA311 /* HomeDataCollectionViewInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BB8C0E296C2572007AA311 /* HomeDataCollectionViewInfoCell.xib */; };
 		41BCB8932929936100E6E757 /* HomeDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BCB8922929936100E6E757 /* HomeDependenciesResolver.swift */; };
 		41BCB8952929937C00E6E757 /* HomeExternalDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BCB8942929937C00E6E757 /* HomeExternalDependenciesResolver.swift */; };
-		41C3EA552938BD3F00BAF477 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41C3EA542938BD3F00BAF477 /* IQKeyboardManagerSwift */; };
 		41C3EA582938BD5700BAF477 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 41C3EA572938BD5700BAF477 /* Lottie */; };
 		41D1BAEE2963563F00633467 /* HomeDataCollectionViewSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D1BAEC2963563F00633467 /* HomeDataCollectionViewSectionHeaderView.swift */; };
 		41D1BAEF2963563F00633467 /* HomeDataCollectionViewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41D1BAED2963563F00633467 /* HomeDataCollectionViewSectionHeaderView.xib */; };
@@ -169,6 +169,7 @@
 		25770A592AF2781E000414B8 /* EpisodesCollectionViewLoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodesCollectionViewLoadingCell.xib; sourceTree = "<group>"; };
 		25770A5A2AF2781E000414B8 /* EpisodesCollectionViewLoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesCollectionViewLoadingCell.swift; sourceTree = "<group>"; };
 		25770A5D2AF27DC7000414B8 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
+		25FC91B52AF3EB3100F15562 /* CommonExternalDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExternalDependenciesResolver.swift; sourceTree = "<group>"; };
 		4106092C2928602600E44A77 /* TokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDTO.swift; sourceTree = "<group>"; };
 		410DB72829281A3B00176DE9 /* AppDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
 		410DB72A29282AD300176DE9 /* HomeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRepository.swift; sourceTree = "<group>"; };
@@ -330,7 +331,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41C3EA552938BD3F00BAF477 /* IQKeyboardManagerSwift in Frameworks */,
 				41C3EA582938BD5700BAF477 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,6 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				410DB72829281A3B00176DE9 /* AppDependencies.swift */,
+				25FC91B52AF3EB3100F15562 /* CommonExternalDependenciesResolver.swift */,
 			);
 			path = DI;
 			sourceTree = "<group>";
@@ -1453,7 +1454,6 @@
 			);
 			name = RickAndMorty;
 			packageProductDependencies = (
-				41C3EA542938BD3F00BAF477 /* IQKeyboardManagerSwift */,
 				41C3EA572938BD5700BAF477 /* Lottie */,
 			);
 			productName = clean;
@@ -1486,7 +1486,6 @@
 			);
 			mainGroup = C1780310291673D800E9E0AE;
 			packageReferences = (
-				41C3EA532938BD3F00BAF477 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				41C3EA562938BD5700BAF477 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = C178031A291673D800E9E0AE /* Products */;
@@ -1573,6 +1572,7 @@
 				4106092D2928602600E44A77 /* TokenDTO.swift in Sources */,
 				41A5655F297F2F0A00B0CC5E /* CharactersExternalDependenciesResolver.swift in Sources */,
 				414C99AD297D86BE00EF9ED1 /* UIImageView+Extension.swift in Sources */,
+				25FC91B62AF3EB3100F15562 /* CommonExternalDependenciesResolver.swift in Sources */,
 				413217BE29884E0900229B85 /* CharacterDetailRepresentable.swift in Sources */,
 				41BCB8932929936100E6E757 /* HomeDependenciesResolver.swift in Sources */,
 				41A5657D297F353E00B0CC5E /* EpisodesCoordinator.swift in Sources */,
@@ -2006,14 +2006,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		41C3EA532938BD3F00BAF477 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		41C3EA562938BD5700BAF477 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -2025,11 +2017,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		41C3EA542938BD3F00BAF477 /* IQKeyboardManagerSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 41C3EA532938BD3F00BAF477 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
-			productName = IQKeyboardManagerSwift;
-		};
 		41C3EA572938BD5700BAF477 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 41C3EA562938BD5700BAF477 /* XCRemoteSwiftPackageReference "lottie-ios" */;

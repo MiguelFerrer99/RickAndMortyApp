@@ -13,16 +13,17 @@ final class LocationDetailViewController: UIViewController {
     
     private let viewModel: LocationDetailViewModel
     private let dependencies: LocationDetailDependenciesResolver
+    private let sceneNavigationController: UINavigationController
     private var subscriptions: Set<AnyCancellable> = []
-    private let typeInfoView = InfoView()
-    private let dimensionInfoView = InfoView()
-    private let numberOfResidentsInfoView = InfoView()
-    private let spacerView = UIView()
-    private lazy var sceneNavigationController = dependencies.external.resolve()
+    private lazy var typeInfoView = InfoView()
+    private lazy var dimensionInfoView = InfoView()
+    private lazy var numberOfResidentsInfoView = InfoView()
+    private lazy var spacerView = UIView()
 
     init(dependencies: LocationDetailDependenciesResolver) {
         self.dependencies = dependencies
         self.viewModel = dependencies.resolve()
+        self.sceneNavigationController = dependencies.external.resolve()
         super.init(nibName: String(describing: LocationDetailViewController.self), bundle: .main)
     }
     
