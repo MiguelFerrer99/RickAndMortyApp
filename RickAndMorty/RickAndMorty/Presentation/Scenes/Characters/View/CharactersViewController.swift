@@ -45,11 +45,6 @@ final class CharactersViewController: UIViewController {
         super.viewWillAppear(animated)
         configureNavigationBar()
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if isMovingFromParent { viewModel.dismiss(with: .gesture) }
-    }
 }
 
 private extension CharactersViewController {
@@ -145,7 +140,7 @@ private extension CharactersViewController {
     }
     
     @objc func didTapBackButton() {
-        viewModel.dismiss(with: .button)
+        viewModel.dismiss()
     }
     
     @objc func didTapRightNavigationBarButton() {

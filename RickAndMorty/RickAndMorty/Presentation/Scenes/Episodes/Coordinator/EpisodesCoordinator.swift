@@ -13,8 +13,6 @@ protocol EpisodesCoordinator: Coordinator {
 }
 
 final class DefaultEpisodesCoordinator {
-    var onFinish: (() -> Void)?
-    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     private var info: EpisodesViewModelRepresentable?
     private let externalDependencies: EpisodesExternalDependenciesResolver
@@ -41,14 +39,13 @@ extension DefaultEpisodesCoordinator: EpisodesCoordinator {
         let coordinator: EpisodeDetailCoordinator = dependencies.external.resolve()
         coordinator.setInfo(info)
         coordinator.start()
-        append(child: coordinator)
     }
 }
 
 private extension DefaultEpisodesCoordinator {
     struct Dependencies: EpisodesDependenciesResolver {
         let externalDependencies: EpisodesExternalDependenciesResolver
-        unowned let coordinator: EpisodesCoordinator
+        let coordinator: EpisodesCoordinator
         
         var external: EpisodesExternalDependenciesResolver {
             externalDependencies

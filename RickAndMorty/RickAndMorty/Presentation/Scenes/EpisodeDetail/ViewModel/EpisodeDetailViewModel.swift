@@ -29,8 +29,8 @@ final class EpisodeDetailViewModel {
         setInfo()
     }
     
-    func dismiss(with type: PopType) {
-        coordinator.dismiss(with: type)
+    func dismiss() {
+        coordinator.dismiss()
     }
 }
 

@@ -51,11 +51,6 @@ final class CharacterDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         configureNavigationBar()
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if isMovingFromParent { viewModel.dismiss(with: .gesture) }
-    }
 }
 
 private extension CharacterDetailViewController {
@@ -132,6 +127,6 @@ private extension CharacterDetailViewController {
     }
     
     @objc func didTapCloseImageView() {
-        viewModel.dismiss(with: .button)
+        viewModel.dismiss()
     }
 }

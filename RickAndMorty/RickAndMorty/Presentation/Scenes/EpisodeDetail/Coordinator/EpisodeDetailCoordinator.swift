@@ -12,8 +12,6 @@ protocol EpisodeDetailCoordinator: Coordinator {
 }
 
 final class DefaultEpisodeDetailCoordinator {
-    var onFinish: (() -> Void)?
-    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     private var info: EpisodeDetailRepresentable?
     private let externalDependencies: EpisodeDetailExternalDependenciesResolver
@@ -40,7 +38,7 @@ extension DefaultEpisodeDetailCoordinator: EpisodeDetailCoordinator {
 private extension DefaultEpisodeDetailCoordinator {
     struct Dependencies: EpisodeDetailDependenciesResolver {
         let externalDependencies: EpisodeDetailExternalDependenciesResolver
-        unowned let coordinator: EpisodeDetailCoordinator
+        let coordinator: EpisodeDetailCoordinator
         
         var external: EpisodeDetailExternalDependenciesResolver {
             externalDependencies

@@ -12,8 +12,6 @@ protocol CharacterDetailCoordinator: Coordinator {
 }
 
 final class DefaultCharacterDetailCoordinator {
-    var onFinish: (() -> Void)?
-    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     private var info: CharacterDetailRepresentable?
     private let externalDependencies: CharacterDetailExternalDependenciesResolver
@@ -40,7 +38,7 @@ extension DefaultCharacterDetailCoordinator: CharacterDetailCoordinator {
 private extension DefaultCharacterDetailCoordinator {
     struct Dependencies: CharacterDetailDependenciesResolver {
         let externalDependencies: CharacterDetailExternalDependenciesResolver
-        unowned let coordinator: CharacterDetailCoordinator
+        let coordinator: CharacterDetailCoordinator
         
         var external: CharacterDetailExternalDependenciesResolver {
             externalDependencies

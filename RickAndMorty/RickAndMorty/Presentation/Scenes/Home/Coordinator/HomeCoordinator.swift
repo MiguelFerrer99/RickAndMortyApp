@@ -18,8 +18,6 @@ protocol HomeCoordinator: Coordinator {
 }
 
 final class DefaultHomeCoordinator {
-    var onFinish: (() -> Void)?
-    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     private let externalDependencies: HomeExternalDependenciesResolver
     private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
@@ -32,10 +30,8 @@ final class DefaultHomeCoordinator {
 
 extension DefaultHomeCoordinator: HomeCoordinator {
     func start() {
-        let appDependencies: AppDependencies = dependencies.external.resolve()
-        guard let window = appDependencies.getWindow() else { return }
-        let viewController: HomeViewController = dependencies.resolve()
-        navigationController.setViewControllers([viewController], animated: true)
+        guard let window = dependencies.external.resolve().getWindow() else { return }
+        navigationController.setViewControllers([dependencies.resolve()], animated: true)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }
@@ -43,49 +39,42 @@ extension DefaultHomeCoordinator: HomeCoordinator {
     func openAuthorInfo() {
         let coordinator: AuthorInfoCoordinator = dependencies.external.resolve()
         coordinator.start()
-        append(child: coordinator)
     }
     
     func openCharacters(with info: CharactersViewModelRepresentable) {
         let coordinator: CharactersCoordinator = dependencies.external.resolve()
         coordinator.setInfo(info)
         coordinator.start()
-        append(child: coordinator)
     }
     
     func openCharacterDetail(with info: CharacterDetailRepresentable) {
         let coordinator: CharacterDetailCoordinator = dependencies.external.resolve()
         coordinator.setInfo(info)
         coordinator.start()
-        append(child: coordinator)
     }
     
     func openLocations(with info: LocationsViewModelRepresentable) {
         let coordinator: LocationsCoordinator = dependencies.external.resolve()
         coordinator.setInfo(info)
         coordinator.start()
-        append(child: coordinator)
     }
     
     func openLocationDetail(with info: LocationDetailRepresentable) {
         let coordinator: LocationDetailCoordinator = dependencies.external.resolve()
         coordinator.setInfo(info)
         coordinator.start()
-        append(child: coordinator)
     }
     
     func openEpisodes(with info: EpisodesViewModelRepresentable) {
         let coordinator: EpisodesCoordinator = dependencies.external.resolve()
         coordinator.setInfo(info)
         coordinator.start()
-        append(child: coordinator)
     }
     
     func openEpisodeDetail(with info: EpisodeDetailRepresentable) {
         let coordinator: EpisodeDetailCoordinator = dependencies.external.resolve()
         coordinator.setInfo(info)
         coordinator.start()
-        append(child: coordinator)
     }
 }
 

@@ -22,6 +22,6 @@ final class AuthorInfoViewModel {
     }
     
     func dismiss() {
-        coordinator.dismiss(with: .button)
+        coordinator.dismiss()
     }
 }

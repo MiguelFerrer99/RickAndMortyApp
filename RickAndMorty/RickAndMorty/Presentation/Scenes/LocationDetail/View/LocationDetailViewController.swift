@@ -43,11 +43,6 @@ final class LocationDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         configureNavigationBar()
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if isMovingFromParent { viewModel.dismiss(with: .gesture) }
-    }
 }
 
 private extension LocationDetailViewController {
@@ -89,6 +84,6 @@ private extension LocationDetailViewController {
     }
     
     @objc func didTapBackButton() {
-        viewModel.dismiss(with: .button)
+        viewModel.dismiss()
     }
 }

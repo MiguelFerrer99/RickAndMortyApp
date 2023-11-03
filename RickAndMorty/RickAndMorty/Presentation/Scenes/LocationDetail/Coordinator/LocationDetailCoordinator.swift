@@ -12,8 +12,6 @@ protocol LocationDetailCoordinator: Coordinator {
 }
 
 final class DefaultLocationDetailCoordinator {
-    var onFinish: (() -> Void)?
-    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     private var info: LocationDetailRepresentable?
     private let externalDependencies: LocationDetailExternalDependenciesResolver
@@ -40,7 +38,7 @@ extension DefaultLocationDetailCoordinator: LocationDetailCoordinator {
 private extension DefaultLocationDetailCoordinator {
     struct Dependencies: LocationDetailDependenciesResolver {
         let externalDependencies: LocationDetailExternalDependenciesResolver
-        unowned let coordinator: LocationDetailCoordinator
+        let coordinator: LocationDetailCoordinator
         
         var external: LocationDetailExternalDependenciesResolver {
             externalDependencies

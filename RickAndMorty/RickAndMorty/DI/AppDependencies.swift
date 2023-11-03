@@ -8,16 +8,20 @@
 import UIKit
 
 final class AppDependencies {
-    private let navigationController = UINavigationController()
-    private let apiService = DefaultAPIService()
-    private let imageCacheManager = ImageCacheManager()
+    private let apiService: APIService
+    private let imageCacheManager: ImageCacheManager
+    private let navigationController: UINavigationController
     private var window: UIWindow?
     
-    func setWindow(_ window: UIWindow) {
-        self.window = window
+    init(window: UIWindow? = nil) {
+        apiService = DefaultAPIService()
+        imageCacheManager = ImageCacheManager()
+        navigationController = UINavigationController()
     }
     
     func getWindow() -> UIWindow? { window }
+    func setWindow(_ window: UIWindow) { self.window = window }
+    
     func resolve() -> AppDependencies { self }
     func resolve() -> APIService { apiService }
     func resolve() -> ImageCacheManager { imageCacheManager }

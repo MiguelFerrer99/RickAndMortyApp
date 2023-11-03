@@ -13,8 +13,6 @@ protocol CharactersCoordinator: Coordinator {
 }
 
 final class DefaultCharactersCoordinator {
-    var onFinish: (() -> Void)?
-    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     private var info: CharactersViewModelRepresentable?
     private let externalDependencies: CharactersExternalDependenciesResolver
@@ -41,14 +39,13 @@ extension DefaultCharactersCoordinator: CharactersCoordinator {
         let coordinator: CharacterDetailCoordinator = dependencies.external.resolve()
         coordinator.setInfo(info)
         coordinator.start()
-        append(child: coordinator)
     }
 }
 
 private extension DefaultCharactersCoordinator {
     struct Dependencies: CharactersDependenciesResolver {
         let externalDependencies: CharactersExternalDependenciesResolver
-        unowned let coordinator: CharactersCoordinator
+        let coordinator: CharactersCoordinator
         
         var external: CharactersExternalDependenciesResolver {
             externalDependencies

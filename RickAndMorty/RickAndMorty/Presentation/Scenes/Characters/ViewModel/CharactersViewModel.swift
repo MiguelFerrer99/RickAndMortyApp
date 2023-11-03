@@ -54,8 +54,8 @@ final class CharactersViewModel {
         coordinator.openCharacter(with: info)
     }
     
-    func dismiss(with type: PopType) {
-        coordinator.dismiss(with: type)
+    func dismiss() {
+        coordinator.dismiss()
     }
 }
 

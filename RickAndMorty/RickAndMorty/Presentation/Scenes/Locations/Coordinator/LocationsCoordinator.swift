@@ -13,8 +13,6 @@ protocol LocationsCoordinator: Coordinator {
 }
 
 final class DefaultLocationsCoordinator {
-    var onFinish: (() -> Void)?
-    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     private var info: LocationsViewModelRepresentable?
     private let externalDependencies: LocationsExternalDependenciesResolver
@@ -41,14 +39,13 @@ extension DefaultLocationsCoordinator: LocationsCoordinator {
         let coordinator: LocationDetailCoordinator = dependencies.external.resolve()
         coordinator.setInfo(info)
         coordinator.start()
-        append(child: coordinator)
     }
 }
 
 private extension DefaultLocationsCoordinator {
     struct Dependencies: LocationsDependenciesResolver {
         let externalDependencies: LocationsExternalDependenciesResolver
-        unowned let coordinator: LocationsCoordinator
+        let coordinator: LocationsCoordinator
         
         var external: LocationsExternalDependenciesResolver {
             externalDependencies

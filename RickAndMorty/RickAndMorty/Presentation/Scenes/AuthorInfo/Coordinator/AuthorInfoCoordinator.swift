@@ -13,8 +13,6 @@ protocol AuthorInfoCoordinator: Coordinator {
 }
 
 final class DefaultAuthorInfoCoordinator {
-    var onFinish: (() -> Void)?
-    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     private let externalDependencies: AuthorInfoExternalDependenciesResolver
     private lazy var dependencies = Dependencies(externalDependencies: externalDependencies, coordinator: self)
@@ -48,7 +46,7 @@ extension DefaultAuthorInfoCoordinator: AuthorInfoCoordinator {
 private extension DefaultAuthorInfoCoordinator {
     struct Dependencies: AuthorInfoDependenciesResolver {
         let externalDependencies: AuthorInfoExternalDependenciesResolver
-        unowned let coordinator: AuthorInfoCoordinator
+        let coordinator: AuthorInfoCoordinator
         
         var external: AuthorInfoExternalDependenciesResolver {
             externalDependencies
