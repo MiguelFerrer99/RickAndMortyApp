@@ -9,7 +9,7 @@ https://www.figma.com/file/IBc3ajaL7Ioc3I9szwuydY/RichAndMorty?t=XTMBVRM495gtA67
 * Hexagonal architecture
 * Dependency injection
 * Demo environment with mocked json
-* Response and images caching
+* Images caching
 * Async/Await
 * Combine
 * UIKit
