@@ -16,3 +16,4 @@ https://www.figma.com/file/IBc3ajaL7Ioc3I9szwuydY/RichAndMorty?t=XTMBVRM495gtA67
 * UIKit
 * iPad adaptation
 * Localizables
+* iOS 14 - iOS 16
